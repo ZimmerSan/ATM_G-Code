@@ -1,4 +1,4 @@
-package gui;
+package atm.gui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +10,7 @@ public class MainFrame extends JFrame {
 
 
     public MainFrame(){
-        setTitle("ATM Simulator");
+        setTitle("atm.ATM Simulator");
         setSize(frameHeight, frameWidth);
         setLocation(20, 20);
         setResizable(false);

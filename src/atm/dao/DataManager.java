@@ -1,7 +1,7 @@
-package dao;
+package atm.dao;
 
-import config.DatabaseConnector;
-import model.Client;
+import atm.config.DatabaseConnector;
+import atm.model.Client;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +20,7 @@ public class DataManager {
             Connection connection = dbConnector.getConnection();
             Statement stmt = connection.createStatement();
 
-            String selTable = "SELECT * FROM ATM";
+            String selTable = "SELECT * FROM atm.ATM";
             stmt.execute(selTable);
             ResultSet rs = stmt.getResultSet();
             while (rs.next()) {
@@ -39,7 +39,7 @@ public class DataManager {
     public void updateClientInfo(int id, String password, int balance){
         try {
             Connection connection = dbConnector.getConnection();
-            String updateStatement = "UPDATE ATM SET PASSWORD = ?, BALANCE = ? Where id = ?";
+            String updateStatement = "UPDATE atm.ATM SET PASSWORD = ?, BALANCE = ? Where id = ?";
             PreparedStatement statement = connection.prepareStatement(updateStatement);
             statement.setString(1, password);
             statement.setInt(2, balance);

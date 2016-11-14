@@ -1,3 +1,5 @@
+package atm;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -44,7 +46,7 @@ final public class GUI {
 	private final static Color LabelForeground = ChooseCardLabel.getForeground();
 	private final ActionListener BPressed = new KeyboardListener();
 
-	private static final String Welcome = "\n\n\n                   Welcome\n "+ "         to the ATM Simulator";
+	private static final String Welcome = "\n\n\n                   Welcome\n "+ "         to the atm.ATM Simulator";
 	private static final String idle = "";
 
 	private static JButton m1;
@@ -90,7 +92,7 @@ final public class GUI {
 		private static final long serialVersionUID = 1L;
 
 		public MyFrame() {
-			setTitle("ATM Simulator");
+			setTitle("atm.ATM Simulator");
 			setSize(h, w);
 			setLocation(5, 5);
 			setResizable(false);
@@ -364,7 +366,7 @@ final public class GUI {
 		NoPrint.setVisible(false);
 		endWork();
 		String date = new java.util.Date().toString();
-		String transaction = "               ATM \"Virtual\"\n"
+		String transaction = "               atm.ATM \"Virtual\"\n"
 				+ "\n ID транзакції: " + ATM.nextTransaction() + "\n Дата:\n "
 				+ date + "\n Номер картки: " + ATM.getCurrentClient().getCard()
 				+ "\n\n Баланс: " + ATM.getCurrentClient().getBalance()

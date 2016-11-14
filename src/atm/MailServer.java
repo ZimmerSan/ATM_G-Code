@@ -1,3 +1,5 @@
+package atm;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -20,14 +22,14 @@ public class MailServer {
         rootMap.put("time", date);
         rootMap.put("money", money);
         rootMap.put("balance", balance);
-        sendMessage(email, rootMap, "template.ftl","ATM Virtual");
+        sendMessage(email, rootMap, "template.ftl","atm.ATM Virtual");
     }
     protected void changePassword(String name, String password, String date, String email){
         Map<String, String> rootMap = new HashMap<String, String>();//here are fields, which we wanted to paste into template
         rootMap.put("to", name);
         rootMap.put("password", password);
         rootMap.put("time", date);
-        sendMessage(email, rootMap, "password.ftl","ATM Virtual");
+        sendMessage(email, rootMap, "password.ftl","atm.ATM Virtual");
     }
 
 //general mail configuration for all templates

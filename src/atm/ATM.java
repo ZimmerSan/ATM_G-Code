@@ -1,5 +1,7 @@
-import dao.DataManager;
-import model.Client;
+package atm;
+
+import atm.dao.DataManager;
+import atm.model.Client;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ final public class ATM {
 
     private static final String PANE_TITLE_ERROR = "Error";
     private static final String EXCEEDED_LIMIT_ERROR = "Exceeded Limit";
-    private static final String NOT_ENOUGH_CASH_ERROR = "Not Enough Cash in ATM";
+    private static final String NOT_ENOUGH_CASH_ERROR = "Not Enough Cash in atm.ATM";
 
     void addTransaction(String tr) {
         transactions.add(tr);
