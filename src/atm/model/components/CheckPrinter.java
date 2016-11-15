@@ -1,4 +1,4 @@
-package atm.components;
+package atm.model.components;
 
 /**
  * Created by KOKOWKA on 14.11.2016.

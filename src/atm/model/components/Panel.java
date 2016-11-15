@@ -1,4 +1,4 @@
-package atm.components;
+package atm.model.components;
 
 import atm.model.Atm;
 

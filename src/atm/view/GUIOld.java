@@ -1,7 +1,7 @@
-package atm.gui;
+package atm.view;
 
-final public class GUI {
-//	private static GUI instance = new GUI();;
+final public class GUIOld {
+//	private static GUIOld instance = new GUIOld();;
 //	private static MyFrame ATMwindow;
 //
 //	private JPanel Panel;
@@ -68,11 +68,11 @@ final public class GUI {
 //
 //	public static final int INIT_TOTAL_CASH = 100000;
 //
-//	public static GUI getInstance() {
+//	public static GUIOld getInstance() {
 //		return instance;
 //	}
 //
-//	private GUI() {
+//	private GUIOld() {
 //		ATMwindow = new MyFrame();
 //		ATMwindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		ATMwindow.setVisible(true);
@@ -1140,7 +1140,7 @@ final public class GUI {
 //		}
 //
 //		public void inputCard(ActionEvent e) {
-//			int len = GUI.ChooseCardField.getText().length();
+//			int len = GUIOld.ChooseCardField.getText().length();
 //			switch (e.getActionCommand()) {
 //			case "CORRECTION":
 //				if (len != 0)

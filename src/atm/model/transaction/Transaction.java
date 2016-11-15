@@ -1,4 +1,4 @@
-package atm.transaction;
+package atm.model.transaction;
 
 /**
  * Created by KOKOWKA on 15.11.2016.

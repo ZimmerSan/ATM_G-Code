@@ -36,7 +36,7 @@ final public class ATM {
 //    }
 //
 //    public ATM() {
-//        Window = GUI.getInstance().getATMwindow();
+//        Window = GUIOld.getInstance().getATMwindow();
 //        mailServer = new MailServer();
 //        dataManager = new DataManager();
 //        clients = dataManager.getAvailableClients();

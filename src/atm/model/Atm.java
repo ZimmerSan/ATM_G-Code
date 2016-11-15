@@ -1,6 +1,6 @@
 package atm.model;
 
-import atm.components.*;
+import atm.model.components.*;
 
 public class Atm {
 
