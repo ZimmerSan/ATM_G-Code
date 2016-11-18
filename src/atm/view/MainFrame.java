@@ -1,18 +1,12 @@
 package atm.view;
 
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Font;
-
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by Andrii Voitenko on 18-Nov-16.
  */
-public class MainView extends JFrame {
+public class MainFrame extends JFrame {
 	
 	private static final Color FRAME_BACKGROUND_COLOR = new Color(237, 238, 240);
 	private static final Color HEADER_BACKGROUND_COLOUR = new Color(30, 143, 50);
@@ -22,10 +16,7 @@ public class MainView extends JFrame {
 	JPanel headerView;
 	JPanel screenView;
 	
-	
-	
-	
-    public MainView() {
+    public MainFrame() {
         super("ATM");
         setSize(520, 660);
         
@@ -40,7 +31,7 @@ public class MainView extends JFrame {
     
     private void init(){
     	//Keyboard init
-    	keyboardView = new KeyBoardView();
+    	keyboardView = KeyBoardView.newInstance();
     	keyboardView.setLocation(40, 360);
     	add(keyboardView);
     	keyboardView.setVisible(true);
@@ -53,7 +44,7 @@ public class MainView extends JFrame {
     	headerView.setBackground(HEADER_BACKGROUND_COLOUR);
     	headerView.setLayout(null);
     	JLabel atmName = new JLabel("G-ATM");
-    	atmName.setFont(new Font("Halvetica", Font.PLAIN, 12));
+    	atmName.setFont(new Font("Arial", Font.PLAIN, 12));
     	atmName.setSize(60, 14);
     	atmName.setLocation(370, 3);
     	headerView.add(atmName);
@@ -68,7 +59,5 @@ public class MainView extends JFrame {
     	//setVisible(true);
     	
     }
-    
-    
     
 }

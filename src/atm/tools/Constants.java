@@ -2,6 +2,8 @@ package atm.tools;
 
 public interface Constants {
     int PIN_LENGTH = 4;
+    int D_KEY_WIDTH =  45;
+    int D_KEY_HEIGHT =  D_KEY_WIDTH;
 
     // Titles
     String TITLE_ERROR = "Error";

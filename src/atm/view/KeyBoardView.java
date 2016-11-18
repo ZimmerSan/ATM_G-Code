@@ -1,53 +1,49 @@
 package atm.view;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
+
+import static atm.tools.Constants.D_KEY_HEIGHT;
+import static atm.tools.Constants.D_KEY_WIDTH;
 
 public class KeyBoardView extends JPanel{
-	private JButton b1;
-	private JButton b2;
-	private JButton b3;
-	private JButton b4;
-	private JButton b5;
-	private JButton b6;
-	private JButton b7;
-	private JButton b8;
-	private JButton b9;
-	private JButton b0;
+	private static KeyBoardView instance;
+
+	public static synchronized KeyBoardView newInstance(){
+		if (instance == null) instance = new KeyBoardView();
+		return instance;
+	}
+
+	private JButton b0, b1, b2, b3, b4, b5, b6, b7, b8, b9;
 	private JButton btnCancel;
 	private JButton btnClear;
 	private JButton btnEnter;
 	private JButton btnInputCard;
-	
-	public KeyBoardView() {
-		// TODO Auto-generated constructor stub
+
+	private KeyBoardView() {
 		super();
-		setSize(440,260);
+		setSize(440,320);
 		setLayout(null);
 		initKeyboard();
 	}
-	
 
 	private void initKeyboard(){
-    	
-    	b1 = getKeyboardButton("1", 80, 40, 40, 40);
-    	b2 = getKeyboardButton("2", 140, 40, 40, 40);
-    	b3 = getKeyboardButton("3", 200, 40, 40, 40);
-    	b4 = getKeyboardButton("4", 80, 100, 40, 40);
-    	b5 = getKeyboardButton("5", 140, 100, 40, 40);
-    	b6 = getKeyboardButton("6", 200, 100, 40, 40);
-    	b7 = getKeyboardButton("7", 80, 160, 40, 40);
-    	b8 = getKeyboardButton("8", 140, 160, 40, 40);
-    	b9 = getKeyboardButton("9", 200, 160, 40, 40);
-    	b0 = getKeyboardButton("0", 140, 220, 40, 40);
-    	
-    	btnInputCard = getKeyboardButton("Input Card", 140, 0, 160, 20);
-    	btnCancel = getKeyboardButton("Cancel", 280, 40, 80, 40);
-    	btnClear = getKeyboardButton("Clear", 280, 100, 80, 40);
-    	btnEnter = getKeyboardButton("Enter", 280, 160, 80, 40);
-    	
-    	add(b1);
+		b1 = getDigitButton("1", 80, 40);
+		b2 = getDigitButton("2", 140, 40);
+		b3 = getDigitButton("3", 200, 40);
+		b4 = getDigitButton("4", 80, 100);
+		b5 = getDigitButton("5", 140, 100);
+		b6 = getDigitButton("6", 200, 100);
+		b7 = getDigitButton("7", 80, 160);
+		b8 = getDigitButton("8", 140, 160);
+		b9 = getDigitButton("9", 200, 160);
+		b0 = getDigitButton("0", 140, 220);
+
+		btnInputCard = getButton("Input Card", 140, 0, 160, 20);
+		btnCancel = getButton("Cancel", 280, 40, 80, 40);
+		btnClear = getButton("Clear", 280, 100, 80, 40);
+		btnEnter = getButton("Enter", 280, 160, 80, 40);
+
+		add(b1);
 		add(b2);
 		add(b3);
 		add(b4);
@@ -60,14 +56,19 @@ public class KeyBoardView extends JPanel{
 		add(btnInputCard);
 		add(btnCancel);
 		add(btnClear);
-		add(btnEnter);	
-    	
-    }
+		add(btnEnter);
 
-    private final JButton getKeyboardButton(String lable, int x, int y, int size_x, int size_y) {
-		JButton button = new JButton(lable);
-		button.setSize(size_x, size_y);
+	}
+
+	private final JButton getDigitButton(String label, int x, int y) {
+		return getButton(label, x, y, D_KEY_WIDTH, D_KEY_HEIGHT);
+	}
+
+	private final JButton getButton(String label, int x, int y, int width, int height){
+		JButton button = new JButton(label);
+		button.setSize(width, height);
 		button.setLocation(x, y);
 		return button;
 	}
+
 }
