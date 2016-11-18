@@ -1,6 +1,25 @@
-package atm.view;
-
-final public class GUIOld {
+//package atm.view;
+//
+//import java.awt.Color;
+//import java.awt.Container;
+//import java.awt.Font;
+//import java.awt.Label;
+//import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
+//
+//import javax.swing.JButton;
+//import javax.swing.JFrame;
+//import javax.swing.JLabel;
+//import javax.swing.JOptionPane;
+//import javax.swing.JPanel;
+//import javax.swing.JPasswordField;
+//import javax.swing.JTextArea;
+//import javax.swing.JTextField;
+//import javax.swing.SwingConstants;
+//
+//import atm.ATM;
+//
+//final public class GUIOld {
 //	private static GUIOld instance = new GUIOld();;
 //	private static MyFrame ATMwindow;
 //
@@ -20,11 +39,11 @@ final public class GUIOld {
 //	private static JButton b8;
 //	private static JButton b9;
 //	private static JButton b0;
-//	private static JButton Cancel;
-//	private static JButton Correction;
+//	private static JButton btnCancel;
+//	private static JButton btnCorrection;
 //	private static JButton Enter;
 //	private static JButton EXIT;
-//	private static JButton InputCard;
+//	private static JButton btnInputCard;
 //
 //	private static JLabel ChooseCardLabel;
 //	private static JButton YesPrint;
@@ -261,19 +280,19 @@ final public class GUIOld {
 //				};
 //			});
 //
-//			add(b1);
-//			add(b2);
-//			add(b3);
-//			add(Cancel);
-//			add(b4);
-//			add(b5);
-//			add(b6);
-//			add(Correction);
-//			add(b7);
-//			add(b8);
-//			add(b9);
-//			add(Enter);
-//			add(b0);
+////			add(b1);
+////			add(b2);
+////			add(b3);
+////			add(Cancel);
+////			add(b4);
+////			add(b5);
+////			add(b6);
+////			add(Correction);
+////			add(b7);
+////			add(b8);
+////			add(b9);
+////			add(Enter);
+////			add(b0);
 //
 //			setVisibleKeyboard(false);
 //
@@ -1160,5 +1179,5 @@ final public class GUIOld {
 //	public MyFrame getATMwindow() {
 //		return ATMwindow;
 //	}
-
-}
+//
+//}
