@@ -1,19 +1,15 @@
 package atm.view;
 
-import atm.view.ScreenPanels.StartPanel;
+import static atm.tools.ViewConstants.MAINFRAME_HEIGHT;
+import static atm.tools.ViewConstants.MAINFRAME_WIDTH;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import atm.view.components.CardReaderView;
 import atm.view.components.HeaderView;
 import atm.view.components.KeyboardView;
-
-import javax.swing.*;
-
-import static atm.tools.GUIConstants.HEADER_BACKGROUND_COLOUR;
-import static atm.tools.GUIConstants.MAINFRAME_HEIGHT;
-import static atm.tools.GUIConstants.MAINFRAME_WIDTH;
-import static atm.tools.GUIConstants.SCREEN_BACKGROUND_COLOR;
-
-import java.awt.Color;
-import java.awt.Font;
+import atm.view.screenpanels.StartPanel;
 
 /**
  * Created by Andrii Voitenko on 18-Nov-16.
@@ -41,15 +37,13 @@ public class MainFrame extends JFrame {
     }
     
     private void init() {
-    	
+    	//Components init
     	//Keyboard init
         keyboardView = KeyboardView.getInstance();
-        keyboardView.setLocation(40, 380);
         add(keyboardView);
         
     	//CardReader init
         cardReaderView = CardReaderView.getInstance();
-        cardReaderView.setLocation(40, 360);
         add(cardReaderView);
         
         // Header init
@@ -58,10 +52,7 @@ public class MainFrame extends JFrame {
         
         // Start ScreenPanel init
         screenView = StartPanel.getInstance();
-       
-        screenView.setBackground(SCREEN_BACKGROUND_COLOR);
         add(screenView);
-
     }
     
     
