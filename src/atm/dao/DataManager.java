@@ -1,11 +1,14 @@
 package atm.dao;
 
-import atm.tools.DatabaseConnector;
-import atm.model.shared.Client;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import atm.model.shared.Client;
+import atm.tools.DatabaseConnector;
 
 public class DataManager {
     private static DatabaseConnector dbConnector = new DatabaseConnector();
