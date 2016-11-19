@@ -2,13 +2,10 @@ package atm.model.components;
 
 import atm.model.Atm;
 
-/**
- * Created by KOKOWKA on 14.11.2016.
- */
-public class Panel {
+public class KeyBoardModel {
     private Atm atm;
 
-    public Panel(Atm atm) {
+    public KeyBoardModel(Atm atm) {
         this.atm = atm;
     }
 
