@@ -1,12 +1,9 @@
-package atm.config;
+package atm.tools;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * Created by Zimme on 29-Oct-16.
- */
 public class DatabaseConnector {
     // JDBC driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
