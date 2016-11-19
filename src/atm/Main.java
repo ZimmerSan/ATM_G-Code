@@ -7,7 +7,9 @@ public class Main{
 
 	public static void main(String[] args) throws Exception  {
         Atm atm = new Atm("DreamBank");
-        MainFrame mainFrame = new MainFrame("ATM");
-	}
 
+        MainFrame mainFrame = new MainFrame();
+		
+
+	}
 }

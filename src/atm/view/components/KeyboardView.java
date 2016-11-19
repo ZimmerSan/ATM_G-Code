@@ -1,20 +1,26 @@
 package atm.view.components;
 
-import javax.swing.*;
-
 import static atm.tools.GUIConstants.*;
 import static atm.tools.ViewUtils.createButton;
 import static atm.tools.ViewUtils.createDigitButton;
 
-public class KeyBoardView extends JPanel {
-    private static KeyBoardView instance;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+public class KeyboardView extends JPanel {
+    private static KeyboardView instance;
 
     private JButton b0, b1, b2, b3, b4, b5, b6, b7, b8, b9;
     private JButton btnCancel;
     private JButton btnClear;
     private JButton btnEnter;
+    
+    public static synchronized KeyboardView getInstance() {
+        if (instance == null) instance = new KeyboardView();
+        return instance;
+    }
 
-    private KeyBoardView() {
+    private KeyboardView() {
         super();
         setSize(KEYBOARD_WIDTH, KEYBOARD_HEIGHT);
         setLayout(null);
@@ -52,9 +58,6 @@ public class KeyBoardView extends JPanel {
         add(btnEnter);
     }
 
-    public static synchronized KeyBoardView getInstance() {
-        if (instance == null) instance = new KeyBoardView();
-        return instance;
-    }
+    
 
 }
