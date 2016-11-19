@@ -1,18 +1,15 @@
 package atm.view.ScreenPanels;
 
-import javax.swing.*;
+import static atm.tools.GUIConstants.SCREEN_BACKGROUND_COLOR;
 
-import atm.view.components.KeyBoardView;
-
-import java.awt.*;
-
-import static atm.tools.GUIConstants.*;
+import javax.swing.JPanel;
 
 public class StartPanel extends JPanel{
     private static StartPanel instance;
 
     private StartPanel(){
     	setLayout(null);
+    	setLocation(40, 60);
         setSize(440, 280);
         setBackground(SCREEN_BACKGROUND_COLOR);
     }

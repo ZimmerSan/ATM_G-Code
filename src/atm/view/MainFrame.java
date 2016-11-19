@@ -1,8 +1,9 @@
 package atm.view;
 
 import atm.view.ScreenPanels.StartPanel;
+import atm.view.components.CardReaderView;
 import atm.view.components.HeaderView;
-import atm.view.components.KeyBoardView;
+import atm.view.components.KeyboardView;
 
 import javax.swing.*;
 
@@ -19,14 +20,15 @@ import java.awt.Font;
  */
 public class MainFrame extends JFrame {
 	
-	KeyBoardView keyboardView;
+	KeyboardView keyboardView;
+	CardReaderView cardReaderView;
     JPanel headerView;
     JPanel screenView;
     
     StartPanel homePanel;
 
     public MainFrame() {
-        super("ATM");
+        super("G-ATM");
         setSize(MAINFRAME_WIDTH, MAINFRAME_HEIGHT);
 
         setLayout(null);
@@ -40,19 +42,27 @@ public class MainFrame extends JFrame {
     
     private void init() {
     	
-        //Keyboard init
-        keyboardView = KeyBoardView.getInstance();
-        keyboardView.setLocation(40, 360);
+    	//Keyboard init
+        keyboardView = KeyboardView.getInstance();
+        keyboardView.setLocation(40, 380);
         add(keyboardView);
-
+        
+    	//CardReader init
+        cardReaderView = CardReaderView.getInstance();
+        cardReaderView.setLocation(40, 360);
+        add(cardReaderView);
+        
         // Header init
         headerView = HeaderView.getInstance();
         add(headerView);
-
-        // Start Screen init
+        
+        // Start ScreenPanel init
         screenView = StartPanel.getInstance();
-        screenView.setLocation(40, 60);
+       
+        screenView.setBackground(SCREEN_BACKGROUND_COLOR);
         add(screenView);
+
     }
+    
     
 }
