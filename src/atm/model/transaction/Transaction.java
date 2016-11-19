@@ -1,17 +1,12 @@
 package atm.model.transaction;
 
 import atm.model.Atm;
-import atm.model.shared.Card;
-import atm.model.shared.Check;
-import atm.model.shared.Message;
-import atm.model.shared.Money;
-import atm.model.shared.exception.CardRetained;
+import atm.model.shared.*;
 
 
 public abstract class Transaction {
     protected Atm atm;
-    protected Card card;
-    protected String pin;
+    protected Client client;
     protected int id;
     protected Message message;
     protected Money money;
@@ -20,27 +15,26 @@ public abstract class Transaction {
     }
     private static int nextId = 1;
 
-    protected Transaction(Atm atm, Card card, String pin) {
+    protected Transaction(Atm atm, Client client) {
         this.atm = atm;
-        this.card = card;
-        this.pin = pin;
+        this.client = client;
         this.id = nextId ++;
     }
 
 //TODO:getChoice for makeTransaction
-    public static Transaction makeTransaction(Atm atm, Card card, String pin) {
+    public static Transaction makeTransaction(Atm atm, Client client) {
         int choice = 0;
         switch(choice) {
             case 0:
 
-                return new Withdrawal(atm, card, pin);
+                return new Withdrawal(atm, client);
             case 1:
 
-                return new Transfer(atm, card, pin);
+                return new Transfer(atm, client);
 
             case 2:
 
-                return new Inquiry(atm, card, pin);
+                return new Inquiry(atm, client);
 
             default:
 

@@ -1,28 +1,25 @@
 package atm.model.transaction;
 
 import atm.model.Atm;
-import atm.model.shared.Card;
-import atm.model.shared.Check;
-import atm.model.shared.Message;
-import atm.model.shared.Money;
+import atm.model.shared.*;
 
 /**
  * Created by KOKOWKA on 15.11.2016.
  */
 public class Withdrawal extends Transaction{
 
-    private int from;
+    private Client from;
     private Money amount;
 
-    public Withdrawal(Atm atm, Card card, String pin) {
-        super(atm, card, pin);
+    public Withdrawal(Atm atm, Client client) {
+        super(atm, client);
     }
 
 //TODO:getFrom, amount for getSpecificsFromCustomer Withdrawal
     protected Message getSpecificsFromCustomer(){
-        from = 0;
+        from = null;
         amount = new Money(100);
-        return new Message(Message.MessageCode.WITHDRAWAL, card, pin, id, from, -1, amount);
+        return new Message(Message.MessageCode.WITHDRAWAL, id, from, null, amount);
     }
 
     //TODO:write correct check for withdrawal

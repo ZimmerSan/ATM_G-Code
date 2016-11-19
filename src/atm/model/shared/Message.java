@@ -10,11 +10,11 @@ public class Message {
     private Card card;
     private String pin;
     private int serialNumber;
-    private int fromAccount;
-    private int toAccount;
+    private Client fromAccount;
+    private Client toAccount;
     private Money amount;
 
-    public Message(MessageCode messageCode, Card card, String pin, int serialNumber, int fromAccount, int toAccount, Money amount) {
+    public Message(MessageCode messageCode, int serialNumber, Client fromAccount, Client toAccount, Money amount) {
         this.messageCode = messageCode;
         this.card = card;
         this.pin = pin;
@@ -43,11 +43,11 @@ public class Message {
 
         result += " CARD# " + card.getNumber();
         result += " TRANS# " + serialNumber;
-        if (fromAccount >= 0)
+        if (fromAccount.getBalance().getCents() >= 0)
             result += " FROM  " + fromAccount;
         else
             result += " NO FROM";
-        if (toAccount >= 0)
+        if (toAccount.getBalance().getCents() >= 0)
             result += " TO  " + toAccount;
         else
             result += " NO TO";
@@ -79,11 +79,11 @@ public class Message {
         return serialNumber;
     }
 
-    public int getFromAccount() {
+    public Client getFromAccount() {
         return fromAccount;
     }
 
-    public int getToAccount() {
+    public Client getToAccount() {
         return toAccount;
     }
 

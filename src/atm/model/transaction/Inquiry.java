@@ -1,23 +1,20 @@
 package atm.model.transaction;
 
 import atm.model.Atm;
-import atm.model.shared.Card;
-import atm.model.shared.Check;
-import atm.model.shared.Message;
-import atm.model.shared.Money;
+import atm.model.shared.*;
 
 public class Inquiry extends Transaction{
 
-    private int from;
+    private Client from;
 
-    public Inquiry(Atm atm, Card card, String pin) {
-        super(atm, card, pin);
+    public Inquiry(Atm atm, Client client) {
+        super(atm, client);
     }
 
     //TODO:getFrom for getSpecificsFromCustomer Inquiry
     protected Message getSpecificsFromCustomer() {
-        from = 0;
-        return new Message(Message.MessageCode.INQUIRY, card, pin, id, from, -1, new Money(0));
+        from = null;
+        return new Message(Message.MessageCode.INQUIRY, id, from, null, new Money(0));
     }
 
 //TODO:write correct check for inquiry
