@@ -1,17 +1,17 @@
-package atm.view.ScreenPanels;
+package atm.view.screenpanels;
 
-import static atm.tools.GUIConstants.SCREEN_BACKGROUND_COLOR;
+import static atm.tools.ViewConstants.SCREEN_BACKGROUND_COLOR;
 
 import javax.swing.JPanel;
+
+import atm.tools.ViewUtils;
 
 public class StartPanel extends JPanel{
     private static StartPanel instance;
 
     private StartPanel(){
-    	setLayout(null);
-    	setLocation(40, 60);
-        setSize(440, 280);
-        setBackground(SCREEN_BACKGROUND_COLOR);
+    	super();
+    	ViewUtils.setupDefaultScreenPanel(this);
     }
 
     public static synchronized StartPanel getInstance(){
