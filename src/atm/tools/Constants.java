@@ -16,4 +16,6 @@ public interface Constants {
 
     // Errors
     String ERR_INVALID_PIN_LENGTH = "Invalid PIN length - must be " + PIN_LENGTH + " digits long.";
+    String ERR_INVALID_CLIENT = "Can not get user";
+
 }
