@@ -6,6 +6,7 @@ import static atm.tools.Constants.D_KEY_HEIGHT;
 import static atm.tools.Constants.D_KEY_WIDTH;
 
 public class KeyBoardView extends JPanel{
+	// TODO: 19-Nov-16 move to package atm.view.components
 	private static KeyBoardView instance;
 
 	public static synchronized KeyBoardView newInstance(){
@@ -27,21 +28,21 @@ public class KeyBoardView extends JPanel{
 	}
 
 	private void initKeyboard(){
-		b1 = getDigitButton("1", 80, 40);
-		b2 = getDigitButton("2", 140, 40);
-		b3 = getDigitButton("3", 200, 40);
-		b4 = getDigitButton("4", 80, 100);
-		b5 = getDigitButton("5", 140, 100);
-		b6 = getDigitButton("6", 200, 100);
-		b7 = getDigitButton("7", 80, 160);
-		b8 = getDigitButton("8", 140, 160);
-		b9 = getDigitButton("9", 200, 160);
-		b0 = getDigitButton("0", 140, 220);
+		b1 = createDigitButton("1", 80, 40);
+		b2 = createDigitButton("2", 140, 40);
+		b3 = createDigitButton("3", 200, 40);
+		b4 = createDigitButton("4", 80, 100);
+		b5 = createDigitButton("5", 140, 100);
+		b6 = createDigitButton("6", 200, 100);
+		b7 = createDigitButton("7", 80, 160);
+		b8 = createDigitButton("8", 140, 160);
+		b9 = createDigitButton("9", 200, 160);
+		b0 = createDigitButton("0", 140, 220);
 
-		btnInputCard = getButton("Input Card", 140, 0, 160, 20);
-		btnCancel = getButton("Cancel", 280, 40, 80, 40);
-		btnClear = getButton("Clear", 280, 100, 80, 40);
-		btnEnter = getButton("Enter", 280, 160, 80, 40);
+		btnInputCard = createButton("Input Card", 140, 0, 160, 20);
+		btnCancel = createButton("Cancel", 280, 40, 80, 40);
+		btnClear = createButton("Clear", 280, 100, 80, 40);
+		btnEnter = createButton("Enter", 280, 160, 80, 40);
 
 		add(b1);
 		add(b2);
@@ -60,11 +61,11 @@ public class KeyBoardView extends JPanel{
 
 	}
 
-	private final JButton getDigitButton(String label, int x, int y) {
-		return getButton(label, x, y, D_KEY_WIDTH, D_KEY_HEIGHT);
+	private final JButton createDigitButton(String label, int x, int y) {
+		return createButton(label, x, y, D_KEY_WIDTH, D_KEY_HEIGHT);
 	}
 
-	private final JButton getButton(String label, int x, int y, int width, int height){
+	private final JButton createButton(String label, int x, int y, int width, int height){
 		JButton button = new JButton(label);
 		button.setSize(width, height);
 		button.setLocation(x, y);
