@@ -1,7 +1,6 @@
 package atm.view.screenpanels;
 
-import static atm.tools.ViewConstants.SCREEN_BACKGROUND_COLOR;
-
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JLabel;
@@ -16,7 +15,13 @@ public class StartPanel extends JPanel{
     private StartPanel(){
     	super();
     	ViewUtils.setupDefaultScreenPanel(this);
+    	init();
+    	
+    }
+    
+    private void init(){
     	JLabel welcome = new JLabel("WELCOME", SwingConstants.CENTER);
+    	welcome.setForeground(Color.white);
     	welcome.setSize(280, 40);
     	welcome.setLocation(80, 120);
     	welcome.setFont(new Font("Arial", Font.PLAIN, 22));

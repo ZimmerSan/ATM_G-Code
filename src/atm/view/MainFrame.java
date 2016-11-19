@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import atm.view.components.CardReaderView;
 import atm.view.components.HeaderView;
 import atm.view.components.KeyboardView;
+import atm.view.screenpanels.GetCashPanel;
+import atm.view.screenpanels.MenuPanel;
 import atm.view.screenpanels.StartPanel;
 
 /**
@@ -26,9 +28,9 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         super("G-ATM");
         setSize(MAINFRAME_WIDTH, MAINFRAME_HEIGHT);
-
         setLayout(null);
         init();
+        initActionListners();
         
         //repaint();
 		setVisible(true);
@@ -51,8 +53,16 @@ public class MainFrame extends JFrame {
         add(headerView);
         
         // Start ScreenPanel init
-        screenView = StartPanel.getInstance();
+        screenView = GetCashPanel.getInstance();
+        //screenView = MenuPanel.getInstance();
+        //screenView = AuthPanel.getInstance();
+        //screenView = StartPanel.getInstance();
         add(screenView);
+    }
+    
+    private void initActionListners(){
+    	// TODO: Action Listners for Cardreader
+    	
     }
     
     
