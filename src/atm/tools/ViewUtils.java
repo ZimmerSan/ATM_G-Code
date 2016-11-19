@@ -10,6 +10,8 @@ import static atm.tools.ViewConstants.F_KEY_HEIGHT;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import atm.view.screenpanels.MenuPanel;
+
 public class ViewUtils {
 	
 	
@@ -29,9 +31,9 @@ public class ViewUtils {
     }
     
     public static final void setupDefaultScreenPanel(JPanel panel){
-        panel.setLayout(null);
-        panel.setLocation(SCREEN_LOCATION_WIDTH, SCREEN_LOCATION_HEIGHT);
-        panel.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-        panel.setBackground(SCREEN_BACKGROUND_COLOR);
+    	panel.setLayout(null);
+    	panel.setLocation(SCREEN_LOCATION_WIDTH, SCREEN_LOCATION_HEIGHT);
+    	panel.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+    	panel.setBackground(SCREEN_BACKGROUND_COLOR);
     }
 }
