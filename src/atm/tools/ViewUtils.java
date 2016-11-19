@@ -5,6 +5,9 @@ import static atm.tools.ViewConstants.D_KEY_HEIGHT;
 import static atm.tools.ViewConstants.D_KEY_WIDTH;
 import static atm.tools.ViewConstants.F_KEY_WIDTH;
 import static atm.tools.ViewConstants.SCREEN_BACKGROUND_COLOR;
+
+import java.awt.Color;
+
 import static atm.tools.ViewConstants.F_KEY_HEIGHT;
 
 import javax.swing.JButton;
@@ -27,6 +30,7 @@ public class ViewUtils {
         JButton button = new JButton(label);
         button.setSize(width, height);
         button.setLocation(x, y);
+        button.setBackground(Color.white);
         return button;
     }
     

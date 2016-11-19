@@ -1,5 +1,6 @@
 package atm.view.screenpanels;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.TextField;
 
@@ -30,6 +31,7 @@ public class AuthPanel extends JPanel {
     
     private void init(){
     	JLabel cardLabel = new JLabel("Input Card Number:", SwingConstants.RIGHT);
+    	cardLabel.setForeground(Color.white);
     	cardLabel.setSize(120, 40);
     	cardLabel.setLocation(40, 20);
     	cardLabel.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -41,6 +43,7 @@ public class AuthPanel extends JPanel {
     	add(cardTextField);
     	
     	JLabel pinLabel = new JLabel("Input Card Number:", SwingConstants.RIGHT);
+    	pinLabel.setForeground(Color.white);
     	pinLabel.setSize(120, 40);
     	pinLabel.setLocation(40, 80);
     	pinLabel.setFont(new Font("Arial", Font.PLAIN, 12));

@@ -1,5 +1,6 @@
 package atm.view.screenpanels;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -32,6 +33,7 @@ public class GetCashPanel extends JPanel{
     
     private void init(){
     	JLabel label = new JLabel("Please, choose amount:", SwingConstants.CENTER);
+    	label.setForeground(Color.white);
     	label.setSize(280, 40);
     	label.setLocation(80, 20);
     	label.setFont(new Font("Arial", Font.PLAIN, 14));

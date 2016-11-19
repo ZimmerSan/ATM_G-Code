@@ -1,5 +1,6 @@
 package atm.view.screenpanels;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -26,6 +27,7 @@ public class MenuPanel extends JPanel {
     
     private void init(){
     	JLabel label = new JLabel("Chose Action:", SwingConstants.CENTER);
+    	label.setForeground(Color.white);
     	label.setSize(240, 20);
     	label.setLocation(100, 20);
     	label.setFont(new Font("Arial", Font.PLAIN, 14));
