@@ -5,9 +5,8 @@ import atm.model.Atm;
 import atm.model.transaction.Transaction;
 
 import java.util.Date;
-import java.util.Enumeration;
 
-public abstract class Check {
+public class Check {
 
     private String[] headingPortion;
     protected String[] detailsPortion;
