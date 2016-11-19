@@ -1,4 +1,4 @@
-package atm.view;
+package atm.view.components;
 
 import javax.swing.*;
 
@@ -6,10 +6,9 @@ import static atm.tools.ViewUtils.createButton;
 import static atm.tools.ViewUtils.createDigitButton;
 
 public class KeyBoardView extends JPanel{
-	// TODO: 19-Nov-16 move to package atm.view.components
 	private static KeyBoardView instance;
 
-	public static synchronized KeyBoardView newInstance(){
+	public static synchronized KeyBoardView getInstance(){
 		if (instance == null) instance = new KeyBoardView();
 		return instance;
 	}
