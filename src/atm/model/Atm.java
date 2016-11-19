@@ -10,7 +10,7 @@ public class Atm {
     private CardReader cardReader;
     private CashDispenser cashDispenser;
     private CheckPrinter checkPrinter;
-    private Panel panel;
+    private KeyBoardModel keyBoardModel;
     private Screen screen;
 
     //state
@@ -19,7 +19,7 @@ public class Atm {
     private boolean cardInserted;
 
     public enum State{
-        OFF_STATE, IDLE_STATE, PROCESSING_STATE
+        IDLE_STATE, PROCESSING_STATE
     }
 
     public Atm(String bankName){
@@ -29,22 +29,27 @@ public class Atm {
         cardReader = new CardReader(this);
         cashDispenser = new CashDispenser();
         checkPrinter = new CheckPrinter();
-        panel = new Panel(this);
+        keyBoardModel = new KeyBoardModel(this);
         screen = new Screen();
 
         //initial state
-        state = State.OFF_STATE;
+        state = State.IDLE_STATE;
         switchOn = false;
         cardInserted = false;
     }
 
 
-    public Panel getPanel() {
-        return panel;
+
+    public KeyBoardModel getKeyBoardModel() {
+        return keyBoardModel;
     }
 
     public boolean isCardInserted() {
         return cardInserted;
+    }
+
+    public void setCardInserted(boolean flag) {
+        cardInserted = flag;
     }
 
     public CashDispenser getCashDispenser() {
@@ -73,5 +78,9 @@ public class Atm {
 
     public State getState() {
         return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 }
