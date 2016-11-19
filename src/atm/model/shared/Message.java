@@ -8,13 +8,13 @@ public class Message {
 
     private MessageCode messageCode;
     private Card card;
-    private int pin;
+    private String pin;
     private int serialNumber;
     private int fromAccount;
     private int toAccount;
-    private double amount;
+    private Money amount;
 
-    public Message(MessageCode messageCode, Card card, int pin, int serialNumber, int fromAccount, int toAccount, double amount) {
+    public Message(MessageCode messageCode, Card card, String pin, int serialNumber, int fromAccount, int toAccount, Money amount) {
         this.messageCode = messageCode;
         this.card = card;
         this.pin = pin;
@@ -51,7 +51,7 @@ public class Message {
             result += " TO  " + toAccount;
         else
             result += " NO TO";
-        if (amount > 0)
+        if (amount.getCents() > 0)
             result += " AMOUNT = " + amount;
         else
             result += " NO AMOUNT";
@@ -59,7 +59,7 @@ public class Message {
         return result;
     }
 
-    public void setPIN(int pin) {
+    public void setPIN(String pin) {
         this.pin = pin;
     }
 
@@ -71,7 +71,7 @@ public class Message {
         return card;
     }
 
-    public int getPIN() {
+    public String getPIN() {
         return pin;
     }
 
@@ -87,7 +87,7 @@ public class Message {
         return toAccount;
     }
 
-    public double getAmount() {
+    public Money getAmount() {
         return amount;
     }
 }

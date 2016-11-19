@@ -1,23 +1,34 @@
 package atm.model.transaction;
 
-/**
- * Created by KOKOWKA on 15.11.2016.
- */
+import atm.model.Atm;
+import atm.model.shared.Card;
+import atm.model.shared.Check;
+import atm.model.shared.Message;
+import atm.model.shared.Money;
+
 public class Inquiry extends Transaction{
 
     private int from;
 
-    public Inquiry(/*ATM atm, Session session, Card card, int pin*/) {
-        //super(atm, session, card, pin);
+    public Inquiry(Atm atm, Card card, String pin) {
+        super(atm, card, pin);
     }
 
-
-    protected void getSpecificsFromCustomer() {
-        System.out.println("getSpecificsFromCustomer");
+    //TODO:getFrom for getSpecificsFromCustomer Inquiry
+    protected Message getSpecificsFromCustomer() {
+        from = 0;
+        return new Message(Message.MessageCode.INQUIRY, card, pin, id, from, -1, new Money(0));
     }
 
-    protected void completeTransaction() {
-       System.out.println("completeTransaction");
+//TODO:write correct check for inquiry
+    protected Check completeTransaction() {
+        return new Check() {
+            {
+                detailsPortion = new String[2];
+                detailsPortion[0] = "";
+                detailsPortion[1] = "";
+            }
+        };
     }
 
 }

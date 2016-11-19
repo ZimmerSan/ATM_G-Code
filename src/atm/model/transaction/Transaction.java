@@ -1,57 +1,46 @@
 package atm.model.transaction;
 
-/**
- * Created by KOKOWKA on 15.11.2016.
- */
-public class Transaction {
-    //protected ATM atm;
-    //protected Session session;
-    //protected Card card;
-    protected int pin;
-    protected int serialNumber;
-    //protected Message message;
-    //protected Balances balances;
-    private static final String [] TRANSACTION_TYPES_MENU =
-            { "Withdrawal", "Transfer", "Balance Inquiry" };
-    private static int nextSerialNumber = 1;
-    private int state;
-    private static final int GETTING_SPECIFICS_STATE = 1;
-    private static final int SENDING_TO_BANK_STATE = 2;
-    private static final int INVALID_PIN_STATE = 3;
-    private static final int COMPLETING_TRANSACTION_STATE = 4;
-    private static final int PRINTING_RECEIPT_STATE = 5;
-    private static final int ASKING_DO_ANOTHER_STATE = 6;
+import atm.model.Atm;
+import atm.model.shared.Card;
+import atm.model.shared.Check;
+import atm.model.shared.Message;
+import atm.model.shared.Money;
+import atm.model.shared.exception.CardRetained;
 
-    protected Transaction(/*ATM atm, Session session, Card card, int pin*/) {
-        /*this.atm = atm;
-        this.session = session;
+
+public abstract class Transaction {
+    protected Atm atm;
+    protected Card card;
+    protected String pin;
+    protected int id;
+    protected Message message;
+    protected Money money;
+    private enum TRANSACTION_TYPES {
+        Withdrawal, Transfer, BalanceInquiry
+    }
+    private static int nextId = 1;
+
+    protected Transaction(Atm atm, Card card, String pin) {
+        this.atm = atm;
         this.card = card;
         this.pin = pin;
-        this.serialNumber = nextSerialNumber ++;
-        this.balances = new Balances();
-
-        state = GETTING_SPECIFICS_STATE;*/
+        this.id = nextId ++;
     }
 
-
-    public static Transaction makeTransaction(/*ATM atm, Session session,
-                                              Card card, int pin*/) {
-        /*int choice = atm.getCustomerConsole().readMenuChoice(
-                "Please choose transaction type", TRANSACTION_TYPES_MENU);*/
-        int choice = 4;
-
-        switch(choice)
-        {
+//TODO:getChoice for makeTransaction
+    public static Transaction makeTransaction(Atm atm, Card card, String pin) {
+        int choice = 0;
+        switch(choice) {
             case 0:
 
-                //return new Withdrawal(atm, session, card, pin);
+                return new Withdrawal(atm, card, pin);
             case 1:
 
-                //return new Transfer(atm, session, card, pin);
+                return new Transfer(atm, card, pin);
 
             case 2:
 
-                //return new Inquiry(atm, session, card, pin);
+                return new Inquiry(atm, card, pin);
 
             default:
 
@@ -60,27 +49,12 @@ public class Transaction {
     }
 
 
-    public boolean performTransaction() throws CardRetained {
-        return false;
+    public int getId() {
+        return id;
     }
 
-    /*public Status performInvalidPINExtension() throws CardRetained {
+    protected abstract Message getSpecificsFromCustomer();
 
-    }*/
-
-
-    public int getSerialNumber() {
-        return serialNumber;
-    }
-
-    //protected abstract Message getSpecificsFromCustomer();
-
-    //protected abstract Receipt completeTransaction();
-
-    public static class CardRetained extends Exception {
-        public CardRetained() {
-            super("Card retained due to too many invalid PINs");
-        }
-    }
+    protected abstract Check completeTransaction();
 
 }
