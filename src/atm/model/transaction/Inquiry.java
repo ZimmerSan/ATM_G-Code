@@ -13,12 +13,11 @@ public class Inquiry extends Transaction{
         return new Message(Message.MessageCode.INQUIRY, id, client, null, new Money(0));
     }
 
-//TODO:write correct check for inquiry
     protected Check completeTransaction() {
-        return new Check() {
+        return new Check(this.atm, this.client.getCard(), this, this.client.getBalance()) {
             {
                 detailsPortion = new String[2];
-                detailsPortion[0] = "";
+                detailsPortion[0] = "INQUIRY FROM: " + client.toString();
                 detailsPortion[1] = "";
             }
         };

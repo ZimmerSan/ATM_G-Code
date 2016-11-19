@@ -3,9 +3,6 @@ package atm.model.transaction;
 import atm.model.Atm;
 import atm.model.shared.*;
 
-/**
- * Created by KOKOWKA on 15.11.2016.
- */
 public class Transfer extends Transaction{
     private Client to;
     private Money amount;
@@ -23,10 +20,12 @@ public class Transfer extends Transaction{
 
     //TODO:write correct check for Transfer
     protected Check completeTransaction() {
-        return new Check() {
+        return new Check(this.atm, this.client.getCard(), this, this.client.getBalance()) {
             {
                 detailsPortion = new String[2];
-                detailsPortion[0] = "";
+                detailsPortion[0] = "TRANSFER FROM: " +
+                        client.toString() +
+                        " TO: " + "";
                 detailsPortion[1] = "AMOUNT: " + amount;
             }
         };

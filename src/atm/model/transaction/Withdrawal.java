@@ -3,9 +3,6 @@ package atm.model.transaction;
 import atm.model.Atm;
 import atm.model.shared.*;
 
-/**
- * Created by KOKOWKA on 15.11.2016.
- */
 public class Withdrawal extends Transaction{
 
     private Money amount;
@@ -20,12 +17,12 @@ public class Withdrawal extends Transaction{
         return new Message(Message.MessageCode.WITHDRAWAL, id, client, null, amount);
     }
 
-    //TODO:write correct check for withdrawal
+
     protected Check completeTransaction() {
-        return new Check() {
+        return new Check(this.atm, this.client.getCard(), this, this.client.getBalance()) {
             {
                 detailsPortion = new String[2];
-                detailsPortion[0] = "";
+                detailsPortion[0] = "WITHDRAWAL FROM: " +client.toString();
                 detailsPortion[1] = "AMOUNT: " + amount;
             }
         };
