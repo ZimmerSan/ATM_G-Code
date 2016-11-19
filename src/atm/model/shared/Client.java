@@ -1,7 +1,4 @@
-package atm.model;
-
-import atm.model.shared.Card;
-import atm.model.shared.Money;
+package atm.model.shared;
 
 public class Client {
     private int id;
