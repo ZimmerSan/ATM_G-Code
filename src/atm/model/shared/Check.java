@@ -21,6 +21,11 @@ public abstract class Check {
         balancesPortion = "TOTAL BAL: " + balance;
     }
     public String toString(){
-        return  headingPortion[0] +"\n"+headingPortion[1]+"\n"+headingPortion[2]+"\n"+balancesPortion;
+        String res = "";
+        res +=headingPortion[0] +"\n"+headingPortion[1]+"\n"+headingPortion[2]+"\n"+balancesPortion;
+        if(detailsPortion != null)
+            for(int i = 0; i<detailsPortion.length; i++)
+                res+="\n"+detailsPortion[i];
+        return  res;
     }
 }
