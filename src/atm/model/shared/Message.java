@@ -7,8 +7,6 @@ public class Message {
     }
 
     private MessageCode messageCode;
-    private Card card;
-    private String pin;
     private int serialNumber;
     private Client fromAccount;
     private Client toAccount;
@@ -16,8 +14,6 @@ public class Message {
 
     public Message(MessageCode messageCode, int serialNumber, Client fromAccount, Client toAccount, Money amount) {
         this.messageCode = messageCode;
-        this.card = card;
-        this.pin = pin;
         this.serialNumber = serialNumber;
         this.fromAccount = fromAccount;
         this.toAccount = toAccount;
@@ -41,7 +37,7 @@ public class Message {
                 break;
         }
 
-        result += " CARD# " + card.getNumber();
+        result += " CARD# " + fromAccount.getCard().getNumber();
         result += " TRANS# " + serialNumber;
         if (fromAccount.getBalance().getCents() >= 0)
             result += " FROM  " + fromAccount;
@@ -59,20 +55,8 @@ public class Message {
         return result;
     }
 
-    public void setPIN(String pin) {
-        this.pin = pin;
-    }
-
     public MessageCode getMessageCode() {
         return messageCode;
-    }
-
-    public Card getCard() {
-        return card;
-    }
-
-    public String getPIN() {
-        return pin;
     }
 
     public int getSerialNumber() {

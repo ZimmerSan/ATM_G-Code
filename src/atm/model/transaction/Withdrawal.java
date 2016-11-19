@@ -8,18 +8,16 @@ import atm.model.shared.*;
  */
 public class Withdrawal extends Transaction{
 
-    private Client from;
     private Money amount;
 
     public Withdrawal(Atm atm, Client client) {
         super(atm, client);
     }
 
-//TODO:getFrom, amount for getSpecificsFromCustomer Withdrawal
+//TODO:get amount for getSpecificsFromCustomer Withdrawal
     protected Message getSpecificsFromCustomer(){
-        from = null;
         amount = new Money(100);
-        return new Message(Message.MessageCode.WITHDRAWAL, id, from, null, amount);
+        return new Message(Message.MessageCode.WITHDRAWAL, id, client, null, amount);
     }
 
     //TODO:write correct check for withdrawal

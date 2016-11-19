@@ -7,7 +7,6 @@ import atm.model.shared.*;
  * Created by KOKOWKA on 15.11.2016.
  */
 public class Transfer extends Transaction{
-    private Client from;
     private Client to;
     private Money amount;
 
@@ -15,12 +14,11 @@ public class Transfer extends Transaction{
         super(atm, client);
     }
 
-    //TODO:getFrom,to and amount for getSpecificsFromCustomer Transfer
+    //TODO:get to and amount for getSpecificsFromCustomer Transfer
     protected Message getSpecificsFromCustomer() {
-        from = null;
         to = null;
         amount = new Money(100);
-       return new Message(Message.MessageCode.TRANSFER, id, from, to, amount);
+       return new Message(Message.MessageCode.TRANSFER, id, client, to, amount);
     }
 
     //TODO:write correct check for Transfer
