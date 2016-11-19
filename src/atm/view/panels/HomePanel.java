@@ -1,6 +1,7 @@
 package atm.view.panels;
 
-import atm.view.KeyBoardView;
+import atm.view.components.CardReaderView;
+import atm.view.components.KeyBoardView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +12,7 @@ public class HomePanel extends JPanel{
     private static HomePanel instance;
 
     KeyBoardView keyboardView;
+    CardReaderView cardReaderView;
     JPanel headerView;
     JPanel screenView;
 
@@ -21,9 +23,22 @@ public class HomePanel extends JPanel{
     }
 
     private void init() {
+        // Default Screen init
+        screenView = new JPanel();
+        screenView.setSize(440, 280);
+        screenView.setLocation(40, 60);
+        screenView.setBackground(SCREEN_BACKGROUND_COLOR);
+        add(screenView);
+
+        //CardReader init
+        cardReaderView = CardReaderView.getInstance();
+        cardReaderView.setLocation(40, 360);
+        cardReaderView.setVisible(true);
+        add(cardReaderView);
+
         //Keyboard init
-        keyboardView = KeyBoardView.newInstance();
-        keyboardView.setLocation(40, 360);
+        keyboardView = KeyBoardView.getInstance();
+        keyboardView.setLocation(40, 380);
         keyboardView.setVisible(true);
         add(keyboardView);
 
@@ -31,12 +46,7 @@ public class HomePanel extends JPanel{
         headerView = initHeader();
         add(headerView);
 
-        // Default Screen init
-        screenView = new JPanel();
-        screenView.setSize(440, 280);
-        screenView.setLocation(40, 60);
-        screenView.setBackground(SCREEN_BACKGROUND_COLOR);
-        add(screenView);
+
     }
 
     private JPanel initHeader() {
@@ -56,7 +66,7 @@ public class HomePanel extends JPanel{
         return headerView;
     }
 
-    public static synchronized HomePanel newInstance(){
+    public static synchronized HomePanel getInstance(){
         if (instance == null) instance = new HomePanel();
         return instance;
     }

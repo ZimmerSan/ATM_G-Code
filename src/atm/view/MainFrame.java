@@ -13,8 +13,8 @@ import static atm.tools.GUIConstants.MAINFRAME_WIDTH;
 public class MainFrame extends JFrame {
 	HomePanel homePanel;
 
-    public MainFrame() {
-        super("ATM");
+    public MainFrame(String name) {
+        super(name);
         setSize(MAINFRAME_WIDTH, MAINFRAME_HEIGHT);
 
         setLayout(null);
@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
     }
     
     private void init(){
-        homePanel = HomePanel.newInstance();
+        homePanel = HomePanel.getInstance();
         add(homePanel);
 
         homePanel.setVisible(true);
