@@ -1,15 +1,13 @@
 package atm;
 
 import atm.model.Atm;
-import atm.view.MainView;
+import atm.view.MainFrame;
 
 public class Main{
 
 	public static void main(String[] args) throws Exception  {
         Atm atm = new Atm("DreamBank");
-
-		MainView mainFrame = new MainView();
-		
+        MainFrame mainFrame = new MainFrame("ATM");
 	}
 
 }
