@@ -3,6 +3,7 @@ package atm.view.components;
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 import static atm.tools.ViewConstants.CARDREADER_HEIGHT;
 import static atm.tools.ViewConstants.CARDREADER_WIDTH;
@@ -24,6 +25,16 @@ public class CardReaderView extends JPanel{
         btnInsertCard = createButton("Insert Card", 140, 0, 160, 20);
         btnInsertCard.setBackground(Color.white);
         add(btnInsertCard);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        btnInsertCard.setVisible(enabled);
+        super.setEnabled(enabled);
+    }
+
+    public void addActionListener(ActionListener listener){
+        btnInsertCard.addActionListener(listener);
     }
 
     public static synchronized CardReaderView getInstance() {

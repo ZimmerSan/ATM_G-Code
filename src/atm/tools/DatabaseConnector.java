@@ -6,12 +6,12 @@ import java.sql.SQLException;
 
 public class DatabaseConnector {
     // JDBC driver name and database URL
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://mysql3.gear.host:3306/atmsimulatore";
+    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DB_URL = "jdbc:mysql://mysql3.gear.host:3306/atmsimulator";
 
     //  Database credentials
-    static final String USER = "atmsimulator";
-    static final String PASS = "Dx8s5liv~h~b";
+    private static final String USER = "atmsimulator";
+    private static final String PASS = "Dx8s5liv~h~b";
 
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         //Register JDBC driver

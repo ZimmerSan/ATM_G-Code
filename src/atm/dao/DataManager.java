@@ -1,5 +1,8 @@
 package atm.dao;
 
+import atm.model.shared.Client;
+import atm.tools.DatabaseConnector;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,19 +10,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import atm.model.shared.Client;
-import atm.tools.DatabaseConnector;
-
 public class DataManager {
     private static DatabaseConnector dbConnector = new DatabaseConnector();
 
     public static Client getClientByCardNumber(String number){
         try {
             Connection connection = dbConnector.getConnection();
-            String query = "SELECT * FROM atm WHERE card = ?";
+            String query = "SELECT * FROM atm WHERE CARD = ?";
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setString(1, number);
-            stmt.execute(query);
+            stmt.execute();
             ResultSet rs = stmt.getResultSet();
             if (rs.next()) return new Client(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6));
         } catch (Exception e) {

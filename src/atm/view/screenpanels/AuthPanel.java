@@ -1,21 +1,15 @@
 package atm.view.screenpanels;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.TextField;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.SwingConstants;
-
 import atm.tools.ViewUtils;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class AuthPanel extends JPanel {
 
 	private static AuthPanel instance;
-	TextField cardTextField;
+	JTextField cardTextField;
 	JPasswordField passwordField;
 	JButton acceptbtn;
 	JButton declinebtn;
@@ -37,7 +31,7 @@ public class AuthPanel extends JPanel {
     	cardLabel.setFont(new Font("Arial", Font.PLAIN, 12));
     	add(cardLabel);
     	
-    	cardTextField = new TextField();
+    	cardTextField = new JTextField();
     	cardTextField.setSize(200, 40);
     	cardTextField.setLocation(200, 20);
     	add(cardTextField);
@@ -59,10 +53,38 @@ public class AuthPanel extends JPanel {
     	add(acceptbtn);
     	add(declinebtn);
     }
-    
+
+    @Deprecated
     private void initActionListners(){
     	// TODO: Action Listners
     	
+    }
+
+    @Override
+    public void setVisible(boolean aFlag) {
+        super.setVisible(aFlag);
+        refresh();
+    }
+
+    public synchronized void refresh(){
+		// TODO: 19-Nov-16 clear text fields
+		cardTextField.setText("");
+		passwordField.setText("");
+	}
+
+	public void addDeclineListener(ActionListener listener){
+		declinebtn.addActionListener(listener);
+	}
+	public void addAcceptListener(ActionListener listener){
+		acceptbtn.addActionListener(listener);
+	}
+
+    public String getEnteredCardNumber(){
+        return cardTextField.getText();
+    }
+
+    public String getEnteredPin(){
+        return String.valueOf(passwordField.getPassword());
     }
 
     public static synchronized AuthPanel getInstance(){

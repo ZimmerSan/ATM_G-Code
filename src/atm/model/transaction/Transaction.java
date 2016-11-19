@@ -10,9 +10,11 @@ public abstract class Transaction {
     protected int id;
     protected Message message;
     protected Money money;
+
     private enum TRANSACTION_TYPES {
         Withdrawal, Transfer, BalanceInquiry
     }
+
     private static int nextId = 1;
 
     protected Transaction(Atm atm, Client client) {
@@ -21,24 +23,18 @@ public abstract class Transaction {
         this.id = nextId ++;
     }
 
-//TODO:getChoice for makeTransaction
+    //TODO:getChoice for makeTransaction
     public static Transaction makeTransaction(Atm atm, Client client) {
         int choice = 0;
-        switch(choice) {
+        switch (choice) {
             case 0:
-
                 return new Withdrawal(atm, client);
             case 1:
-
                 return new Transfer(atm, client);
-
             case 2:
-
                 return new Inquiry(atm, client);
-
             default:
-
-                return null;    // To keep compiler happy - should not happen!
+                return null;
         }
     }
 
