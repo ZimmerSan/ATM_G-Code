@@ -35,8 +35,9 @@ public class MainFrame extends JFrame {
     	keyboardView.setLocation(40, 360);
     	add(keyboardView);
     	keyboardView.setVisible(true);
-    	
-    	// Header init
+
+        // TODO: 19-Nov-16 move Header initialization to single method
+        // Header init
     	headerView = new JPanel();
     	headerView.setSize(440,20);
     	headerView.setLocation(40, 40);
@@ -57,7 +58,6 @@ public class MainFrame extends JFrame {
     	screenView.setBackground(SCREEN_BACKGROUND_COLOR);
     	add(screenView);
     	//setVisible(true);
-    	
     }
     
 }
