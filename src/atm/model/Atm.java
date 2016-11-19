@@ -7,7 +7,7 @@ public class Atm {
     private String bankName;
 
     //components
-    private CardReader cardReader;
+    private CardReaderModel cardReader;
     private CashDispenser cashDispenser;
     private CheckPrinter checkPrinter;
     private KeyBoardModel keyBoardModel;
@@ -26,7 +26,7 @@ public class Atm {
         this.bankName = bankName;
 
         //create components
-        cardReader = new CardReader(this);
+        cardReader = new CardReaderModel(this);
         cashDispenser = new CashDispenser();
         checkPrinter = new CheckPrinter();
         keyBoardModel = new KeyBoardModel(this);
@@ -56,7 +56,7 @@ public class Atm {
         return cashDispenser;
     }
 
-    public CardReader getCardReader() {
+    public CardReaderModel getCardReader() {
         return cardReader;
     }
 
