@@ -2,8 +2,8 @@ package atm.view;
 
 import javax.swing.*;
 
-import static atm.tools.Constants.D_KEY_HEIGHT;
-import static atm.tools.Constants.D_KEY_WIDTH;
+import static atm.tools.ViewUtils.createButton;
+import static atm.tools.ViewUtils.createDigitButton;
 
 public class KeyBoardView extends JPanel{
 	// TODO: 19-Nov-16 move to package atm.view.components
@@ -58,18 +58,6 @@ public class KeyBoardView extends JPanel{
 		add(btnCancel);
 		add(btnClear);
 		add(btnEnter);
-
-	}
-
-	private final JButton createDigitButton(String label, int x, int y) {
-		return createButton(label, x, y, D_KEY_WIDTH, D_KEY_HEIGHT);
-	}
-
-	private final JButton createButton(String label, int x, int y, int width, int height){
-		JButton button = new JButton(label);
-		button.setSize(width, height);
-		button.setLocation(x, y);
-		return button;
 	}
 
 }
