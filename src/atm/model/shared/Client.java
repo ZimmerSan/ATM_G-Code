@@ -1,5 +1,7 @@
 package atm.model.shared;
 
+import atm.dao.DataManager;
+
 public class Client {
     private int id;
     private String name, pass;
@@ -18,6 +20,10 @@ public class Client {
 
     public String toString() {
         return id+" "+ name + " "+ card +" "+ pass +" "+ balance +" "+ email;
+    }
+
+    public void updateInDB(){
+        DataManager.updateClientInfo(id, name, pass, balance.getCents(), email);
     }
 
     public void setPass(String pass) {

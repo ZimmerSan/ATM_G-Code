@@ -52,14 +52,16 @@ public class DataManager {
         return clients;
     }
 
-    public static void updateClientInfo(int id, String password, int balance){
+    public static void updateClientInfo(int id, String name, String password, long balance, String email){
         try {
             Connection connection = dbConnector.getConnection();
-            String updateStatement = "UPDATE atm SET PASSWORD = ?, BALANCE = ? Where id = ?";
+            String updateStatement = "UPDATE atm SET NAME = ?, PASSWORD = ?, BALANCE = ?, EMAIL = ? Where id = ?";
             PreparedStatement statement = connection.prepareStatement(updateStatement);
-            statement.setString(1, password);
-            statement.setInt(2, balance);
-            statement.setInt(3, id);
+            statement.setString(1, name);
+            statement.setString(2, password);
+            statement.setLong(3, balance);
+            statement.setString(4, email);
+            statement.setInt(5, id);
             statement.executeUpdate();
 
             statement.close();
