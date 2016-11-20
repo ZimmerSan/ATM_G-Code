@@ -10,10 +10,14 @@ public class Withdrawal extends Transaction{
     public Withdrawal(Atm atm, Client client) {
         super(atm, client);
     }
-
-//TODO:get amount for getSpecificsFromCustomer Withdrawal
+    //TODO:get amount for makeWithdrawal
+    public void makeWithdrawal(){
+        amount = null;
+        client.setBalance(new Money(client.getBalance().getCents() - amount.getCents()));
+    }
+    //TODO:get amount for getSpecificsFromCustomer Withdrawal
     protected Message getSpecificsFromCustomer(){
-        amount = new Money(100);
+        amount = null;
         return new Message(Message.MessageCode.WITHDRAWAL, id, client, null, amount);
     }
 

@@ -11,10 +11,19 @@ public class Transfer extends Transaction{
         super(atm, client);
     }
 
-    //TODO:get to and amount for getSpecificsFromCustomer Transfer
+    //TODO:get client, amount for transfer
+    public void makeTransfer(){
+        to = null;
+        client.setBalance(new Money(client.getBalance().getCents() - amount.getCents()));
+        to.setBalance(new Money(to.getBalance().getCents() + amount.getCents()));
+        client.updateInDB();
+        to.updateInDB();
+    }
+
+    //TODO:get to, amount for getSpecificsFromCustomer Transfer
     protected Message getSpecificsFromCustomer() {
         to = null;
-        amount = new Money(100);
+        amount = null;
        return new Message(Message.MessageCode.TRANSFER, id, client, to, amount);
     }
 
