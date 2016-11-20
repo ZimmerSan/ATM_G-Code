@@ -3,6 +3,8 @@ package atm.model;
 import atm.model.components.*;
 import atm.model.shared.Client;
 import atm.model.shared.exception.InvalidClientException;
+import atm.tools.Constants;
+import atm.view.MainFrame;
 
 import static atm.model.Atm.State.IDLE_STATE;
 import static atm.model.Atm.State.PROCESSING_STATE;
@@ -17,7 +19,6 @@ public class Atm implements Runnable {
     private CashDispenser cashDispenser;
     private CheckPrinter checkPrinter;
     private KeyBoardModel keyBoardModel;
-    private ScreenModel screenModel;
 
     //state
     private State state;
@@ -34,7 +35,6 @@ public class Atm implements Runnable {
         cashDispenser = new CashDispenser();
         checkPrinter = new CheckPrinter();
         keyBoardModel = new KeyBoardModel(this);
-        screenModel = new ScreenModel();
 
         //initial state
         state = State.IDLE_STATE;
@@ -60,24 +60,28 @@ public class Atm implements Runnable {
                 case PROCESSING_STATE:
                     System.out.println("Processing");
                     // TODO: 19-Nov-16
+                    currentSession.performSession();
+                    state = IDLE_STATE;
                     break;
             }
         }
     }
 
-    public Session startSession(Client client){
+    public synchronized Session startSession(Client client){
         currentSession = new Session(this, client);
         sessionActive = true;
+        notify();
         return currentSession;
     }
 
-    public void endSession(){
+    public synchronized void endSession(){
         currentSession = null;
         sessionActive = false;
         this.state = IDLE_STATE;
+        notify();
     }
 
-    public Client validateAuth(String cardNumber, String enteredPin) throws InvalidClientException {
+    public synchronized Client validateAuth(String cardNumber, String enteredPin) throws InvalidClientException {
         Client client;
 
         client = cardReader.readCard(cardNumber);
@@ -88,11 +92,14 @@ public class Atm implements Runnable {
         }
     }
 
-    public void ejectCard() {
+    public synchronized void ejectCard() {
         // TODO: 19-Nov-16 implement valid method
         cardReader.ejectCard();
         setSessionActive(false);
         setState(Atm.State.IDLE_STATE);
+        MainFrame.getInstance().setState(MainFrame.State.INIT);
+        MainFrame.getInstance().showMessage(Constants.CARD_EJECTED, Constants.MessageType.INFO);
+        notify();
     }
 
     public static synchronized Atm getInstance() {
@@ -122,10 +129,6 @@ public class Atm implements Runnable {
 
     public String getBankName() {
         return bankName;
-    }
-
-    public ScreenModel getScreenModel() {
-        return screenModel;
     }
 
     public CheckPrinter getCheckPrinter() {

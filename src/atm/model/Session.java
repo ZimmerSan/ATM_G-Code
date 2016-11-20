@@ -2,8 +2,11 @@ package atm.model;
 
 import atm.model.shared.Client;
 import atm.model.transaction.Transaction;
+import atm.tools.Constants;
+import atm.view.MainFrame;
 
 import static atm.model.Session.State.*;
+import static atm.tools.Constants.ERR_CANNOT_OBTAIN_CLIENT;
 
 public class Session {
     private Atm atm;
@@ -27,7 +30,11 @@ public class Session {
             switch (state) {
                 case INITIAL:
                     if (currentClient != null) state = CHOOSING_TRANSACTION;
-                    else System.err.println("currentClient == null"); // TODO: 19-Nov-16
+                    else {
+                        System.err.println("Session: currentClient == null");
+                        MainFrame.getInstance().showMessage(ERR_CANNOT_OBTAIN_CLIENT, Constants.MessageType.ERROR);
+                        state = EJECTING_CARD;
+                    }
                     break;
                 case CHOOSING_TRANSACTION:
                     // TODO: 19-Nov-16 choose transaction
