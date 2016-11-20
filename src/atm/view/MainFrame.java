@@ -1,5 +1,6 @@
 package atm.view;
 
+import atm.tools.Constants;
 import atm.view.components.CardReaderView;
 import atm.view.components.HeaderView;
 import atm.view.components.KeyboardView;
@@ -17,7 +18,7 @@ import static atm.tools.ViewConstants.MAINFRAME_WIDTH;
  * Created by Andrii Voitenko on 18-Nov-16.
  */
 public class MainFrame extends JFrame {
-
+    private static MainFrame instance;
     private State state;
 
 	private KeyboardView keyboardView;
@@ -29,7 +30,7 @@ public class MainFrame extends JFrame {
     private AuthPanel authPanel;
     private StartPanel startPanel;
 
-    public MainFrame() {
+    private MainFrame() {
         super("G-ATM");
         setSize(MAINFRAME_WIDTH, MAINFRAME_HEIGHT);
         setLayout(null);
@@ -99,9 +100,18 @@ public class MainFrame extends JFrame {
         panelToShow.setVisible(true);
     }
 
+    public void showMessage(String message, Constants.MessageType type){
+        JOptionPane.showMessageDialog(this, message, type.getTitle(), type.getType());
+    }
+
     public enum State {
         // TODO: 19-Nov-16 add other states
         INIT, AUTHORIZING, PROCESSING_MENU
+    }
+
+    public static synchronized MainFrame getInstance() {
+        if (instance == null) instance = new MainFrame();
+        return instance;
     }
 
     public CardReaderView getCardReaderView() {

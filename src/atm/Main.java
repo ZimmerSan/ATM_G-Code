@@ -10,7 +10,7 @@ public class Main{
         Atm atm = Atm.getInstance();
         atm.setBankName("DreamBank");
         new Thread(atm).start();
-        MainFrame mainFrame = new MainFrame();
+        MainFrame mainFrame = MainFrame.getInstance();
         Dispatcher dispatcher = new Dispatcher(atm, mainFrame);
 	}
 }
