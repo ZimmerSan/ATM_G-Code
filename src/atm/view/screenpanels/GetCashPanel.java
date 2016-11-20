@@ -2,6 +2,8 @@ package atm.view.screenpanels;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -28,7 +30,6 @@ public class GetCashPanel extends JPanel{
     	ViewUtils.setupDefaultScreenPanel(this);
     	
     	init();
-    	initActionListners();
     }
     
     private void init(){
@@ -52,6 +53,8 @@ public class GetCashPanel extends JPanel{
     	get500 = ViewUtils.createButton("200", ROW_2_X, ROW_1_Y, 80, 40);
     	get1000 = ViewUtils.createButton("1000", ROW_2_X, ROW_2_Y, 80, 40);
     	ownAmount = ViewUtils.createButton("Enter", ROW_2_X, ROW_3_Y, 80, 40);
+    	ViewUtils.addActionToMap(this, ownAmount, KeyEvent.VK_ENTER);
+    	ViewUtils.addActionToMap(amountTextField, ownAmount, KeyEvent.VK_ENTER);
     	
     	add(get50);
     	add(get100);
@@ -59,15 +62,52 @@ public class GetCashPanel extends JPanel{
     	add(get500);
     	add(get1000);
     	add(ownAmount);
-    }
-    
-    private void initActionListners(){
-    	// TODO: Action Listners
     	
     }
 
+    @Override
+    public void setVisible(boolean aFlag) {
+    	// TODO Auto-generated method stub
+    	refresh();
+    	super.setVisible(aFlag);
+    }
+    
     public static synchronized GetCashPanel getInstance(){
         if (instance == null) instance = new GetCashPanel();
         return instance;
     }
+    
+    public void refresh(){
+    	amountTextField.setText("");
+    }
+    
+    public String getCustomAmount(){
+    	return amountTextField.getText();
+    }
+    
+    public void add50AL(ActionListener al){
+    	get50.addActionListener(al);
+    }
+    
+    public void add100AL(ActionListener al){
+    	get100.addActionListener(al);
+    }
+    
+    public void add200AL(ActionListener al){
+    	get200.addActionListener(al);
+    }
+    
+    public void add500AL(ActionListener al){
+    	get500.addActionListener(al);
+    }
+    
+    public void add1000AL(ActionListener al){
+    	get1000.addActionListener(al);
+    }
+    
+    public void addCustomAmountAL(ActionListener al){
+    	ownAmount.addActionListener(al);
+    }
+    
+    
 }

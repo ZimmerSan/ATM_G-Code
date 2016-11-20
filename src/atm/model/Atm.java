@@ -1,11 +1,15 @@
 package atm.model;
 
-import atm.model.components.*;
-import atm.model.shared.Client;
-import atm.model.shared.exception.InvalidClientException;
-
 import static atm.model.Atm.State.IDLE_STATE;
 import static atm.model.Atm.State.PROCESSING_STATE;
+
+import atm.model.components.CardReaderModel;
+import atm.model.components.CashDispenser;
+import atm.model.components.CheckPrinter;
+import atm.model.components.KeyBoardModel;
+import atm.model.components.Screen;
+import atm.model.shared.Client;
+import atm.model.shared.exception.InvalidClientException;
 
 public class Atm implements Runnable {
     private static Atm instance;
@@ -17,7 +21,7 @@ public class Atm implements Runnable {
     private CashDispenser cashDispenser;
     private CheckPrinter checkPrinter;
     private KeyBoardModel keyBoardModel;
-    private ScreenModel screenModel;
+    private Screen screenModel;
 
     //state
     private State state;
@@ -34,7 +38,7 @@ public class Atm implements Runnable {
         cashDispenser = new CashDispenser();
         checkPrinter = new CheckPrinter();
         keyBoardModel = new KeyBoardModel(this);
-        screenModel = new ScreenModel();
+        screenModel = new Screen();
 
         //initial state
         state = State.IDLE_STATE;
@@ -124,7 +128,7 @@ public class Atm implements Runnable {
         return bankName;
     }
 
-    public ScreenModel getScreenModel() {
+    public Screen getScreenModel() {
         return screenModel;
     }
 

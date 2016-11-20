@@ -20,7 +20,7 @@ public class StartPanel extends JPanel{
     }
     
     private void init(){
-    	JLabel welcome = new JLabel("WELCOME", SwingConstants.CENTER);
+    	JLabel welcome = new JLabel("WELCOME!", SwingConstants.CENTER);
     	welcome.setForeground(Color.white);
     	welcome.setSize(280, 40);
     	welcome.setLocation(80, 120);
@@ -32,4 +32,6 @@ public class StartPanel extends JPanel{
         if (instance == null) instance = new StartPanel();
         return instance;
     }
+    
+    
 }

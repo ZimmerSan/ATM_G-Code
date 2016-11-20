@@ -5,6 +5,7 @@ import atm.view.components.CardReaderView;
 import atm.view.components.HeaderView;
 import atm.view.components.KeyboardView;
 import atm.view.screenpanels.AuthPanel;
+import atm.view.screenpanels.ChangePinPanel;
 import atm.view.screenpanels.GetCashPanel;
 import atm.view.screenpanels.MenuPanel;
 import atm.view.screenpanels.StartPanel;
@@ -29,15 +30,14 @@ public class MainFrame extends JFrame {
     private MenuPanel menuPanel;
     private AuthPanel authPanel;
     private StartPanel startPanel;
+    private ChangePinPanel changePinPanel;
 
     private MainFrame() {
         super("G-ATM");
         setSize(MAINFRAME_WIDTH, MAINFRAME_HEIGHT);
         setLayout(null);
         init();
-        initActionListners();
 
-        //repaint();
 		setVisible(true);
 		setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -58,21 +58,19 @@ public class MainFrame extends JFrame {
         add(headerView);
 
         // Start ScreenPanel init
-        getCashPanel = GetCashPanel.getInstance();
+        
         menuPanel = MenuPanel.getInstance();
         authPanel = AuthPanel.getInstance();
+        getCashPanel = GetCashPanel.getInstance();
         startPanel = StartPanel.getInstance();
+        changePinPanel = ChangePinPanel.getInstance();
+        add(changePinPanel);
         add(getCashPanel);
         add(menuPanel);
         add(authPanel);
         add(startPanel);
 
         repaintScreen(startPanel);
-    }
-
-    private void initActionListners(){
-    	// TODO: Action Listners for Cardreader
-
     }
 
     public synchronized void setState(State state){
@@ -89,15 +87,26 @@ public class MainFrame extends JFrame {
             case PROCESSING_MENU:
                 repaintScreen(menuPanel);
                 break;
+            case GET_CASH:
+            	repaintScreen(getCashPanel);
+            	break;
+            case TRANSMIT_MONEY:
+            	//repaintScreen();
+            	break;
+            case CHANGE_PIN:
+            	repaintScreen(changePinPanel);
+            	break;
         }
     }
 
     private synchronized void repaintScreen(JPanel panelToShow){
+    	changePinPanel.setVisible(false);
         getCashPanel.setVisible(false);
         menuPanel.setVisible(false);
         authPanel.setVisible(false);
         startPanel.setVisible(false);
         panelToShow.setVisible(true);
+        panelToShow.requestFocus();
     }
 
     public void showMessage(String message, Constants.MessageType type){
@@ -106,7 +115,7 @@ public class MainFrame extends JFrame {
 
     public enum State {
         // TODO: 19-Nov-16 add other states
-        INIT, AUTHORIZING, PROCESSING_MENU
+        INIT, AUTHORIZING, PROCESSING_MENU, GET_CASH, TRANSMIT_MONEY, CHANGE_PIN
     }
 
     public static synchronized MainFrame getInstance() {
@@ -133,4 +142,9 @@ public class MainFrame extends JFrame {
     public MenuPanel getMenuPanel() {
         return menuPanel;
     }
+    
+    public ChangePinPanel getChangePinPanel() {
+        return changePinPanel;
+    }
+
 }

@@ -1,10 +1,22 @@
 package atm.view.screenpanels;
 
-import atm.tools.ViewUtils;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
+
+import atm.tools.ViewUtils;
 
 public class AuthPanel extends JPanel {
 
@@ -20,11 +32,10 @@ public class AuthPanel extends JPanel {
     	ViewUtils.setupDefaultScreenPanel(this);
     	
     	init();
-    	initActionListners();
     }
     
     private void init(){
-    	JLabel cardLabel = new JLabel("Input Card Number:", SwingConstants.RIGHT);
+    	JLabel cardLabel = new JLabel("Input Card Number:", SwingConstants.LEFT);
     	cardLabel.setForeground(Color.white);
     	cardLabel.setSize(120, 40);
     	cardLabel.setLocation(40, 20);
@@ -34,9 +45,10 @@ public class AuthPanel extends JPanel {
     	cardTextField = new JTextField();
     	cardTextField.setSize(200, 40);
     	cardTextField.setLocation(200, 20);
+    	
     	add(cardTextField);
     	
-    	JLabel pinLabel = new JLabel("Input Card Number:", SwingConstants.RIGHT);
+    	JLabel pinLabel = new JLabel("Input PIN:", SwingConstants.LEFT);
     	pinLabel.setForeground(Color.white);
     	pinLabel.setSize(120, 40);
     	pinLabel.setLocation(40, 80);
@@ -50,19 +62,22 @@ public class AuthPanel extends JPanel {
     	
     	acceptbtn = ViewUtils.createButton("Accept", 100, 180, 100, 40);
     	declinebtn = ViewUtils.createButton("Decline", 240, 180, 100, 40);
+    	
+    	ViewUtils.addActionToMap(this, acceptbtn, KeyEvent.VK_ENTER);
+    	ViewUtils.addActionToMap(this, declinebtn, KeyEvent.VK_ESCAPE);
+    	ViewUtils.addActionToMap(cardTextField, acceptbtn, KeyEvent.VK_ENTER);
+    	ViewUtils.addActionToMap(cardTextField, declinebtn, KeyEvent.VK_ESCAPE);
+    	ViewUtils.addActionToMap(passwordField, acceptbtn, KeyEvent.VK_ENTER);
+    	ViewUtils.addActionToMap(passwordField, declinebtn, KeyEvent.VK_ESCAPE);
+    	
     	add(acceptbtn);
     	add(declinebtn);
-    }
-
-    @Deprecated
-    private void initActionListners(){
-    	// TODO: Action Listners
-    	
     }
 
     @Override
     public void setVisible(boolean aFlag) {
         super.setVisible(aFlag);
+        
         refresh();
     }
 

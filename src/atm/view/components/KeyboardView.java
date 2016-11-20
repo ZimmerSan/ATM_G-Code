@@ -1,9 +1,25 @@
 package atm.view.components;
 
-import static atm.tools.ViewConstants.*;
-import static atm.tools.ViewUtils.createButton;
+import static atm.tools.ViewConstants.KEYBOARD_HEIGHT;
+import static atm.tools.ViewConstants.KEYBOARD_LOCATION_HEIGHT;
+import static atm.tools.ViewConstants.KEYBOARD_LOCATION_WIDTH;
+import static atm.tools.ViewConstants.KEYBOARD_WIDTH;
+import static atm.tools.ViewConstants.ROW_1_X;
+import static atm.tools.ViewConstants.ROW_1_Y;
+import static atm.tools.ViewConstants.ROW_2_X;
+import static atm.tools.ViewConstants.ROW_2_Y;
+import static atm.tools.ViewConstants.ROW_3_X;
+import static atm.tools.ViewConstants.ROW_3_Y;
+import static atm.tools.ViewConstants.ROW_4_X;
+import static atm.tools.ViewConstants.ROW_4_Y;
 import static atm.tools.ViewUtils.createDigitButton;
 import static atm.tools.ViewUtils.createFuncButton;
+
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -15,6 +31,7 @@ public class KeyboardView extends JPanel {
     private JButton btnCancel;
     private JButton btnClear;
     private JButton btnEnter;
+    private Robot robot;
     
     public static synchronized KeyboardView getInstance() {
         if (instance == null) instance = new KeyboardView();
@@ -27,6 +44,7 @@ public class KeyboardView extends JPanel {
         setLocation(KEYBOARD_LOCATION_WIDTH, KEYBOARD_LOCATION_HEIGHT);
         setLayout(null);
         init();
+        initActionListners();
     }
 
     private void init() {
@@ -59,6 +77,89 @@ public class KeyboardView extends JPanel {
         add(btnClear);
         add(btnEnter);
     }
+    
+    private void initActionListners(){
+    	try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	initButton(b1);
+    	initButton(b2);
+    	initButton(b3);
+    	initButton(b4);
+    	initButton(b5);
+    	initButton(b6);
+    	initButton(b7);
+    	initButton(b8);
+    	initButton(b9);
+    	initButton(b0);
+    	initButton(btnEnter);
+    	initButton(btnClear);
+    	initButton(btnCancel);
+    }
+    
+    private void initButton(JButton btn){
+    	String btnText = btn.getText();
+    	
+    	int key = KeyEvent.VK_0;
+    	switch (btnText) {
+		case "1":
+			key = KeyEvent.VK_1;
+			break;
+		case "2":
+			key = KeyEvent.VK_2;
+			break;
+		case "3":
+			key = KeyEvent.VK_3;
+			break;
+		case "4":
+			key = KeyEvent.VK_4;
+			break;
+		case "5":
+			key = KeyEvent.VK_5;
+			break;
+		case "6":
+			key = KeyEvent.VK_6;
+			break;
+		case "7":
+			key = KeyEvent.VK_7;
+			break;
+		case "8":
+			key = KeyEvent.VK_8;
+			break;
+		case "9":
+			key = KeyEvent.VK_9;
+			break;
+		case "Enter":
+			key = KeyEvent.VK_ENTER;
+			break;
+		case "Cancel":
+			key = KeyEvent.VK_ESCAPE;
+			break;
+		case "Clear":
+			key = KeyEvent.VK_BACK_SPACE;
+			break;
+			
+		default:
+			break;
+		}
+    	final int keyf = key;
+    	btn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				robot.keyPress(keyf);
+				robot.keyRelease(keyf);
+				System.out.println(btnText);
+			}
+		});
+    	btn.setFocusable(false);
+    }
+    
+    
 
     
 
