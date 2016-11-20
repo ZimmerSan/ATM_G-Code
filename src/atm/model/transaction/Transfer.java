@@ -34,7 +34,7 @@ public class Transfer extends Transaction{
                 detailsPortion = new String[2];
                 detailsPortion[0] = "TRANSFER FROM: " +
                         client.toString() +
-                        " TO: " + "";
+                        " TO: " + to.toString();
                 detailsPortion[1] = "AMOUNT: " + amount;
             }
         };
