@@ -16,6 +16,7 @@ public class Dispatcher {
     private MainFrame mainFrame;
 
     public Dispatcher(Atm atm, MainFrame mainFrame) {
+    	
         this.atm = atm;
         this.mainFrame = mainFrame;
         // Start Panel
@@ -32,16 +33,16 @@ public class Dispatcher {
         mainFrame.getMenuPanel().addCloseSessioneAL(new CloseSessionListner());
         
         // Change PIN Panel
-       mainFrame.getChangePinPanel().addAcceptListener(new ChangePINListner());
-       mainFrame.getChangePinPanel().addDeclineListener(new BackToMenuListner());
+        mainFrame.getChangePinPanel().addAcceptListener(new ChangePINListner());
+        mainFrame.getChangePinPanel().addDeclineListener(new BackToMenuListner());
        
-       //Get Cash Panel
-       mainFrame.getGetCashPanel().add50AL(new GetCashDefaultListner(50));
-       mainFrame.getGetCashPanel().add100AL(new GetCashDefaultListner(100));
-       mainFrame.getGetCashPanel().add200AL(new GetCashDefaultListner(200));
-       mainFrame.getGetCashPanel().add500AL(new GetCashDefaultListner(500));
-       mainFrame.getGetCashPanel().add1000AL(new GetCashDefaultListner(1000));
-       mainFrame.getGetCashPanel().addCustomAmountAL(new GetCashCustomListner());
+	    //Get Cash Panel
+	    mainFrame.getGetCashPanel().add50AL(new GetCashDefaultListner(50));
+	    mainFrame.getGetCashPanel().add100AL(new GetCashDefaultListner(100));
+	    mainFrame.getGetCashPanel().add200AL(new GetCashDefaultListner(200));
+	    mainFrame.getGetCashPanel().add500AL(new GetCashDefaultListner(500));
+	    mainFrame.getGetCashPanel().add1000AL(new GetCashDefaultListner(1000));
+	    mainFrame.getGetCashPanel().addCustomAmountAL(new GetCashCustomListner());
         
     }
 
@@ -68,16 +69,16 @@ public class Dispatcher {
         public void actionPerformed(ActionEvent e) {
             String cardNumber = mainFrame.getAuthPanel().getEnteredCardNumber();
             String pin = mainFrame.getAuthPanel().getEnteredPin();
-            mainFrame.setState(MainFrame.State.PROCESSING_MENU);
-//            try {
-//                Client client = atm.validateAuth(cardNumber, pin);
-//                atm.startSession(client);
-//                mainFrame.showMessage("Success!", Constants.MessageType.INFO);
-//                mainFrame.setState(MainFrame.State.PROCESSING_MENU);
-//            } catch (InvalidClientException e1) {
-//                System.err.println(e1.getMessage());
-//                mainFrame.showMessage(e1.getMessage(), Constants.MessageType.ERROR);
-//            }
+            //mainFrame.setState(MainFrame.State.PROCESSING_MENU);
+            try {
+                Client client = atm.validateAuth(cardNumber, pin);
+                atm.startSession(client);
+                //mainFrame.showMessage("Success!", Constants.MessageType.INFO);
+                mainFrame.setState(MainFrame.State.PROCESSING_MENU);
+            } catch (InvalidClientException e1) {
+                System.err.println(e1.getMessage());
+                mainFrame.showMessage(e1.getMessage(), Constants.MessageType.ERROR);
+            }
         }
     }
     
@@ -148,7 +149,6 @@ public class Dispatcher {
     private class GetCashDefaultListner implements ActionListener {
     	private int amount;
     	public GetCashDefaultListner(int amount) {
-			// TODO Auto-generated constructor stub
     		this.amount = amount;
 		}
     	
