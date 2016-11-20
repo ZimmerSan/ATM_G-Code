@@ -38,8 +38,8 @@ public class Session {
                     break;
                 case CHOOSING_TRANSACTION:
                     // TODO: 19-Nov-16 choose transaction
-                    transaction = Transaction.makeTransaction(atm, currentClient);
-                    state = PERFORMING_TRANSACTION;
+//                    transaction = Transaction.makeTransaction(atm, currentClient);
+//                    state = PERFORMING_TRANSACTION;
                     break;
                 case PERFORMING_TRANSACTION:
                     // TODO: 19-Nov-16 perform transaction
