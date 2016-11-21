@@ -2,6 +2,7 @@ package atm.model.transaction;
 
 import atm.model.Atm;
 import atm.model.shared.*;
+import atm.model.shared.exception.MoneyException;
 
 public class Transfer extends Transaction{
 
@@ -9,20 +10,23 @@ public class Transfer extends Transaction{
         super(atm, from, to, money);
     }
 
-    public void makeTransfer(){
-        from.setBalance(new Money((from.getBalance().getCents() - money.getCents())/100));
-        to.setBalance(new Money((to.getBalance().getCents() + money.getCents())/100));
-        from.updateInDB();
-        to.updateInDB();
+    public void makeTransfer() throws MoneyException {
+        long amount = (from.getBalance().getCents() - money.getCents()) / 100;
+        if (amount < 0) throw new MoneyException();
+        else {
+            from.setBalance(new Money(amount));
+            to.setBalance(new Money((to.getBalance().getCents() + money.getCents()) / 100));
+            from.updateInDB();
+            to.updateInDB();
+        }
     }
-
 
     protected Message getSpecificsFromCustomer() {
        return new Message(Message.MessageCode.TRANSFER, id, from, to, money);
     }
 
 
-    protected Check completeTransaction() {
+    public Check completeTransaction() {
         return new Check(this.atm, this.from.getCard(), this, this.from.getBalance()) {
             {
                 detailsPortion = new String[2];

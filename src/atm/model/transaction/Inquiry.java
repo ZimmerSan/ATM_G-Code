@@ -13,7 +13,7 @@ public class Inquiry extends Transaction{
         return new Message(Message.MessageCode.INQUIRY, id, from, to, new Money(0));
     }
 
-    protected Check completeTransaction() {
+    public Check completeTransaction() {
         return new Check(this.atm, this.from.getCard(), this, this.from.getBalance()) {
             {
                 detailsPortion = new String[2];

@@ -19,7 +19,7 @@ public class Client {
     }
 
     public String toString() {
-        return id+" "+ name + " "+ card +" "+ pass +" "+ balance +" "+ email;
+        return id+" "+ name + " "+ card.getNumber() +" "+ balance +" "+ email;
     }
 
     public void updateInDB(){
