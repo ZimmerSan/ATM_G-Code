@@ -4,38 +4,32 @@ import atm.model.Atm;
 import atm.model.shared.*;
 
 public class Transfer extends Transaction{
-    private Client to;
-    private Money amount;
 
-    public Transfer(Atm atm, Client client) {
-        super(atm, client);
+    public Transfer(Atm atm, Client from, Client to, Money money) {
+        super(atm, from, to, money);
     }
 
-    //TODO:get client, amount for transfer
     public void makeTransfer(){
-        to = null;
-        client.setBalance(new Money(client.getBalance().getCents() - amount.getCents()));
-        to.setBalance(new Money(to.getBalance().getCents() + amount.getCents()));
-        client.updateInDB();
+        from.setBalance(new Money((from.getBalance().getCents() - money.getCents())/100));
+        to.setBalance(new Money((to.getBalance().getCents() + money.getCents())/100));
+        from.updateInDB();
         to.updateInDB();
     }
 
-    //TODO:get to, amount for getSpecificsFromCustomer Transfer
+
     protected Message getSpecificsFromCustomer() {
-        to = null;
-        amount = null;
-       return new Message(Message.MessageCode.TRANSFER, id, client, to, amount);
+       return new Message(Message.MessageCode.TRANSFER, id, from, to, money);
     }
 
-    //TODO:write correct check for Transfer
+
     protected Check completeTransaction() {
-        return new Check(this.atm, this.client.getCard(), this, this.client.getBalance()) {
+        return new Check(this.atm, this.from.getCard(), this, this.from.getBalance()) {
             {
                 detailsPortion = new String[2];
                 detailsPortion[0] = "TRANSFER FROM: " +
-                        client.toString() +
+                        from.toString() +
                         " TO: " + to.toString();
-                detailsPortion[1] = "AMOUNT: " + amount;
+                detailsPortion[1] = "AMOUNT: " + money;
             }
         };
     }

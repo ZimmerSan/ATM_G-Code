@@ -1,19 +1,22 @@
 package atm.view;
 
 import atm.model.Atm;
+import atm.model.shared.Check;
 import atm.model.shared.Client;
+import atm.model.shared.Money;
 import atm.model.shared.exception.InvalidClientException;
+import atm.model.transaction.Transaction;
+import atm.model.transaction.Withdrawal;
 import atm.tools.Constants;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-
-import javax.enterprise.inject.Disposes;
 
 public class Dispatcher {
     private Atm atm;
     private MainFrame mainFrame;
+    private Client from;
+    private Client to;
 
     public Dispatcher(Atm atm, MainFrame mainFrame) {
     	
@@ -71,8 +74,8 @@ public class Dispatcher {
             String pin = mainFrame.getAuthPanel().getEnteredPin();
             //mainFrame.setState(MainFrame.State.PROCESSING_MENU);
             try {
-                Client client = atm.validateAuth(cardNumber, pin);
-                atm.startSession(client);
+                from = atm.validateAuth(cardNumber, pin);
+                atm.startSession(from);
                 //mainFrame.showMessage("Success!", Constants.MessageType.INFO);
                 mainFrame.setState(MainFrame.State.PROCESSING_MENU);
             } catch (InvalidClientException e1) {
@@ -95,7 +98,6 @@ public class Dispatcher {
         @Override
         public void actionPerformed(ActionEvent e) {
             mainFrame.setState(MainFrame.State.GET_CASH);
-            
         }
     }
     
@@ -155,7 +157,11 @@ public class Dispatcher {
         @Override
         public void actionPerformed(ActionEvent e) {
         	// TODO: Implement model logic here (Get Cash)
-            
+            Money money = new Money(amount);
+            Withdrawal w = new Withdrawal(atm, from, null, money);
+            w.makeWithdrawal();
+            Check check = new Check(atm, from.getCard(), w, from.getBalance());
+            System.out.println(check.toString());
         	mainFrame.showMessage("Pick up "+amount+" USD!", Constants.MessageType.INFO);
         	mainFrame.setState(MainFrame.State.PROCESSING_MENU);
         }
@@ -169,8 +175,13 @@ public class Dispatcher {
             	return;
             }
             // TODO: Implement model logic here (Get custom amount)
-            
+            int cents = Integer.parseInt(cashString);
+            Withdrawal w = new Withdrawal(atm, from, null, new Money(cents));
+            System.out.println(from.getBalance());
+            w.makeWithdrawal();
+            System.out.println(from.getBalance());
             mainFrame.showMessage("Pick up "+cashString+" USD!", Constants.MessageType.INFO);
+
         	mainFrame.setState(MainFrame.State.PROCESSING_MENU);
         }
     }

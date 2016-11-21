@@ -5,29 +5,25 @@ import atm.model.shared.*;
 
 public class Withdrawal extends Transaction{
 
-    private Money amount;
+    public Withdrawal(Atm atm, Client from, Client to, Money money) {
+        super(atm, from, to, money);
+    }
 
-    public Withdrawal(Atm atm, Client client) {
-        super(atm, client);
-    }
-    //TODO:get amount for makeWithdrawal
     public void makeWithdrawal(){
-        amount = null;
-        client.setBalance(new Money(client.getBalance().getCents() - amount.getCents()));
+        from.setBalance(new Money((from.getBalance().getCents() - money.getCents())/100));
     }
-    //TODO:get amount for getSpecificsFromCustomer Withdrawal
+
     protected Message getSpecificsFromCustomer(){
-        amount = null;
-        return new Message(Message.MessageCode.WITHDRAWAL, id, client, null, amount);
+        return new Message(Message.MessageCode.WITHDRAWAL, id, from, to, money);
     }
 
 
     protected Check completeTransaction() {
-        return new Check(this.atm, this.client.getCard(), this, this.client.getBalance()) {
+        return new Check(this.atm, this.from.getCard(), this, this.from.getBalance()) {
             {
                 detailsPortion = new String[2];
-                detailsPortion[0] = "WITHDRAWAL FROM: " +client.toString();
-                detailsPortion[1] = "AMOUNT: " + amount;
+                detailsPortion[0] = "WITHDRAWAL FROM: " +from.toString();
+                detailsPortion[1] = "AMOUNT: " + money;
             }
         };
     }

@@ -11,6 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import atm.model.shared.Check;
+import atm.model.shared.Message;
+import atm.model.transaction.Transaction;
+import atm.model.transaction.Withdrawal;
 import atm.tools.ViewUtils;
 
 public class GetCashPanel extends JPanel{

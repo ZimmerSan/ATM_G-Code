@@ -12,7 +12,7 @@ public class Check {
     protected String[] detailsPortion;
     private String balancesPortion;
 
-    protected Check(Atm atm, Card card, Transaction transaction, Money balance) {
+    public Check(Atm atm, Card card, Transaction transaction, Money balance) {
         headingPortion = new String[3];
         headingPortion[0] = new Date().toString();
         headingPortion[1] = atm.getBankName();

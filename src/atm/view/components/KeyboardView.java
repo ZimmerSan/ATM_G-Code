@@ -153,7 +153,7 @@ public class KeyboardView extends JPanel {
 				// TODO Auto-generated method stub
 				robot.keyPress(keyf);
 				robot.keyRelease(keyf);
-				System.out.println(btnText);
+				//System.out.println(btnText);
 			}
 		});
     	btn.setFocusable(false);

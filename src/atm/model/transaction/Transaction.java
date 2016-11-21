@@ -6,38 +6,24 @@ import atm.model.shared.*;
 
 public abstract class Transaction {
     protected Atm atm;
-    protected Client client;
+    protected Client from;
+    protected Client to;
     protected int id;
-    protected Message message;
     protected Money money;
-
-    private enum TRANSACTION_TYPES {
-        Withdrawal, Transfer, BalanceInquiry
-    }
 
     private static int nextId = 1;
 
-    protected Transaction(Atm atm, Client client) {
+    protected Transaction(Atm atm, Client from, Client to, Money money) {
         this.atm = atm;
-        this.client = client;
+        this.from = from;
+        this.to = to;
         this.id = nextId ++;
+        this.money = money;
     }
 
-    //TODO:getChoice for makeTransaction
-    public static Transaction makeTransaction(Atm atm, Client client) {
-        int choice = 0;
-        switch (choice) {
-            case 0:
-                return new Withdrawal(atm, client);
-            case 1:
-                return new Transfer(atm, client);
-            case 2:
-                return new Inquiry(atm, client);
-            default:
-                return null;
-        }
+    public void setTo(Client client){
+        this.to = client;
     }
-
 
     public int getId() {
         return id;
