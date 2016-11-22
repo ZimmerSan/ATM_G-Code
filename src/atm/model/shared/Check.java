@@ -16,7 +16,7 @@ public class Check {
         headingPortion = new String[3];
         headingPortion[0] = new Date().toString();
         headingPortion[1] = atm.getBankName();
-        headingPortion[2] = "CARD " + card.getNumber() + " TRANS #" + transaction.getId();
+        headingPortion[2] = "CARD " + card.getNumber() + " TRANS #" + transaction.getTransactionId();
         balancesPortion = "TOTAL BAL: " + balance;
     }
     public String toString(){
