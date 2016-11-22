@@ -10,8 +10,10 @@ public class Transfer extends Transaction{
         super(atm, from, to, money);
     }
 
-    public void makeTransfer() throws MoneyException {
-        long amount = (from.getBalance().getCents() - money.getCents()) / 100;
+    @Override
+    public void performTransaction() throws MoneyException {
+        // TODO: 23-Nov-16 c'mon man. Give the variables good names
+        double amount = (from.getBalance().getCents() - money.getCents()) / 100;
         if (amount < 0) throw new MoneyException();
         else {
             from.setBalance(new Money(amount));
@@ -22,9 +24,8 @@ public class Transfer extends Transaction{
     }
 
     protected Message getSpecificsFromCustomer() {
-       return new Message(Message.MessageCode.TRANSFER, id, from, to, money);
+       return new Message(Message.MessageCode.TRANSFER, transactionId, from, to, money);
     }
-
 
     public Check completeTransaction() {
         return new Check(this.atm, this.from.getCard(), this, this.from.getBalance()) {

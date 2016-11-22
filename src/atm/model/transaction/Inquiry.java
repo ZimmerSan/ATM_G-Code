@@ -5,12 +5,17 @@ import atm.model.shared.*;
 
 public class Inquiry extends Transaction{
 
-    public Inquiry(Atm atm, Client from, Client to, Money money) {
-        super(atm, from, to, money);
+    public Inquiry(Atm atm, Client client, Money money) {
+        super(atm, client, null, money);
+    }
+
+    @Override
+    public void performTransaction() {
+        // TODO: 23-Nov-16 complete
     }
 
     protected Message getSpecificsFromCustomer() {
-        return new Message(Message.MessageCode.INQUIRY, id, from, to, new Money(0));
+        return new Message(Message.MessageCode.INQUIRY, transactionId, from, to, new Money(0));
     }
 
     public Check completeTransaction() {
