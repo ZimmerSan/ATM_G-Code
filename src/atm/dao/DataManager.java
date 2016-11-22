@@ -21,7 +21,7 @@ public class DataManager {
             stmt.setString(1, number);
             stmt.execute();
             ResultSet rs = stmt.getResultSet();
-            if (rs.next()) return new Client(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6));
+            if (rs.next()) return new Client(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getLong(5), rs.getString(6));
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
@@ -40,7 +40,7 @@ public class DataManager {
             stmt.execute(selTable);
             ResultSet rs = stmt.getResultSet();
             while (rs.next()) {
-                clients.add(new Client(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6)));
+                clients.add(new Client(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getLong(5), rs.getString(6)));
             }
             stmt.close();
             connection.close();

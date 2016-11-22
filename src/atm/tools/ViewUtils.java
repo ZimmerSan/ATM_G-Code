@@ -1,26 +1,10 @@
 package atm.tools;
 
-import static atm.tools.ViewConstants.D_KEY_HEIGHT;
-import static atm.tools.ViewConstants.D_KEY_WIDTH;
-import static atm.tools.ViewConstants.F_KEY_HEIGHT;
-import static atm.tools.ViewConstants.F_KEY_WIDTH;
-import static atm.tools.ViewConstants.SCREEN_BACKGROUND_COLOR;
-import static atm.tools.ViewConstants.SCREEN_HEIGHT;
-import static atm.tools.ViewConstants.SCREEN_LOCATION_HEIGHT;
-import static atm.tools.ViewConstants.SCREEN_LOCATION_WIDTH;
-import static atm.tools.ViewConstants.SCREEN_WIDTH;
-
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 
-import javax.swing.AbstractAction;
-import javax.swing.InputMap;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.KeyStroke;
-import javax.swing.UIManager;
+import static atm.tools.ViewConstants.*;
 
 public class ViewUtils {
 	
@@ -48,7 +32,7 @@ public class ViewUtils {
     	panel.setBackground(SCREEN_BACKGROUND_COLOR);
     }
     
-    public static void addActionToMap(JComponent panel, JButton button, int keyEvent){
+    public static void addActionToMap(JComponent panel, final JButton button, int keyEvent){
     	String stringForMap = keyEvent+"ActionKeyboard";
     	panel.getInputMap().put(KeyStroke.getKeyStroke(keyEvent,0),stringForMap);
     	panel.getActionMap().put(stringForMap, new AbstractAction() {

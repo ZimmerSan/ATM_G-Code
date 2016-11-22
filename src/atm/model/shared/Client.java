@@ -9,7 +9,7 @@ public class Client {
     private Money balance;
     private String email;
 
-    public Client(int id, String name, String card, String pass, int balance, String email) {
+    public Client(int id, String name, String card, String pass, Long balance, String email) {
     	this.id = id;
         this.name = name;
         this.card = new Card(card);
