@@ -1,6 +1,8 @@
 package atm.model;
 
-import atm.model.components.*;
+import atm.model.components.CardReaderModel;
+import atm.model.components.CashDispenser;
+import atm.model.components.CheckPrinter;
 import atm.model.shared.Client;
 import atm.model.shared.exception.InvalidClientException;
 
@@ -16,7 +18,6 @@ public class Atm implements Runnable {
     private CardReaderModel cardReader;
     private CashDispenser cashDispenser;
     private CheckPrinter checkPrinter;
-    private KeyBoardModel keyBoardModel;
 
 
     //state
@@ -30,11 +31,9 @@ public class Atm implements Runnable {
 
     public Atm() {
         //create components
-        cardReader = new CardReaderModel(this);
+        cardReader = new CardReaderModel();
         cashDispenser = new CashDispenser();
         checkPrinter = new CheckPrinter();
-        keyBoardModel = new KeyBoardModel(this);
-
 
         //initial state
         state = State.IDLE_STATE;
@@ -60,39 +59,51 @@ public class Atm implements Runnable {
                 case PROCESSING_STATE:
                     System.out.println("Processing");
                     // TODO: 19-Nov-16
+                    currentSession.performSession();
+                    state = IDLE_STATE;
                     break;
             }
         }
     }
 
-    public Session startSession(Client client){
+    public synchronized void insertCard(String cardNumber, String enteredPin) throws InvalidClientException {
+        Client client = cardReader.readCard(cardNumber);
+        if (verifyPin(enteredPin, client)) startSession(client);
+        else throw new InvalidClientException();
+    }
+
+    public synchronized void ejectCard() {
+        if (isSessionActive()) cardReader.ejectCard();
+        endSession();
+    }
+
+    private synchronized Session startSession(Client client){
         currentSession = new Session(this, client);
         sessionActive = true;
+        setState(PROCESSING_STATE);
+        notify();
         return currentSession;
     }
 
-    public void endSession(){
+    private synchronized void endSession(){
         currentSession = null;
         sessionActive = false;
-        this.state = IDLE_STATE;
+        setState(IDLE_STATE);
+        notify();
     }
 
-    public Client validateAuth(String cardNumber, String enteredPin) throws InvalidClientException {
-        Client client;
-
-        client = cardReader.readCard(cardNumber);
-        if (cardReader.verifyPin(enteredPin, client)) {
-            return client;
-        } else {
-            throw new InvalidClientException();
+    public boolean changePin(String oldPin, String newPin){
+        Client currentClient = currentSession.getCurrentClient();
+        if (verifyPin(oldPin, currentClient)) {
+            currentClient.setPass(newPin);
+            currentClient.updateInDB();
+            return true;
         }
+        return false;
     }
 
-    public void ejectCard() {
-        // TODO: 19-Nov-16 implement valid method
-        cardReader.ejectCard();
-        setSessionActive(false);
-        setState(Atm.State.IDLE_STATE);
+    private boolean verifyPin(String pin, Client client){
+        return pin.equals(client.getPass());
     }
 
     public static synchronized Atm getInstance() {
@@ -100,39 +111,19 @@ public class Atm implements Runnable {
         return instance;
     }
 
-    public KeyBoardModel getKeyBoardModel() {
-        return keyBoardModel;
-    }
-
     public boolean isSessionActive() {
         return sessionActive;
-    }
-
-    public void setSessionActive(boolean flag) {
-        sessionActive = flag;
-    }
-
-    public CashDispenser getCashDispenser() {
-        return cashDispenser;
-    }
-
-    public CardReaderModel getCardReader() {
-        return cardReader;
     }
 
     public String getBankName() {
         return bankName;
     }
 
-    public CheckPrinter getCheckPrinter() {
-        return checkPrinter;
-    }
-
     public State getState() {
         return state;
     }
 
-    public void setState(State state) {
+    private void setState(State state) {
         this.state = state;
     }
 

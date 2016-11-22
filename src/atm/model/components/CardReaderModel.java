@@ -1,20 +1,12 @@
 package atm.model.components;
 
 import atm.dao.DataManager;
-import atm.model.Atm;
 import atm.model.shared.Client;
 import atm.model.shared.exception.InvalidClientException;
+import atm.tools.Constants;
+import atm.view.MainFrame;
 
 public class CardReaderModel {
-    private Atm atm;
-
-    public CardReaderModel(Atm atm){
-        this.atm = atm;
-    }
-
-    public boolean verifyPin(String pin, Client client){
-        return pin.equals(client.getPass());
-    }
 
     public Client readCard(String number) throws InvalidClientException {
         Client client = DataManager.getClientByCardNumber(number);
@@ -23,12 +15,12 @@ public class CardReaderModel {
     }
 
     public void ejectCard() {
-        System.out.println("ejectCard");
+        MainFrame.getInstance().setState(MainFrame.State.INIT);
+        MainFrame.getInstance().showMessage(Constants.CARD_EJECTED, Constants.MessageType.INFO);
     }
 
     public void retainCard() {
         System.out.println("retainCard");
     }
-
 
 }

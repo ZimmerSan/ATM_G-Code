@@ -27,13 +27,14 @@ public interface Constants {
     String TITLE_VALID = "Valid";
 
     // Info
-    String INFO_VALID_PIN_LENGTH = "Valid PIN length.";
-    String CARD_EJECTED = "Card has been ejected.";
+    String CARD_EJECTED = "Take your card, please.";
+    String PIN_CHANGED = "PIN has been changed.";
 
     // Warnings
 
     // Errors
-    String ERR_INVALID_PIN_LENGTH = "Invalid PIN length - must be " + PIN_LENGTH + " digits long.";
+    String ERR_INVALID_NEW_PIN = "PINs do not match or do not consist of only " + PIN_LENGTH + " digit(s).";
+    String ERR_INVALID_OLD_PIN = "Invalid old PIN";
     String ERR_INVALID_CLIENT = "Can not get user. Check entered data, please.";
     String ERR_CANNOT_OBTAIN_CLIENT = "Can not obtain current session user";
 
