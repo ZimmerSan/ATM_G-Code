@@ -31,8 +31,8 @@ final public class ATM {
 //        return String.valueOf(++transactionId);
 //    }
 //
-//    public static void updateClientInfo(int id, String password, int balance) {
-//        dataManager.updateClientInfo(id, password, balance);
+//    public static void updateClientInfo(int transactionId, String password, int balance) {
+//        dataManager.updateClientInfo(transactionId, password, balance);
 //    }
 //
 //    public ATM() {
@@ -72,7 +72,7 @@ final public class ATM {
 //            totalCash -= amount;
 //
 //            JOptionPane.showMessageDialog(Window, "Заберіть готівку", "Успішна транзакція", JOptionPane.INFORMATION_MESSAGE);
-//            updateClientInfo(currentClient.getId(), currentClient.getPass(), currentClient.getBalance());
+//            updateClientInfo(currentClient.getTransactionId(), currentClient.getPass(), currentClient.getBalance());
 //            mailServer.prepareMessage(currentClient.getName(), true, String.valueOf(amount), new java.util.Date().toString(), String.valueOf(currentClient.getBalance()), currentClient.getEmail());
 //            return true;
 //        } else {
@@ -114,10 +114,10 @@ final public class ATM {
 //            currentClient.setBalance(currentClientBalance - sum);
 //            JOptionPane.showMessageDialog(Window, "Кошти переказано", "Успішна транзакція", JOptionPane.INFORMATION_MESSAGE);
 //
-//            updateClientInfo(clients.get(order).getId(), clients.get(order).getPass(), clients.get(order).getBalance());
+//            updateClientInfo(clients.get(order).getTransactionId(), clients.get(order).getPass(), clients.get(order).getBalance());
 //            mailServer.prepareMessage(currentClient.getName(), false, String.valueOf(sum), new java.util.Date().toString(), String.valueOf(currentClient.getBalance()), currentClient.getEmail());
 //
-//            updateClientInfo(currentClient.getId(), currentClient.getPass(), currentClient.getBalance());
+//            updateClientInfo(currentClient.getTransactionId(), currentClient.getPass(), currentClient.getBalance());
 //            mailServer.prepareMessage(currentClient.getName(), true, String.valueOf(sum), new java.util.Date().toString(), String.valueOf(currentClient.getBalance()), currentClient.getEmail());
 //            return true;
 //        }
@@ -137,7 +137,7 @@ final public class ATM {
 //
 //        currentClient.setBalance(currentClient.getBalance() - sum);
 //        JOptionPane.showMessageDialog(Window, "Мобільний поповнено", "Успішна транзакція", JOptionPane.INFORMATION_MESSAGE);
-//        updateClientInfo(currentClient.getId(), currentClient.getPass(), currentClient.getBalance());
+//        updateClientInfo(currentClient.getTransactionId(), currentClient.getPass(), currentClient.getBalance());
 //        mailServer.prepareMessage(currentClient.getName(), true, String.valueOf(sum), new java.util.Date().toString(), String.valueOf(currentClient.getBalance()), currentClient.getEmail());
 //        return true;
 //    }
@@ -149,7 +149,7 @@ final public class ATM {
 //        } else if (newPwd1.equals(newPwd2)) {
 //            currentClient.setPass(newPwd2);
 //            JOptionPane.showMessageDialog(Window, "Пароль змінено", "Зміна PIN-коду", JOptionPane.INFORMATION_MESSAGE);
-//            updateClientInfo(currentClient.getId(), currentClient.getPass(), currentClient.getBalance());
+//            updateClientInfo(currentClient.getTransactionId(), currentClient.getPass(), currentClient.getBalance());
 //            mailServer.changePassword(currentClient.getName(), currentClient.getPass(), new java.util.Date().toString(), currentClient.getEmail());
 //            return true;
 //        } else {
