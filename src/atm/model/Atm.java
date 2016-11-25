@@ -6,6 +6,9 @@ import atm.model.components.CheckPrinter;
 import atm.model.shared.Client;
 import atm.model.shared.exception.InvalidClientException;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import static atm.model.Atm.State.IDLE_STATE;
 import static atm.model.Atm.State.PROCESSING_STATE;
 
@@ -95,7 +98,7 @@ public class Atm implements Runnable {
     public boolean changePin(String oldPin, String newPin){
         Client currentClient = currentSession.getCurrentClient();
         if (verifyPin(oldPin, currentClient)) {
-            currentClient.setPass(newPin);
+            currentClient.setPass(encryptWithMD5(newPin));
             currentClient.updateInDB();
             return true;
         }
@@ -103,7 +106,27 @@ public class Atm implements Runnable {
     }
 
     private boolean verifyPin(String pin, Client client){
-        return pin.equals(client.getPass());
+        String encryptedPin = encryptWithMD5(pin);
+        System.out.println(encryptedPin);
+        return encryptedPin.equals(client.getPass());
+    }
+
+    private String encryptWithMD5(String pass){
+        MessageDigest md;
+        try {
+            md = MessageDigest.getInstance("MD5");
+            byte[] passBytes = pass.getBytes();
+            md.reset();
+            byte[] digested = md.digest(passBytes);
+            StringBuffer sb = new StringBuffer();
+            for(int i=0;i<digested.length;i++){
+                sb.append(Integer.toHexString(0xff & digested[i]));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException ex) {
+            System.err.println(ex);
+        }
+        return null;
     }
 
     public static synchronized Atm getInstance() {
