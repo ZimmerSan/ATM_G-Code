@@ -12,13 +12,20 @@ import static atm.tools.Constants.*;
 public class Dispatcher {
     private Atm atm;
     private MainFrame mainFrame;
+    
+    private String clientCardNumber;
 
     public Dispatcher(Atm atm, MainFrame mainFrame) {
         this.atm = atm;
         this.mainFrame = mainFrame;
 
+        
         // Start Panel
         mainFrame.getCardReaderView().addActionListener(new ShowCardReaderPanel());
+        
+        //getClientCardForAuth Panel
+        mainFrame.getGetCardNumberPanel().addAcceptListener(new getClientCardForAuth());
+        mainFrame.getGetCardNumberPanel().addDeclineListener(new CloseSessionListener());
 
         //Auth Panel
         mainFrame.getAuthPanel().addDeclineListener(new CloseSessionListener());
@@ -47,17 +54,42 @@ public class Dispatcher {
     private class ShowCardReaderPanel implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            mainFrame.setState(MainFrame.State.AUTHORIZING);
+        	mainFrame.getCardReaderView().setEnabled(false);
+            mainFrame.setState(MainFrame.State.CHECK_CARD);
+            
         }
     }
+    
+    //getClientCardForAuth  Panel
+    private class getClientCardForAuth implements ActionListener {
 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String cardNumber = mainFrame.getGetCardNumberPanel().getCardNumber();
+			
+			//TODO: Implement model logic here (Check if the card exists)
+			boolean validCard = true;
+			if(validCard){
+				
+				clientCardNumber = cardNumber;
+				mainFrame.setState(MainFrame.State.AUTHORIZING);
+			} else {
+				mainFrame.showMessage("Some wrong card!", Constants.MessageType.INFO);
+				mainFrame.setState(MainFrame.State.INIT);
+			}
+			
+		}
+    	
+    }
+    
+    //Auth Panel
     private class Authenticate implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String cardNumber = mainFrame.getAuthPanel().getEnteredCardNumber();
+            
             String pin = mainFrame.getAuthPanel().getEnteredPin();
             try {
-                atm.insertCard(cardNumber, pin);
+                atm.insertCard(clientCardNumber, pin);
                 mainFrame.setState(MainFrame.State.PROCESSING_MENU);
             } catch (InvalidClientException e1) {
                 atm.ejectCard();
@@ -98,7 +130,8 @@ public class Dispatcher {
     private class CloseSessionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            atm.ejectCard();
+        	mainFrame.setState(MainFrame.State.INIT);
+        	atm.ejectCard();
         }
     }
 

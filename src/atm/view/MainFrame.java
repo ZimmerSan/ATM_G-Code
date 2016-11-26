@@ -6,6 +6,7 @@ import atm.view.components.HeaderView;
 import atm.view.components.KeyboardView;
 import atm.view.screenpanels.AuthPanel;
 import atm.view.screenpanels.ChangePinPanel;
+import atm.view.screenpanels.GetCardNumberPanel;
 import atm.view.screenpanels.GetCashPanel;
 import atm.view.screenpanels.MenuPanel;
 import atm.view.screenpanels.StartPanel;
@@ -31,6 +32,7 @@ public class MainFrame extends JFrame {
     private AuthPanel authPanel;
     private StartPanel startPanel;
     private ChangePinPanel changePinPanel;
+    private GetCardNumberPanel getCardNumberPanel;
 
     private MainFrame() {
         super("G-ATM");
@@ -64,6 +66,8 @@ public class MainFrame extends JFrame {
         getCashPanel = GetCashPanel.getInstance();
         startPanel = StartPanel.getInstance();
         changePinPanel = ChangePinPanel.getInstance();
+        getCardNumberPanel = GetCardNumberPanel.getInstance();
+        add(getCardNumberPanel);
         add(changePinPanel);
         add(getCashPanel);
         add(menuPanel);
@@ -80,9 +84,13 @@ public class MainFrame extends JFrame {
                 repaintScreen(startPanel);
                 cardReaderView.setEnabled(true);
                 break;
+            case CHECK_CARD:
+            	
+                repaintScreen(getCardNumberPanel);
+                break;
             case AUTHORIZING:
                 repaintScreen(authPanel);
-                cardReaderView.setEnabled(false);
+                
                 break;
             case PROCESSING_MENU:
                 repaintScreen(menuPanel);
@@ -105,6 +113,8 @@ public class MainFrame extends JFrame {
         menuPanel.setVisible(false);
         authPanel.setVisible(false);
         startPanel.setVisible(false);
+        getCardNumberPanel.setVisible(false);
+        
         panelToShow.setVisible(true);
         panelToShow.requestFocus();
     }
@@ -115,13 +125,17 @@ public class MainFrame extends JFrame {
 
     public enum State {
         // TODO: 19-Nov-16 add other states
-        INIT, AUTHORIZING, PROCESSING_MENU, GET_CASH, TRANSMIT_MONEY, CHANGE_PIN
+        INIT, CHECK_CARD, AUTHORIZING, PROCESSING_MENU, GET_CASH, TRANSMIT_MONEY, CHANGE_PIN
     }
 
     public static synchronized MainFrame getInstance() {
         if (instance == null) instance = new MainFrame();
         return instance;
     }
+    
+    public GetCardNumberPanel getGetCardNumberPanel() {
+		return getCardNumberPanel;
+	}
 
     public CardReaderView getCardReaderView() {
         return cardReaderView;
