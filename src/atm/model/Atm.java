@@ -5,6 +5,9 @@ import atm.model.components.CashDispenser;
 import atm.model.components.CheckPrinter;
 import atm.model.shared.Client;
 import atm.model.shared.exception.InvalidClientException;
+import atm.model.shared.exception.MoneyException;
+import atm.model.transaction.Withdrawal;
+import atm.model.shared.Money;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -132,6 +135,13 @@ public class Atm implements Runnable {
     public static synchronized Atm getInstance() {
         if (instance == null) instance = new Atm();
         return instance;
+    }
+
+    public int doWithdrawal(String cashString) throws MoneyException{
+        int intCash = Integer.parseInt(cashString);
+        Withdrawal w = new Withdrawal(instance, currentSession.getCurrentClient(), new Money(intCash));
+        w.performTransaction();
+        return intCash;
     }
 
     public boolean isSessionActive() {

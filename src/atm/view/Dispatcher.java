@@ -2,6 +2,7 @@ package atm.view;
 
 import atm.model.Atm;
 import atm.model.shared.exception.InvalidClientException;
+import atm.model.shared.exception.MoneyException;
 import atm.tools.Constants;
 
 import java.awt.event.ActionEvent;
@@ -222,21 +223,16 @@ public class Dispatcher {
     private class GetCashCustomListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-//            String cashString = mainFrame.getGetCashPanel().getCustomAmount();
-//            if (cashString.equals("") || cashString.equals("0")) {
-//                return;
-//            }
-//            // TODO: Implement model logic here (Get custom amount)
-//            int cents = Integer.parseInt(cashString);
-//            Withdrawal w = new Withdrawal(atm, from, null, new Money(cents));
-//            System.out.println(from.getBalance());
-//            try {
-//                w.makeWithdrawal();
-//                System.out.println(from.getBalance());
-//                mainFrame.showMessage("Pick up " + cashString + " USD!", Constants.MessageType.INFO);
-//            } catch (MoneyException ex) {
-//                mainFrame.showMessage(ex.getMessage(), Constants.MessageType.ERROR);
-//            }
+            String cashString = mainFrame.getGetCashPanel().getCustomAmount();
+            if (cashString.equals("") || cashString.equals("0")) {
+                return;
+            }
+            try {
+                atm.doWithdrawal(cashString);
+                mainFrame.showMessage("Pick up " + cashString + " USD!", Constants.MessageType.INFO);
+            }catch (MoneyException ex){
+                mainFrame.showMessage(ex.getMessage(), Constants.MessageType.ERROR);
+            }
             mainFrame.setState(MainFrame.State.PROCESSING_MENU);
         }
     }

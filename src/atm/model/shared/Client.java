@@ -23,7 +23,7 @@ public class Client {
     }
 
     public void updateInDB(){
-        DataManager.updateClientInfo(id, name, pass, balance.getCents(), email);
+        DataManager.updateClientInfo(id, name, pass, balance.getCents()/100, email);
     }
 
     public void setPass(String pass) {

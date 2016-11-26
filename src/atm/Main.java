@@ -1,5 +1,6 @@
 package atm;
 
+import atm.dao.DataManager;
 import atm.model.Atm;
 import atm.view.Dispatcher;
 import atm.view.MainFrame;
