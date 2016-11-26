@@ -133,4 +133,8 @@ public class Atm {
     public void setBankName(String bankName) {
         this.bankName = bankName;
     }
+
+    public Client getCurrentClient(){
+        return currentClient;
+    }
 }

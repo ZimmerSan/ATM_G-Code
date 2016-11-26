@@ -44,8 +44,7 @@ public class Dispatcher {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Implement model logic here (Get current amount of money on card)
-                String amount = "infinity";
+                double amount = atm.getCurrentClient().getBalance().getCents()/100;
                 mainFrame.showMessage("You have " + amount + " USD!", Constants.MessageType.INFO);
             }
         });
