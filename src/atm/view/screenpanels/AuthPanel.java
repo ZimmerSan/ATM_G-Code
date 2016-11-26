@@ -78,9 +78,9 @@ public class AuthPanel extends JPanel {
 
     @Override
     public void setVisible(boolean aFlag) {
-        super.setVisible(aFlag);
-        
-        refresh();
+    	if(aFlag)
+            refresh();
+    	super.setVisible(aFlag);
     }
 
     public synchronized void refresh(){

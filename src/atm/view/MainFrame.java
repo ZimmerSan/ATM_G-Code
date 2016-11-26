@@ -10,6 +10,8 @@ import atm.view.screenpanels.GetCardNumberPanel;
 import atm.view.screenpanels.GetCashPanel;
 import atm.view.screenpanels.MenuPanel;
 import atm.view.screenpanels.StartPanel;
+import atm.view.screenpanels.TransmitCardPanel;
+import atm.view.screenpanels.TransmitSendPanel;
 
 import javax.swing.*;
 
@@ -33,6 +35,9 @@ public class MainFrame extends JFrame {
     private StartPanel startPanel;
     private ChangePinPanel changePinPanel;
     private GetCardNumberPanel getCardNumberPanel;
+    //For transmit
+    private TransmitCardPanel transmitCardPanel;
+    private TransmitSendPanel transmitSendPanel;
 
     private MainFrame() {
         super("G-ATM");
@@ -67,6 +72,10 @@ public class MainFrame extends JFrame {
         startPanel = StartPanel.getInstance();
         changePinPanel = ChangePinPanel.getInstance();
         getCardNumberPanel = GetCardNumberPanel.getInstance();
+        transmitCardPanel = TransmitCardPanel.getInstance();
+        transmitSendPanel = TransmitSendPanel.getInstance();
+        add(transmitCardPanel);
+        add(transmitSendPanel);
         add(getCardNumberPanel);
         add(changePinPanel);
         add(getCashPanel);
@@ -98,8 +107,11 @@ public class MainFrame extends JFrame {
             case GET_CASH:
             	repaintScreen(getCashPanel);
             	break;
-            case TRANSMIT_MONEY:
-            	//repaintScreen();
+            case TRANSMIT_MONEY_CHECK_CARD:
+            	repaintScreen(transmitCardPanel);
+            	break;
+            case TRANSMIT_MONEY_SEND:
+            	repaintScreen(transmitSendPanel);
             	break;
             case CHANGE_PIN:
             	repaintScreen(changePinPanel);
@@ -114,6 +126,8 @@ public class MainFrame extends JFrame {
         authPanel.setVisible(false);
         startPanel.setVisible(false);
         getCardNumberPanel.setVisible(false);
+        transmitCardPanel.setVisible(false);
+        transmitSendPanel.setVisible(false);
         
         panelToShow.setVisible(true);
         panelToShow.requestFocus();
@@ -125,7 +139,8 @@ public class MainFrame extends JFrame {
 
     public enum State {
         // TODO: 19-Nov-16 add other states
-        INIT, CHECK_CARD, AUTHORIZING, PROCESSING_MENU, GET_CASH, TRANSMIT_MONEY, CHANGE_PIN
+        INIT, CHECK_CARD, AUTHORIZING, PROCESSING_MENU, GET_CASH,
+        TRANSMIT_MONEY_CHECK_CARD, TRANSMIT_MONEY_SEND, CHANGE_PIN
     }
 
     public static synchronized MainFrame getInstance() {
@@ -159,6 +174,14 @@ public class MainFrame extends JFrame {
     
     public ChangePinPanel getChangePinPanel() {
         return changePinPanel;
+    }
+    
+    public TransmitCardPanel getTransmitCardPanel(){
+    	return transmitCardPanel;
+    }
+    
+    public TransmitSendPanel getTransmitSendPanel(){
+    	return transmitSendPanel;
     }
 
 }

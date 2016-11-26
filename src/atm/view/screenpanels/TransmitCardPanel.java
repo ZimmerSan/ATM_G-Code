@@ -8,31 +8,30 @@ import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import atm.tools.ViewUtils;
 
-public class GetCardNumberPanel extends JPanel{
-
-	private static GetCardNumberPanel instance;
+public class TransmitCardPanel extends JPanel {
+	
+	private static TransmitCardPanel instance;
 	JTextField cardTextField;
 	JButton acceptbtn;
 	JButton declinebtn;
 	
 
-    private GetCardNumberPanel(){
+    private TransmitCardPanel(){
     	super();
     	ViewUtils.setupDefaultScreenPanel(this);
     	init();
     }
     
     private void init(){
-    	JLabel cardLabel = new JLabel("Input Card Number:", SwingConstants.LEFT);
+    	JLabel cardLabel = new JLabel("Payee's Card Number:", SwingConstants.LEFT);
     	cardLabel.setForeground(Color.white);
-    	cardLabel.setSize(120, 40);
-    	cardLabel.setLocation(40, 80);
+    	cardLabel.setSize(140, 40);
+    	cardLabel.setLocation(30, 80);
     	cardLabel.setFont(new Font("Arial", Font.PLAIN, 12));
     	add(cardLabel);
     	
@@ -59,7 +58,7 @@ public class GetCardNumberPanel extends JPanel{
     public void setVisible(boolean aFlag) {
     	if(aFlag)
             refresh();
-    	super.setVisible(aFlag); 
+    	super.setVisible(aFlag);
     }
 
     public synchronized void refresh(){
@@ -79,8 +78,8 @@ public class GetCardNumberPanel extends JPanel{
 		
 	}
 	
-	public static synchronized GetCardNumberPanel getInstance(){
-        if (instance == null) instance = new GetCardNumberPanel();
+	public static synchronized TransmitCardPanel getInstance(){
+        if (instance == null) instance = new TransmitCardPanel();
         return instance;
     }
 }

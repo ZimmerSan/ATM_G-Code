@@ -11,26 +11,22 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import atm.model.shared.Check;
-import atm.model.shared.Message;
-import atm.model.transaction.Transaction;
-import atm.model.transaction.Withdrawal;
 import atm.tools.ViewUtils;
 
-public class GetCashPanel extends JPanel{
-	
+public class TransmitSendPanel extends JPanel {
+
 	private static final int ROW_1_X = 20;
 	private static final int ROW_2_X = 340;
 	private static final int ROW_1_Y = 100;
 	private static final int ROW_2_Y = 160;
 	private static final int ROW_3_Y = 220;
 
-	private static GetCashPanel instance;
+	private static TransmitSendPanel instance;
 	private JTextField amountTextField;
 	private JButton get50, get100, get200, get500, get1000, ownAmount;
 	JButton declinebtn;
 
-    private GetCashPanel(){
+    private TransmitSendPanel(){
     	super();
     	ViewUtils.setupDefaultScreenPanel(this);
     	
@@ -78,12 +74,12 @@ public class GetCashPanel extends JPanel{
     public void setVisible(boolean aFlag) {
     	// TODO Auto-generated method stub
     	if(aFlag)
-    		refresh();
+            refresh();
     	super.setVisible(aFlag);
     }
     
-    public static synchronized GetCashPanel getInstance(){
-        if (instance == null) instance = new GetCashPanel();
+    public static synchronized TransmitSendPanel getInstance(){
+        if (instance == null) instance = new TransmitSendPanel();
         return instance;
     }
     
@@ -122,6 +118,4 @@ public class GetCashPanel extends JPanel{
     public void addDeclineListener(ActionListener listener){
 		declinebtn.addActionListener(listener);
 	}
-    
-    
 }

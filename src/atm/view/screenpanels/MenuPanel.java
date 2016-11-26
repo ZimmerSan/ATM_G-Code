@@ -41,8 +41,10 @@ public class MenuPanel extends JPanel {
     	checkBalance = ViewUtils.createButton("Check Balance", 300, 60, 120, 40);
     	//ROW_2
     	deposits = ViewUtils.createButton("View Deposits", 20, 140, 120, 40);
+    	deposits.setEnabled(false);
     	changePin = ViewUtils.createButton("Change PIN", 160, 140, 120, 40);
-    	somebtn2 = ViewUtils.createButton("Random Action 2", 300, 140, 120, 40);
+    	somebtn2 = ViewUtils.createButton("Charity", 300, 140, 120, 40);
+    	somebtn2.setEnabled(false);
     	
     	//ROW_3
     	//somebtn3 = ViewUtils.createButton("Random Action 3", 20, 220, 120, 40);
