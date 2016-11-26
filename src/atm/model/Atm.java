@@ -15,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
 import static atm.model.Atm.State.IDLE_STATE;
 import static atm.model.Atm.State.PROCESSING_STATE;
 
-public class Atm implements Runnable {
+public class Atm {
     private static Atm instance;
 
     private String bankName;
@@ -28,7 +28,7 @@ public class Atm implements Runnable {
 
     //state
     private State state;
-    private Session currentSession;
+    private Client currentClient;
     private boolean sessionActive;
 
     public enum State {
@@ -46,60 +46,24 @@ public class Atm implements Runnable {
         sessionActive = false;
     }
 
-    @Override
-    public void run() {
-        while (true) {
-            switch (state) {
-                case IDLE_STATE:
-                    synchronized (this) {
-                        try {
-                            wait();
-                        } catch (InterruptedException e) {
-                        }
-                    }
-                    if (sessionActive) {
-                        state = PROCESSING_STATE;
-                    }
-                    // TODO: 19-Nov-16
-                    break;
-                case PROCESSING_STATE:
-                    System.out.println("Processing");
-                    // TODO: 19-Nov-16
-                    currentSession.performSession();
-                    state = IDLE_STATE;
-                    break;
-            }
-        }
-    }
-
     public synchronized void insertCard(String cardNumber, String enteredPin) throws InvalidClientException {
         Client client = cardReader.readCard(cardNumber);
-        if (verifyPin(enteredPin, client)) startSession(client);
+        if (verifyPin(enteredPin, client)) {
+            setState(PROCESSING_STATE);
+            currentClient = client;
+            sessionActive = true;
+        }
         else throw new InvalidClientException();
     }
 
     public synchronized void ejectCard() {
         if (isSessionActive()) cardReader.ejectCard();
-        endSession();
-    }
-
-    private synchronized Session startSession(Client client){
-        currentSession = new Session(this, client);
-        sessionActive = true;
-        setState(PROCESSING_STATE);
-        notify();
-        return currentSession;
-    }
-
-    private synchronized void endSession(){
-        currentSession = null;
-        sessionActive = false;
         setState(IDLE_STATE);
-        notify();
+        currentClient = null;
+        sessionActive = false;
     }
 
-    public boolean changePin(String oldPin, String newPin){
-        Client currentClient = currentSession.getCurrentClient();
+    public boolean changePin(String oldPin, String newPin) {
         if (verifyPin(oldPin, currentClient)) {
             currentClient.setPass(encryptWithMD5(newPin));
             currentClient.updateInDB();
@@ -108,21 +72,19 @@ public class Atm implements Runnable {
         return false;
     }
 
-    private boolean verifyPin(String pin, Client client){
+    private boolean verifyPin(String pin, Client client) {
         String encryptedPin = encryptWithMD5(pin);
-        System.out.println(encryptedPin);
         return encryptedPin.equals(client.getPass());
     }
 
-    private String encryptWithMD5(String pass){
-        MessageDigest md;
+    private String encryptWithMD5(String pass) {
         try {
-            md = MessageDigest.getInstance("MD5");
-            byte[] passBytes = pass.getBytes();
+            MessageDigest md = MessageDigest.getInstance("MD5");
             md.reset();
+            byte[] passBytes = pass.getBytes();
             byte[] digested = md.digest(passBytes);
             StringBuffer sb = new StringBuffer();
-            for(int i=0;i<digested.length;i++){
+            for (int i = 0; i < digested.length; i++) {
                 sb.append(Integer.toHexString(0xff & digested[i]));
             }
             return sb.toString();
@@ -139,7 +101,7 @@ public class Atm implements Runnable {
 
     public int doWithdrawal(String cashString) throws MoneyException{
         int intCash = Integer.parseInt(cashString);
-        Withdrawal w = new Withdrawal(instance, currentSession.getCurrentClient(), new Money(intCash));
+        Withdrawal w = new Withdrawal(instance, currentClient, new Money(intCash));
         w.performTransaction();
         return intCash;
     }
