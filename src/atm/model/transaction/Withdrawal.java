@@ -4,6 +4,8 @@ import atm.model.Atm;
 import atm.model.shared.*;
 import atm.model.shared.exception.MoneyException;
 
+import static atm.tools.Constants.ERR_UNKNOWN;
+
 public class Withdrawal extends Transaction {
 
     public Withdrawal(Atm atm, Client from, Money money) {
@@ -11,19 +13,23 @@ public class Withdrawal extends Transaction {
     }
 
     @Override
-    public void performTransaction() throws MoneyException {
+    public long performTransaction() throws Exception {
         long balanceAfterTransaction = (from.getBalance().getCents() - money.getCents()) / 100;
         if (balanceAfterTransaction < 0) throw new MoneyException();
         else {
             from.setBalance(new Money(balanceAfterTransaction));
-            from.updateInDB();
+            try {
+                from.updateInDB();
+            } catch (Exception e) {
+                throw new Exception(ERR_UNKNOWN);
+            }
         }
+        return money.getCents();
     }
 
-    protected Message getSpecificsFromCustomer() {
+    public Message getSpecificsFromCustomer() {
         return new Message(Message.MessageCode.WITHDRAWAL, transactionId, from, to, money);
     }
-
 
     public Check completeTransaction() {
         return new Check(this.atm, this.from.getCard(), this, this.from.getBalance()) {

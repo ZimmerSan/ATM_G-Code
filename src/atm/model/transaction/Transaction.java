@@ -1,8 +1,10 @@
 package atm.model.transaction;
 
 import atm.model.Atm;
-import atm.model.shared.*;
-import atm.model.shared.exception.MoneyException;
+import atm.model.shared.Check;
+import atm.model.shared.Client;
+import atm.model.shared.Message;
+import atm.model.shared.Money;
 
 
 public abstract class Transaction {
@@ -22,7 +24,7 @@ public abstract class Transaction {
         this.money = money;
     }
 
-    public abstract void performTransaction() throws MoneyException;
+    public abstract long performTransaction() throws Exception;
 
     public void setTo(Client client){
         this.to = client;
@@ -32,7 +34,7 @@ public abstract class Transaction {
         return transactionId;
     }
 
-    protected abstract Message getSpecificsFromCustomer();
+    public abstract Message getSpecificsFromCustomer();
 
     protected abstract Check completeTransaction();
 

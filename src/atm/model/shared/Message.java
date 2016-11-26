@@ -25,7 +25,7 @@ public class Message {
 
         switch (messageCode) {
             case WITHDRAWAL:
-                    result += "WITHDRAW";
+                result += "WITHDRAW";
                 break;
 
             case TRANSFER:
@@ -37,20 +37,16 @@ public class Message {
                 break;
         }
 
-        result += " CARD# " + fromAccount.getCard().getNumber();
-        result += " TRANS# " + serialNumber;
-        if (fromAccount.getBalance().getCents() >= 0)
-            result += " FROM  " + fromAccount;
+        result += "\nCARD# " + fromAccount.getCard().getNumber();
+        result += "\nTRANS# " + serialNumber;
+        if (fromAccount != null && fromAccount.getBalance().getCents() >= 0)
+            result += "\nFROM  " + fromAccount;
         else
-            result += " NO FROM";
-        if (toAccount.getBalance().getCents() >= 0)
-            result += " TO  " + toAccount;
-        else
-            result += " NO TO";
-        if (amount.getCents() > 0)
-            result += " AMOUNT = " + amount;
-        else
-            result += " NO AMOUNT";
+            result += "\nNO FROM";
+        if (toAccount != null && toAccount.getBalance().getCents() >= 0)
+            result += "\nTO  " + toAccount;
+        if (amount != null && amount.getCents() > 0)
+            result += "\nAMOUNT = " + amount;
 
         return result;
     }

@@ -3,10 +3,7 @@ package atm.dao;
 import atm.model.shared.Client;
 import atm.tools.DatabaseConnector;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,23 +49,18 @@ public class DataManager {
         return clients;
     }
 
-    public static void updateClientInfo(int id, String name, String password, long balance, String email){
-        try {
-            Connection connection = dbConnector.getConnection();
-            String updateStatement = "UPDATE atm SET NAME = ?, PASSWORD = ?, BALANCE = ?, EMAIL = ? Where id = ?";
-            PreparedStatement statement = connection.prepareStatement(updateStatement);
-            statement.setString(1, name);
-            statement.setString(2, password);
-            statement.setLong(3, balance);
-            statement.setString(4, email);
-            statement.setInt(5, id);
-            statement.executeUpdate();
+    public static void updateClientInfo(int id, String name, String password, long balance, String email) throws Exception {
+        Connection connection = dbConnector.getConnection();
+        String updateStatement = "UPDATE atm SET NAME = ?, PASSWORD = ?, BALANCE = ?, EMAIL = ? Where id = ?";
+        PreparedStatement statement = connection.prepareStatement(updateStatement);
+        statement.setString(1, name);
+        statement.setString(2, password);
+        statement.setLong(3, balance);
+        statement.setString(4, email);
+        statement.setInt(5, id);
+        statement.executeUpdate();
 
-            statement.close();
-            connection.close();
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
+        statement.close();
+        connection.close();
     }
 }

@@ -19,10 +19,10 @@ public class Client {
     }
 
     public String toString() {
-        return id+" "+ name + " "+ card.getNumber() +" "+ balance +" "+ email;
+        return id+" "+ name + " "+ card.getNumber();
     }
 
-    public void updateInDB(){
+    public void updateInDB() throws Exception {
         DataManager.updateClientInfo(id, name, pass, balance.getCents()/100, email);
     }
 

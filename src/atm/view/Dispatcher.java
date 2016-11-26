@@ -2,7 +2,6 @@ package atm.view;
 
 import atm.model.Atm;
 import atm.model.shared.exception.InvalidClientException;
-import atm.model.shared.exception.MoneyException;
 import atm.tools.Constants;
 
 import java.awt.event.ActionEvent;
@@ -23,31 +22,23 @@ public class Dispatcher {
         //Often used AL
         backToMenuListener = new BackToMenuListener();
 
-
         // Start Panel
-        mainFrame.getCardReaderView().addActionListener(new WelcomeListner());
+        mainFrame.getCardReaderView().addActionListener(new WelcomeListener());
 
         //getClientCardForAuth Panel
-        mainFrame.getGetCardNumberPanel().addAcceptListener(new getClientCardForAuthListner());
+        mainFrame.getGetCardNumberPanel().addAcceptListener(new getClientCardForAuthListener());
         mainFrame.getGetCardNumberPanel().addDeclineListener(new CloseSessionListener());
 
         //Auth Panel
         mainFrame.getAuthPanel().addDeclineListener(new CloseSessionListener());
-        mainFrame.getAuthPanel().addAcceptListener(new AuthenticateListner());
+        mainFrame.getAuthPanel().addAcceptListener(new AuthenticateListener());
 
         // Menu Panel
-        mainFrame.getMenuPanel().addGetCashAL(new ShowGetCashPanelListener());
-        mainFrame.getMenuPanel().addTransmitMoneyAL(new ShowTransmitMoneyPanelListener());
+        mainFrame.getMenuPanel().addWithdrawalAL(new ShowGetCashPanelListener());
+        mainFrame.getMenuPanel().addTransferAL(new ShowTransmitMoneyPanelListener());
+        mainFrame.getMenuPanel().addInquiryAL(new InquiryListener());
         mainFrame.getMenuPanel().addChangePinAL(new ShowChangePinPanelListener());
-        mainFrame.getMenuPanel().addCloseSessioneAL(new CloseSessionListener());
-        mainFrame.getMenuPanel().addCheckBalanceAL(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                double amount = atm.getCurrentClient().getBalance().getCents()/100;
-                mainFrame.showMessage("You have " + amount + " USD!", Constants.MessageType.INFO);
-            }
-        });
+        mainFrame.getMenuPanel().addCloseSessionAL(new CloseSessionListener());
 
         // Change PIN Panel
         mainFrame.getChangePinPanel().addAcceptListener(new ChangePINListener());
@@ -81,12 +72,10 @@ public class Dispatcher {
                 mainFrame.setState(MainFrame.State.TRANSMIT_MONEY_CHECK_CARD);
             }
         });
-
-
     }
 
     // Start Panel
-    private class WelcomeListner implements ActionListener {
+    private class WelcomeListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             mainFrame.getCardReaderView().setEnabled(false);
@@ -96,7 +85,7 @@ public class Dispatcher {
     }
 
     //getClientCardForAuth  Panel
-    private class getClientCardForAuthListner implements ActionListener {
+    private class getClientCardForAuthListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -110,14 +99,11 @@ public class Dispatcher {
                 mainFrame.showMessage("Some wrong card!", Constants.MessageType.INFO);
                 mainFrame.setState(MainFrame.State.INIT);
             }
-
         }
-
     }
 
     //Auth Panel
-    private class AuthenticateListner implements ActionListener {
-
+    private class AuthenticateListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             //Pay attention to the following code
             String clientCardNumber = mainFrame.getGetCardNumberPanel().getCardNumber();
@@ -166,7 +152,6 @@ public class Dispatcher {
         public void actionPerformed(ActionEvent e) {
             atm.ejectCard();
             mainFrame.setState(MainFrame.State.INIT);
-
         }
     }
 
@@ -180,12 +165,16 @@ public class Dispatcher {
             if (!validateNewPins(newPIN, confirmPIN)) {
                 mainFrame.showMessage(ERR_INVALID_NEW_PIN, Constants.MessageType.ERROR);
                 mainFrame.getChangePinPanel().refresh();
-            } else if (atm.changePin(oldPIN, newPIN)) {
-                mainFrame.showMessage(PIN_CHANGED, Constants.MessageType.INFO);
-                mainFrame.setState(MainFrame.State.PROCESSING_MENU);
-            } else {
-                mainFrame.showMessage(ERR_INVALID_OLD_PIN, Constants.MessageType.ERROR);
-                mainFrame.getChangePinPanel().refresh();
+            } else try {
+                if (atm.changePin(oldPIN, newPIN)) {
+                    mainFrame.showMessage(PIN_CHANGED, MessageType.INFO);
+                    mainFrame.setState(MainFrame.State.PROCESSING_MENU);
+                } else {
+                    mainFrame.showMessage(ERR_INVALID_OLD_PIN, MessageType.ERROR);
+                    mainFrame.getChangePinPanel().refresh();
+                }
+            } catch (Exception e1) {
+                mainFrame.showMessage(e1.getMessage(), MessageType.ERROR);
             }
         }
 
@@ -222,11 +211,12 @@ public class Dispatcher {
         @Override
         public void actionPerformed(ActionEvent e) {
             String cashString = mainFrame.getGetCashPanel().getCustomAmount();
-            if (cashString.equals("") || cashString.equals("0")) return;
+            Integer cash = Integer.getInteger(cashString);
+            if (cash == null || cash == 0) return;
             try {
-                atm.doWithdrawal(cashString);
+                atm.doWithdrawal(cash);
                 mainFrame.showMessage("Pick up " + cashString + " USD!", Constants.MessageType.INFO);
-            } catch (MoneyException ex) {
+            } catch (Exception ex) {
                 mainFrame.showMessage(ex.getMessage(), Constants.MessageType.ERROR);
             }
             mainFrame.setState(MainFrame.State.PROCESSING_MENU);
@@ -243,7 +233,6 @@ public class Dispatcher {
             //TODO: Implement model logic here (Check if the card exists)
             boolean validCard = true;
             if (validCard) {
-
                 mainFrame.setState(MainFrame.State.TRANSMIT_MONEY_SEND);
             } else {
                 mainFrame.showMessage("Some wrong card!", Constants.MessageType.ERROR);
@@ -267,8 +256,6 @@ public class Dispatcher {
             String cardNumber = mainFrame.getTransmitCardPanel().getCardNumber();
             // TODO: Implement model logic here (Send money to the some card)
             //
-
-
             mainFrame.showMessage("The " + amount + " USD has been transmited!", Constants.MessageType.INFO);
             mainFrame.setState(MainFrame.State.PROCESSING_MENU);
         }
@@ -277,20 +264,30 @@ public class Dispatcher {
     private class TransmitSendCustomAmountListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String cashString = mainFrame.getTransmitSendPanel().getCustomAmount();
             String cardNumber = mainFrame.getTransmitCardPanel().getCardNumber();
-            if (cashString.equals("") || cashString.equals("0")) {
-                return;
-            }
-            try{
-                atm.doTransfer(cardNumber, cashString);
-                mainFrame.showMessage("The " + cashString + " USD has been transmited!", Constants.MessageType.INFO);
-            }catch (Exception ex){
+            String cashString = mainFrame.getTransmitSendPanel().getCustomAmount();
+            Integer cash = Integer.getInteger(cashString);
+            if (cash == null || cash == 0) return;
+            try {
+                atm.doTransfer(cardNumber, cash);
+                mainFrame.showMessage("The " + cashString + " USD has been transmitted!", Constants.MessageType.INFO);
+            } catch (Exception ex) {
                 mainFrame.showMessage(ex.getMessage(), MessageType.ERROR);
             }
             mainFrame.setState(MainFrame.State.PROCESSING_MENU);
         }
     }
 
+    private class InquiryListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                String message = atm.doInquiry();
+                mainFrame.showMessage(message, MessageType.INFO);
+            } catch (Exception e1) {
+                mainFrame.showMessage(e1.getMessage(), MessageType.ERROR);
+            }
+        }
+    }
 
 }

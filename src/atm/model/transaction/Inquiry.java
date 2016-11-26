@@ -5,17 +5,17 @@ import atm.model.shared.*;
 
 public class Inquiry extends Transaction{
 
-    public Inquiry(Atm atm, Client client, Money money) {
-        super(atm, client, null, money);
+    public Inquiry(Atm atm, Client client) {
+        super(atm, client, null, null);
     }
 
     @Override
-    public void performTransaction() {
-        // TODO: 23-Nov-16 complete
+    public long performTransaction() {
+        return from.getBalance().getCents();
     }
 
-    protected Message getSpecificsFromCustomer() {
-        return new Message(Message.MessageCode.INQUIRY, transactionId, from, to, new Money(0));
+    public Message getSpecificsFromCustomer() {
+        return new Message(Message.MessageCode.INQUIRY, transactionId, from, to, from.getBalance());
     }
 
     public Check completeTransaction() {

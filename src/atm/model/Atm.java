@@ -5,7 +5,8 @@ import atm.model.components.CashDispenser;
 import atm.model.components.CheckPrinter;
 import atm.model.shared.Client;
 import atm.model.shared.exception.InvalidClientException;
-import atm.model.shared.exception.MoneyException;
+import atm.model.transaction.Inquiry;
+import atm.model.transaction.Transaction;
 import atm.model.transaction.Transfer;
 import atm.model.transaction.Withdrawal;
 import atm.model.shared.Money;
@@ -25,7 +26,6 @@ public class Atm {
     private CardReaderModel cardReader;
     private CashDispenser cashDispenser;
     private CheckPrinter checkPrinter;
-
 
     //state
     private State state;
@@ -64,7 +64,7 @@ public class Atm {
         sessionActive = false;
     }
 
-    public boolean changePin(String oldPin, String newPin) {
+    public boolean changePin(String oldPin, String newPin) throws Exception {
         if (verifyPin(oldPin, currentClient)) {
             currentClient.setPass(encryptWithMD5(newPin));
             currentClient.updateInDB();
@@ -100,17 +100,23 @@ public class Atm {
         return instance;
     }
 
-    public void doWithdrawal(String cashString) throws MoneyException{
-        int intCash = Integer.parseInt(cashString);
-        Withdrawal w = new Withdrawal(instance, currentClient, new Money(intCash));
+    public String doWithdrawal(int cash) throws Exception {
+        Withdrawal w = new Withdrawal(instance, currentClient, new Money(cash));
         w.performTransaction();
+        return w.getSpecificsFromCustomer().toString();
     }
 
-    public void doTransfer(String cardNumber, String cashString) throws InvalidClientException, MoneyException{
+    public String doTransfer(String cardNumber, int cash) throws Exception {
         Client clientForTransfer = cardReader.readCard(cardNumber);
-        int intCash = Integer.parseInt(cashString);
-        Transfer t = new Transfer(instance, currentClient, clientForTransfer, new Money(intCash));
+        Transfer t = new Transfer(instance, currentClient, clientForTransfer, new Money(cash));
         t.performTransaction();
+        return t.getSpecificsFromCustomer().toString();
+    }
+
+    public String doInquiry() throws Exception {
+        Transaction inquiry = new Inquiry(instance, currentClient);
+        inquiry.performTransaction();
+        return inquiry.getSpecificsFromCustomer().toString();
     }
 
 
@@ -134,7 +140,7 @@ public class Atm {
         this.bankName = bankName;
     }
 
-    public Client getCurrentClient(){
+    private Client getCurrentClient(){
         return currentClient;
     }
 }
