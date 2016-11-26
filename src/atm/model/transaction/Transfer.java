@@ -12,11 +12,10 @@ public class Transfer extends Transaction{
 
     @Override
     public void performTransaction() throws MoneyException {
-        // TODO: 23-Nov-16 c'mon man. Give the variables good names
-        double amount = (from.getBalance().getCents() - money.getCents()) / 100;
-        if (amount < 0) throw new MoneyException();
+        double balanceAfterTransaction = (from.getBalance().getCents() - money.getCents()) / 100;
+        if (balanceAfterTransaction < 0) throw new MoneyException();
         else {
-            from.setBalance(new Money(amount));
+            from.setBalance(new Money(balanceAfterTransaction));
             to.setBalance(new Money((to.getBalance().getCents() + money.getCents()) / 100));
             from.updateInDB();
             to.updateInDB();

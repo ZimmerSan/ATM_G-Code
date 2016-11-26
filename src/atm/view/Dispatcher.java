@@ -279,12 +279,16 @@ public class Dispatcher {
         @Override
         public void actionPerformed(ActionEvent e) {
             String cashString = mainFrame.getTransmitSendPanel().getCustomAmount();
+            String cardNumber = mainFrame.getTransmitCardPanel().getCardNumber();
             if (cashString.equals("") || cashString.equals("0")) {
                 return;
             }
-            // TODO: Implement model logic here (Send custom amount of money to the some card)
-
-            mainFrame.showMessage("The " + cashString + " USD has been transmited!", Constants.MessageType.INFO);
+            try{
+                atm.doTransfer(cardNumber, cashString);
+                mainFrame.showMessage("The " + cashString + " USD has been transmited!", Constants.MessageType.INFO);
+            }catch (Exception ex){
+                mainFrame.showMessage(ex.getMessage(), MessageType.ERROR);
+            }
             mainFrame.setState(MainFrame.State.PROCESSING_MENU);
         }
     }

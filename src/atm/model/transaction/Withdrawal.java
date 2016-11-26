@@ -12,11 +12,10 @@ public class Withdrawal extends Transaction {
 
     @Override
     public void performTransaction() throws MoneyException {
-        // TODO: 23-Nov-16 c'mon man. Give the variables good names
-        long cents = (from.getBalance().getCents() - money.getCents()) / 100;
-        if (cents < 0) throw new MoneyException();
+        long balanceAfterTransaction = (from.getBalance().getCents() - money.getCents()) / 100;
+        if (balanceAfterTransaction < 0) throw new MoneyException();
         else {
-            from.setBalance(new Money(cents));
+            from.setBalance(new Money(balanceAfterTransaction));
             from.updateInDB();
         }
     }

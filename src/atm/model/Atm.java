@@ -6,6 +6,7 @@ import atm.model.components.CheckPrinter;
 import atm.model.shared.Client;
 import atm.model.shared.exception.InvalidClientException;
 import atm.model.shared.exception.MoneyException;
+import atm.model.transaction.Transfer;
 import atm.model.transaction.Withdrawal;
 import atm.model.shared.Money;
 
@@ -99,12 +100,19 @@ public class Atm {
         return instance;
     }
 
-    public int doWithdrawal(String cashString) throws MoneyException{
+    public void doWithdrawal(String cashString) throws MoneyException{
         int intCash = Integer.parseInt(cashString);
         Withdrawal w = new Withdrawal(instance, currentClient, new Money(intCash));
         w.performTransaction();
-        return intCash;
     }
+
+    public void doTransfer(String cardNumber, String cashString) throws InvalidClientException, MoneyException{
+        Client clientForTransfer = cardReader.readCard(cardNumber);
+        int intCash = Integer.parseInt(cashString);
+        Transfer t = new Transfer(instance, currentClient, clientForTransfer, new Money(intCash));
+        t.performTransaction();
+    }
+
 
     public boolean isSessionActive() {
         return sessionActive;
