@@ -25,6 +25,7 @@ public interface Constants {
     }
 
     String CONFIRM_PRINT_CHECK = "Would you like to print check?";
+    String CONFIRM_TRANSACTION = "Do you really want to perform transaction?";
 
     // Info
     String CARD_EJECTED = "Take your card, please.";
