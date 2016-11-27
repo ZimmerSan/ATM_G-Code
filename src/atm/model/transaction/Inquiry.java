@@ -3,7 +3,7 @@ package atm.model.transaction;
 import atm.model.Atm;
 import atm.model.shared.*;
 
-public class Inquiry extends Transaction{
+public class Inquiry extends Transaction {
 
     public Inquiry(Atm atm, Client client) {
         super(atm, client, null, null);
