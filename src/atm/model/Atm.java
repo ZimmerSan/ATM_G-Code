@@ -34,10 +34,7 @@ public class Atm {
     }
 
     public Atm() {
-        //create components
         cardReader = new CardReaderModel();
-
-        //initial state
         state = State.IDLE_STATE;
         sessionActive = false;
     }
@@ -49,15 +46,7 @@ public class Atm {
     }
 
     public boolean verifyCard(String card){
-        try {
-            if (cardReader.readCard(card) != null) {
-                insertedCard = card;
-                return true;
-            } else
-                return false;
-        } catch (InvalidClientException e) {
-            return false;
-        }
+        return cardReader.verifyCard(card);
     }
 
     public void authClient(String enteredPin) throws InvalidClientException {
@@ -99,9 +88,7 @@ public class Atm {
             byte[] passBytes = pass.getBytes();
             byte[] digested = md.digest(passBytes);
             StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < digested.length; i++) {
-                sb.append(Integer.toHexString(0xff & digested[i]));
-            }
+            for (int i = 0; i < digested.length; i++) sb.append(Integer.toHexString(0xff & digested[i]));
             return sb.toString();
         } catch (NoSuchAlgorithmException ex) {
             System.err.println(ex);
@@ -109,6 +96,7 @@ public class Atm {
         return null;
     }
 
+    // Transactions
     public String doWithdrawal(long cash) throws Exception {
         Withdrawal w = new Withdrawal(instance, currentClient, new Money(cash));
         w.performTransaction();
@@ -151,9 +139,5 @@ public class Atm {
 
     public void setBankName(String bankName) {
         this.bankName = bankName;
-    }
-
-    private Client getCurrentClient(){
-        return currentClient;
     }
 }

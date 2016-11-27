@@ -8,6 +8,15 @@ import atm.view.MainFrame;
 
 public class CardReaderModel {
 
+    public boolean verifyCard(String card) {
+        try {
+            readCard(card);
+            return true;
+        } catch (InvalidClientException e) {
+            return false;
+        }
+    }
+
     public Client readCard(String number) throws InvalidClientException {
         Client client = DataManager.getClientByCardNumber(number);
         if (client != null) return client;
