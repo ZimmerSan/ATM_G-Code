@@ -14,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 
 import static atm.model.Atm.State.IDLE_STATE;
 import static atm.model.Atm.State.PROCESSING_STATE;
+import static atm.tools.Constants.SELF_TRANSFER;
 
 public class Atm {
     private static Atm instance;
@@ -43,6 +44,13 @@ public class Atm {
         boolean verifyCard = verifyCard(card);
         if (verifyCard) insertedCard = card;
         return verifyCard;
+    }
+
+    public boolean verifyCardForTransfer(String card) throws Exception {
+        Client client = cardReader.readCard(card);
+        if (client.getId() == currentClient.getId())
+            throw new Exception(SELF_TRANSFER);
+        else return true;
     }
 
     public boolean verifyCard(String card){

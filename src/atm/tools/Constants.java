@@ -5,7 +5,6 @@ import javax.swing.*;
 public interface Constants {
     int PIN_LENGTH = 4;
 
-    // Titles
     enum MessageType {
         ERROR("Error", JOptionPane.ERROR_MESSAGE),
         INFO("Info", JOptionPane.INFORMATION_MESSAGE);
@@ -24,14 +23,14 @@ public interface Constants {
         }
     }
 
-    String CONFIRM_PRINT_CHECK = "Would you like to print check?";
-    String CONFIRM_TRANSACTION = "Do you really want to perform transaction?";
 
     // Info
     String CARD_EJECTED = "Take your card, please.";
     String PIN_CHANGED = "PIN has been changed.";
+    String SELF_TRANSFER = "Transfer to your own card has no sense.";
 
-    // Warnings
+    // Confirmations
+    String CONFIRM_PRINT_CHECK = "Would you like to print check?";
 
     // Errors
     String ERR_INVALID_NEW_PIN = "PINs do not match or do not consist of only " + PIN_LENGTH + " digit(s).";

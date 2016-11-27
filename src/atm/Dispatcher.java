@@ -193,22 +193,25 @@ public class Dispatcher {
         @Override
         public void actionPerformed(ActionEvent e) {
             String cashString = mainFrame.getGetCashPanel().getCustomAmount();
-            int dialogResult = JOptionPane.showConfirmDialog(null, Constants.CONFIRM_TRANSACTION+"\n"+"Get cash: "+ cashString+"$", "Warning", JOptionPane.YES_NO_OPTION);
-            if (dialogResult == JOptionPane.YES_OPTION) {
-                try {
-                    long cash = Long.parseLong(cashString);
-                    if (cash <= 0) return;
+
+            try {
+                long cash = Long.parseLong(cashString);
+                if (cash <= 0) return;
+
+                int dialogResult = JOptionPane.showConfirmDialog(mainFrame, "Proceed Get Cash [amount = $" + cash + "]?", "Warning", JOptionPane.YES_NO_OPTION);
+                if (dialogResult == JOptionPane.YES_OPTION) {
                     String message = atm.doWithdrawal(cash);
-                    dialogResult = JOptionPane.showConfirmDialog(null, Constants.CONFIRM_PRINT_CHECK, "Warning", JOptionPane.YES_NO_OPTION);
+                    dialogResult = JOptionPane.showConfirmDialog(mainFrame, Constants.CONFIRM_PRINT_CHECK, "Warning", JOptionPane.YES_NO_OPTION);
                     if (dialogResult == JOptionPane.YES_OPTION) {
                         mainFrame.showMessage(message, Constants.MessageType.INFO);
                     }
-                } catch (NumberFormatException e1) {
-                    mainFrame.showMessage(ERR_INVALID_NUMBER, MessageType.ERROR);
-                    return;
-                } catch (Exception ex) {
-                    mainFrame.showMessage(ex.getMessage(), Constants.MessageType.ERROR);
                 }
+
+            } catch (NumberFormatException e1) {
+                mainFrame.showMessage(ERR_INVALID_NUMBER, MessageType.ERROR);
+                return;
+            } catch (Exception ex) {
+                mainFrame.showMessage(ex.getMessage(), Constants.MessageType.ERROR);
             }
             mainFrame.setState(MainFrame.State.PROCESSING_MENU);
         }
@@ -219,12 +222,16 @@ public class Dispatcher {
         @Override
         public void actionPerformed(ActionEvent e) {
             String cardNumber = mainFrame.getTransferCardPanel().getCardNumber();
-            boolean validCard = atm.verifyCard(cardNumber);
-            if (validCard) {
-                mainFrame.setState(MainFrame.State.TRANSMIT_MONEY_SEND);
-            } else {
-                mainFrame.showMessage(ERR_INVALID_CARD, Constants.MessageType.ERROR);
-                mainFrame.getTransferCardPanel().refresh();
+            try {
+                boolean validCard = atm.verifyCardForTransfer(cardNumber);
+                if (validCard) {
+                    mainFrame.setState(MainFrame.State.TRANSMIT_MONEY_SEND);
+                } else {
+                    mainFrame.showMessage(ERR_INVALID_CARD, Constants.MessageType.ERROR);
+                    mainFrame.getTransferCardPanel().refresh();
+                }
+            } catch (Exception e1) {
+                mainFrame.showMessage(e1.getMessage(), MessageType.ERROR);
             }
         }
     }
@@ -248,21 +255,23 @@ public class Dispatcher {
         public void actionPerformed(ActionEvent e) {
             String cardNumber = mainFrame.getTransferCardPanel().getCardNumber();
             String cashString = mainFrame.getTransferSendPanel().getCustomAmount();
-            int dialogResult = JOptionPane.showConfirmDialog(null, Constants.CONFIRM_TRANSACTION+"\n"+"Transfer "+cashString+"$ to "+cardNumber, "Warning", JOptionPane.YES_NO_OPTION);
-            if (dialogResult == JOptionPane.YES_OPTION) {
-                try {
-                    long cash = Long.parseLong(cashString);
-                    if (cash <= 0) return;
+
+            try {
+                long cash = Long.parseLong(cashString);
+                if (cash <= 0) return;
+
+                int dialogResult = JOptionPane.showConfirmDialog(mainFrame, "Proceed Transfer [amount = $" + cash + "] to [" + cardNumber + "]?", "Warning", JOptionPane.YES_NO_OPTION);
+                if (dialogResult == JOptionPane.YES_OPTION) {
                     String message = atm.doTransfer(cardNumber, cash);
-                    dialogResult = JOptionPane.showConfirmDialog(null, Constants.CONFIRM_PRINT_CHECK, "Warning", JOptionPane.YES_NO_OPTION);
+                    dialogResult = JOptionPane.showConfirmDialog(mainFrame, Constants.CONFIRM_PRINT_CHECK, "Warning", JOptionPane.YES_NO_OPTION);
                     if (dialogResult == JOptionPane.YES_OPTION) {
                         mainFrame.showMessage(message, Constants.MessageType.INFO);
                     }
-                } catch (NumberFormatException e1) {
-                    mainFrame.showMessage(ERR_INVALID_NUMBER, MessageType.ERROR);
-                } catch (Exception ex) {
-                    mainFrame.showMessage(ex.getMessage(), MessageType.ERROR);
                 }
+            } catch (NumberFormatException e1) {
+                mainFrame.showMessage(ERR_INVALID_NUMBER, MessageType.ERROR);
+            } catch (Exception ex) {
+                mainFrame.showMessage(ex.getMessage(), MessageType.ERROR);
             }
             mainFrame.setState(MainFrame.State.PROCESSING_MENU);
         }

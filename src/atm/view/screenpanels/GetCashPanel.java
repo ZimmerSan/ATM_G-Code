@@ -45,7 +45,7 @@ public class GetCashPanel extends JPanel{
     	get100 = ViewUtils.createButton("100", ROW_1_X, ROW_2_Y, 80, 40);
     	get200 = ViewUtils.createButton("200", ROW_1_X, ROW_3_Y, 80, 40);
     	//COL_2
-    	get500 = ViewUtils.createButton("200", ROW_2_X, ROW_1_Y, 80, 40);
+    	get500 = ViewUtils.createButton("500", ROW_2_X, ROW_1_Y, 80, 40);
     	get1000 = ViewUtils.createButton("1000", ROW_2_X, ROW_2_Y, 80, 40);
     	ownAmount = ViewUtils.createButton("Enter", ROW_2_X, ROW_3_Y, 80, 40);
     	ViewUtils.addActionToMap(this, ownAmount, KeyEvent.VK_ENTER);
