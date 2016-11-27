@@ -1,8 +1,6 @@
 package atm.model;
 
 import atm.model.components.CardReaderModel;
-import atm.model.components.CashDispenser;
-import atm.model.components.CheckPrinter;
 import atm.model.shared.Client;
 import atm.model.shared.exception.InvalidClientException;
 import atm.model.transaction.Inquiry;
@@ -24,8 +22,6 @@ public class Atm {
 
     //components
     private CardReaderModel cardReader;
-    private CashDispenser cashDispenser;
-    private CheckPrinter checkPrinter;
 
     //state
     private State state;
@@ -40,8 +36,6 @@ public class Atm {
     public Atm() {
         //create components
         cardReader = new CardReaderModel();
-        cashDispenser = new CashDispenser();
-        checkPrinter = new CheckPrinter();
 
         //initial state
         state = State.IDLE_STATE;

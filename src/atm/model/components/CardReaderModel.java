@@ -18,9 +18,4 @@ public class CardReaderModel {
         MainFrame.getInstance().setState(MainFrame.State.INIT);
         MainFrame.getInstance().showMessage(Constants.CARD_EJECTED, Constants.MessageType.INFO);
     }
-
-    public void retainCard() {
-        System.out.println("retainCard");
-    }
-
 }
