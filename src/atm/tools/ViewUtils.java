@@ -39,11 +39,8 @@ public class ViewUtils {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				//System.out.println(panel.getClass()+" "+button.getText()+keyEvent);
 				button.doClick();
 			}
 		});
-    	//System.out.println(panel.getClass()+" "+button.getText()+keyEvent);
     }
 }

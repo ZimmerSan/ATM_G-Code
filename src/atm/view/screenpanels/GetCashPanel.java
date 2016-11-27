@@ -66,9 +66,7 @@ public class GetCashPanel extends JPanel{
 
     @Override
     public void setVisible(boolean aFlag) {
-    	// TODO Auto-generated method stub
-    	if(aFlag)
-    		refresh();
+    	if(aFlag) refresh();
     	super.setVisible(aFlag);
     }
     

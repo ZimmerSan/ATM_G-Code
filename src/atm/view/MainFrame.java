@@ -86,7 +86,6 @@ public class MainFrame extends JFrame {
     }
 
     public synchronized void setState(State state) {
-        // TODO: 19-Nov-16 implement other states
         switch (state) {
             case INIT:
                 repaintScreen(startPanel);

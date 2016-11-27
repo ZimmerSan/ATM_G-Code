@@ -1,18 +1,11 @@
 package atm.view.screenpanels;
 
-import java.awt.Color;
-import java.awt.Font;
+import atm.tools.ViewUtils;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
-import atm.tools.ViewUtils;
 
 public class ChangePinPanel extends JPanel{
 
@@ -92,7 +85,6 @@ public class ChangePinPanel extends JPanel{
     }
 
     public synchronized void refresh(){
-		// TODO: 19-Nov-16 clear text fields
 		oldPasswordField.setText("");
 		newPasswordField.setText("");
 		confirmPasswordField.setText("");	

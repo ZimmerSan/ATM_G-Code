@@ -1,28 +1,14 @@
 package atm.view.components;
 
-import static atm.tools.ViewConstants.KEYBOARD_HEIGHT;
-import static atm.tools.ViewConstants.KEYBOARD_LOCATION_HEIGHT;
-import static atm.tools.ViewConstants.KEYBOARD_LOCATION_WIDTH;
-import static atm.tools.ViewConstants.KEYBOARD_WIDTH;
-import static atm.tools.ViewConstants.ROW_1_X;
-import static atm.tools.ViewConstants.ROW_1_Y;
-import static atm.tools.ViewConstants.ROW_2_X;
-import static atm.tools.ViewConstants.ROW_2_Y;
-import static atm.tools.ViewConstants.ROW_3_X;
-import static atm.tools.ViewConstants.ROW_3_Y;
-import static atm.tools.ViewConstants.ROW_4_X;
-import static atm.tools.ViewConstants.ROW_4_Y;
-import static atm.tools.ViewUtils.createDigitButton;
-import static atm.tools.ViewUtils.createFuncButton;
-
-import java.awt.AWTException;
-import java.awt.Robot;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import static atm.tools.ViewConstants.*;
+import static atm.tools.ViewUtils.createDigitButton;
+import static atm.tools.ViewUtils.createFuncButton;
 
 public class KeyboardView extends JPanel {
     private static KeyboardView instance;
@@ -44,7 +30,7 @@ public class KeyboardView extends JPanel {
         setLocation(KEYBOARD_LOCATION_WIDTH, KEYBOARD_LOCATION_HEIGHT);
         setLayout(null);
         init();
-        initActionListners();
+        initActionListeners();
     }
 
     private void init() {
@@ -78,11 +64,10 @@ public class KeyboardView extends JPanel {
         add(btnEnter);
     }
     
-    private void initActionListners(){
+    private void initActionListeners(){
     	try {
 			robot = new Robot();
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	initButton(b1);
@@ -150,10 +135,8 @@ public class KeyboardView extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				robot.keyPress(keyf);
 				robot.keyRelease(keyf);
-				//System.out.println(btnText);
 			}
 		});
     	btn.setFocusable(false);

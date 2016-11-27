@@ -1,16 +1,9 @@
 package atm.view.components;
 
-import static atm.tools.ViewConstants.HEADER_BACKGROUND_COLOUR;
+import javax.swing.*;
+import java.awt.*;
+
 import static atm.tools.ViewConstants.*;
-
-import java.awt.Color;
-import java.awt.Font;
-
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import atm.view.screenpanels.StartPanel;
 
 public class HeaderView extends JPanel{
 
@@ -25,11 +18,10 @@ public class HeaderView extends JPanel{
 	        setLayout(null);
 
 	        JLabel atmName = new JLabel("G-ATM");
-	        atmName.setFont(new Font("Arial", Font.PLAIN, 12));
+	        atmName.setFont(new Font("Arial", Font.BOLD, 12));
 	        atmName.setSize(60, 14);
 	        atmName.setLocation(370, 3);
 	        add(atmName);
-
 	    }
 
 	    public static synchronized HeaderView getInstance(){

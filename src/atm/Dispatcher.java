@@ -1,8 +1,9 @@
-package atm.view;
+package atm;
 
 import atm.model.Atm;
 import atm.model.shared.exception.InvalidClientException;
 import atm.tools.Constants;
+import atm.view.MainFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +14,6 @@ public class Dispatcher {
     private Atm atm;
     private MainFrame mainFrame;
     private final BackToMenuListener backToMenuListener;
-
 
     public Dispatcher(Atm atm, final MainFrame mainFrame) {
         this.atm = atm;
@@ -68,7 +68,6 @@ public class Dispatcher {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
                 mainFrame.setState(MainFrame.State.TRANSMIT_MONEY_CHECK_CARD);
             }
         });
@@ -80,7 +79,6 @@ public class Dispatcher {
         public void actionPerformed(ActionEvent e) {
             mainFrame.getCardReaderView().setEnabled(false);
             mainFrame.setState(MainFrame.State.CHECK_CARD);
-
         }
     }
 

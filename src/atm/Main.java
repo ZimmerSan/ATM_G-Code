@@ -1,7 +1,6 @@
 package atm;
 
 import atm.model.Atm;
-import atm.view.Dispatcher;
 import atm.view.MainFrame;
 
 public class Main{
