@@ -15,7 +15,7 @@ public class Withdrawal extends Transaction {
     @Override
     public long performTransaction() throws Exception {
         long balanceAfterTransaction = (from.getBalance().getCents() - money.getCents()) / 100;
-        if (balanceAfterTransaction < 0) throw new MoneyException();
+        if (balanceAfterTransaction < 0 || money.getCents() > atm.getPresentMoney().getCents()) throw new MoneyException();
         else {
             from.setBalance(new Money(balanceAfterTransaction));
             try {
@@ -23,12 +23,9 @@ public class Withdrawal extends Transaction {
             } catch (Exception e) {
                 throw new Exception(ERR_UNKNOWN);
             }
+            atm.getPresentMoney().subtract(money);
         }
         return money.getCents();
-    }
-
-    public Message getSpecificsFromCustomer() {
-        return new Message(Message.MessageCode.WITHDRAWAL, transactionId, from, to, money);
     }
 
     public Check completeTransaction() {

@@ -3,7 +3,6 @@ package atm.model.transaction;
 import atm.model.Atm;
 import atm.model.shared.Check;
 import atm.model.shared.Client;
-import atm.model.shared.Message;
 import atm.model.shared.Money;
 
 
@@ -33,8 +32,6 @@ public abstract class Transaction {
     public int getTransactionId() {
         return transactionId;
     }
-
-    public abstract Message getSpecificsFromCustomer();
 
     public abstract Check completeTransaction();
 

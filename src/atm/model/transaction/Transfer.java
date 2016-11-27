@@ -36,10 +36,6 @@ public class Transfer extends Transaction{
         return money.getCents();
     }
 
-    public Message getSpecificsFromCustomer() {
-       return new Message(Message.MessageCode.TRANSFER, transactionId, from, to, money);
-    }
-
     public Check completeTransaction() {
         return new Check(this.atm, this.from.getCard(), this, this.from.getBalance()) {
             {

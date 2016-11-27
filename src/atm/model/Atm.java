@@ -2,12 +2,12 @@ package atm.model;
 
 import atm.model.components.CardReaderModel;
 import atm.model.shared.Client;
+import atm.model.shared.Money;
 import atm.model.shared.exception.InvalidClientException;
 import atm.model.transaction.Inquiry;
 import atm.model.transaction.Transaction;
 import atm.model.transaction.Transfer;
 import atm.model.transaction.Withdrawal;
-import atm.model.shared.Money;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -29,6 +29,7 @@ public class Atm {
     private String insertedCard;
     private Client currentClient;
     private boolean sessionActive;
+    private Money presentMoney;
 
     public enum State {
         IDLE_STATE, PROCESSING_STATE
@@ -38,6 +39,7 @@ public class Atm {
         cardReader = new CardReaderModel();
         state = State.IDLE_STATE;
         sessionActive = false;
+        presentMoney = new Money(100000);
     }
 
     public boolean insertCard(String card){
@@ -147,5 +149,9 @@ public class Atm {
 
     public void setBankName(String bankName) {
         this.bankName = bankName;
+    }
+
+    public Money getPresentMoney() {
+        return presentMoney;
     }
 }

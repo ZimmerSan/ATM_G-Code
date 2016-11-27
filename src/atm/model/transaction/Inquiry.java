@@ -14,10 +14,6 @@ public class Inquiry extends Transaction {
         return from.getBalance().getCents();
     }
 
-    public Message getSpecificsFromCustomer() {
-        return new Message(Message.MessageCode.INQUIRY, transactionId, from, to, from.getBalance());
-    }
-
     public Check completeTransaction() {
         return new Check(this.atm, this.from.getCard(), this, this.from.getBalance()) {
             {
