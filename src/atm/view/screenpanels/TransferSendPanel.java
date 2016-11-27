@@ -85,6 +85,7 @@ public class TransferSendPanel extends JPanel {
 
 	public void setCustomAmount(int customAmount) {
 		amountTextField.setText(String.valueOf(customAmount));
+		amountTextField.requestFocus();
 	}
     
     public void add50AL(ActionListener al){

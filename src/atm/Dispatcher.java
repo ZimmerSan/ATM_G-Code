@@ -5,6 +5,7 @@ import atm.model.shared.exception.InvalidClientException;
 import atm.tools.Constants;
 import atm.view.MainFrame;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -195,8 +196,11 @@ public class Dispatcher {
             try {
                 long cash = Long.parseLong(cashString);
                 if (cash <= 0) return;
-                atm.doWithdrawal(cash);
-                mainFrame.showMessage("Pick up " + cashString + " USD!", Constants.MessageType.INFO);
+                String message = atm.doWithdrawal(cash);
+                int dialogResult = JOptionPane.showConfirmDialog (null, "Would you like to print check?","Warning",JOptionPane.YES_NO_OPTION);
+                if(dialogResult == JOptionPane.YES_OPTION){
+                    mainFrame.showMessage(message, Constants.MessageType.INFO);
+                }
             } catch (NumberFormatException e1) {
                 mainFrame.showMessage(ERR_INVALID_NUMBER, MessageType.ERROR);
                 return;
@@ -245,7 +249,10 @@ public class Dispatcher {
                 long cash = Long.parseLong(cashString);
                 if (cash <= 0) return;
                 String message = atm.doTransfer(cardNumber, cash);
-                mainFrame.showMessage(message, Constants.MessageType.INFO);
+                int dialogResult = JOptionPane.showConfirmDialog (null, "Would you like to print check?","Warning",JOptionPane.YES_NO_OPTION);
+                if(dialogResult == JOptionPane.YES_OPTION){
+                    mainFrame.showMessage(message, Constants.MessageType.INFO);
+                }
             } catch (NumberFormatException e1) {
                 mainFrame.showMessage(ERR_INVALID_NUMBER, MessageType.ERROR);
             } catch (Exception ex) {

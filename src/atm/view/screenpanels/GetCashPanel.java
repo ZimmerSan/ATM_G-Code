@@ -85,6 +85,7 @@ public class GetCashPanel extends JPanel{
 
 	public void setCustomAmount(long amount){
     	amountTextField.setText(String.valueOf(amount));
+		amountTextField.requestFocus();
     }
     
     public void add50AL(ActionListener al){
