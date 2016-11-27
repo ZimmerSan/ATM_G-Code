@@ -197,7 +197,7 @@ public class Dispatcher {
                 long cash = Long.parseLong(cashString);
                 if (cash <= 0) return;
                 String message = atm.doWithdrawal(cash);
-                int dialogResult = JOptionPane.showConfirmDialog (null, "Would you like to print check?","Warning",JOptionPane.YES_NO_OPTION);
+                int dialogResult = JOptionPane.showConfirmDialog (mainFrame, "Would you like to print check?","Warning",JOptionPane.YES_NO_OPTION);
                 if(dialogResult == JOptionPane.YES_OPTION){
                     mainFrame.showMessage(message, Constants.MessageType.INFO);
                 }
@@ -249,7 +249,7 @@ public class Dispatcher {
                 long cash = Long.parseLong(cashString);
                 if (cash <= 0) return;
                 String message = atm.doTransfer(cardNumber, cash);
-                int dialogResult = JOptionPane.showConfirmDialog (null, "Would you like to print check?","Warning",JOptionPane.YES_NO_OPTION);
+                int dialogResult = JOptionPane.showConfirmDialog (mainFrame, "Would you like to print check?","Warning",JOptionPane.YES_NO_OPTION);
                 if(dialogResult == JOptionPane.YES_OPTION){
                     mainFrame.showMessage(message, Constants.MessageType.INFO);
                 }
