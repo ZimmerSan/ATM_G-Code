@@ -23,11 +23,8 @@ public interface Constants {
             return type;
         }
     }
-    String TITLE_ERROR = "Error";
-    String TITLE_VALID = "Valid";
 
-    String ASK_PRINT_CHECK = "Would you like to print check?";
-    String CONFIRM_TRANSACTION = "Do you really want to perform transaction?";
+    String CONFIRM_PRINT_CHECK = "Would you like to print check?";
 
     // Info
     String CARD_EJECTED = "Take your card, please.";
