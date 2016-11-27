@@ -54,17 +54,17 @@ public class Dispatcher {
         mainFrame.getGetCashPanel().addDeclineListener(backToMenuListener);
 
         //Transmit Check Card
-        mainFrame.getTransmitCardPanel().addDeclineListener(backToMenuListener);
-        mainFrame.getTransmitCardPanel().addAcceptListener(new TransmitCardListener());
+        mainFrame.getTransferCardPanel().addDeclineListener(backToMenuListener);
+        mainFrame.getTransferCardPanel().addAcceptListener(new TransmitCardListener());
 
         //Transmit Send Panel
-        mainFrame.getTransmitSendPanel().addCustomAmountAL(new TransmitSendCustomAmountListener());
-        mainFrame.getTransmitSendPanel().add50AL(new TransmitSendListener(50));
-        mainFrame.getTransmitSendPanel().add100AL(new TransmitSendListener(100));
-        mainFrame.getTransmitSendPanel().add200AL(new TransmitSendListener(200));
-        mainFrame.getTransmitSendPanel().add500AL(new TransmitSendListener(500));
-        mainFrame.getTransmitSendPanel().add1000AL(new TransmitSendListener(1000));
-        mainFrame.getTransmitSendPanel().addDeclineListener(new ActionListener() {
+        mainFrame.getTransferSendPanel().addCustomAmountAL(new TransferSendCustomAmountListener());
+        mainFrame.getTransferSendPanel().add50AL(new TransferSendListener(50));
+        mainFrame.getTransferSendPanel().add100AL(new TransferSendListener(100));
+        mainFrame.getTransferSendPanel().add200AL(new TransferSendListener(200));
+        mainFrame.getTransferSendPanel().add500AL(new TransferSendListener(500));
+        mainFrame.getTransferSendPanel().add1000AL(new TransferSendListener(1000));
+        mainFrame.getTransferSendPanel().addDeclineListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -84,19 +84,16 @@ public class Dispatcher {
         }
     }
 
-    //getClientCardForAuth  Panel
+    //getClientCardForAuth Panel
     private class getClientCardForAuthListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             String cardNumber = mainFrame.getGetCardNumberPanel().getCardNumber();
-
-            //TODO: Implement model logic here (Check if the card exists)
-            boolean validCard = true;
+            boolean validCard = atm.insertCard(cardNumber);
             if (validCard) {
                 mainFrame.setState(MainFrame.State.AUTHORIZING);
             } else {
-                mainFrame.showMessage("Some wrong card!", Constants.MessageType.INFO);
+                mainFrame.showMessage(ERR_INVALID_CARD, Constants.MessageType.INFO);
                 mainFrame.setState(MainFrame.State.INIT);
             }
         }
@@ -105,14 +102,11 @@ public class Dispatcher {
     //Auth Panel
     private class AuthenticateListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            //Pay attention to the following code
-            String clientCardNumber = mainFrame.getGetCardNumberPanel().getCardNumber();
             String pin = mainFrame.getAuthPanel().getEnteredPin();
             try {
-                atm.insertCard(clientCardNumber, pin);
+                atm.authClient(pin);
                 mainFrame.setState(MainFrame.State.PROCESSING_MENU);
             } catch (InvalidClientException e1) {
-                atm.ejectCard();
                 mainFrame.showMessage(e1.getMessage(), Constants.MessageType.ERROR);
             }
         }
@@ -183,7 +177,6 @@ public class Dispatcher {
         }
     }
 
-    // Get Cash Panel
     private class GetCashDefaultListener implements ActionListener {
         private int amount;
 
@@ -193,17 +186,7 @@ public class Dispatcher {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO: Implement model logic here (Get Cash)
-//            Money money = new Money(amount);
-//            Withdrawal w = new Withdrawal(atm, from, null, money);
-//            try {
-//                w.makeWithdrawal();
-//                System.out.println(from.getBalance());
-//                mainFrame.showMessage("Pick up " + amount + " USD!", Constants.MessageType.INFO);
-//            } catch (MoneyException ex) {
-//                mainFrame.showMessage(ex.getMessage(), Constants.MessageType.ERROR);
-//            }
-            mainFrame.setState(MainFrame.State.PROCESSING_MENU);
+            mainFrame.getGetCashPanel().setCustomAmount(amount);
         }
     }
 
@@ -211,11 +194,14 @@ public class Dispatcher {
         @Override
         public void actionPerformed(ActionEvent e) {
             String cashString = mainFrame.getGetCashPanel().getCustomAmount();
-            Integer cash = Integer.getInteger(cashString);
-            if (cash == null || cash == 0) return;
             try {
+                long cash = Long.parseLong(cashString);
+                if (cash <= 0) return;
                 atm.doWithdrawal(cash);
                 mainFrame.showMessage("Pick up " + cashString + " USD!", Constants.MessageType.INFO);
+            } catch (NumberFormatException e1) {
+                mainFrame.showMessage(ERR_INVALID_NUMBER, MessageType.ERROR);
+                return;
             } catch (Exception ex) {
                 mainFrame.showMessage(ex.getMessage(), Constants.MessageType.ERROR);
             }
@@ -225,52 +211,45 @@ public class Dispatcher {
 
     // Transmit Card Panel
     private class TransmitCardListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
-            String cardNumber = mainFrame.getTransmitCardPanel().getCardNumber();
-
-            //TODO: Implement model logic here (Check if the card exists)
-            boolean validCard = true;
+            String cardNumber = mainFrame.getTransferCardPanel().getCardNumber();
+            boolean validCard = atm.verifyCard(cardNumber);
             if (validCard) {
                 mainFrame.setState(MainFrame.State.TRANSMIT_MONEY_SEND);
             } else {
-                mainFrame.showMessage("Some wrong card!", Constants.MessageType.ERROR);
-                mainFrame.getTransmitCardPanel().refresh();
+                mainFrame.showMessage(ERR_INVALID_CARD, Constants.MessageType.ERROR);
+                mainFrame.getTransferCardPanel().refresh();
             }
         }
     }
 
-    //Transmit Send Panel
-    //We chose amount here and send money
-
-    private class TransmitSendListener implements ActionListener {
+    //Transfer Send Panel
+    private class TransferSendListener implements ActionListener {
         private int amount;
 
-        public TransmitSendListener(int amount) {
+        TransferSendListener(int amount) {
             this.amount = amount;
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String cardNumber = mainFrame.getTransmitCardPanel().getCardNumber();
-            // TODO: Implement model logic here (Send money to the some card)
-            //
-            mainFrame.showMessage("The " + amount + " USD has been transmited!", Constants.MessageType.INFO);
-            mainFrame.setState(MainFrame.State.PROCESSING_MENU);
+            mainFrame.getTransferSendPanel().setCustomAmount(amount);
         }
     }
 
-    private class TransmitSendCustomAmountListener implements ActionListener {
+    private class TransferSendCustomAmountListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String cardNumber = mainFrame.getTransmitCardPanel().getCardNumber();
-            String cashString = mainFrame.getTransmitSendPanel().getCustomAmount();
-            Integer cash = Integer.getInteger(cashString);
-            if (cash == null || cash == 0) return;
+            String cardNumber = mainFrame.getTransferCardPanel().getCardNumber();
+            String cashString = mainFrame.getTransferSendPanel().getCustomAmount();
             try {
-                atm.doTransfer(cardNumber, cash);
-                mainFrame.showMessage("The " + cashString + " USD has been transmitted!", Constants.MessageType.INFO);
+                long cash = Long.parseLong(cashString);
+                if (cash <= 0) return;
+                String message = atm.doTransfer(cardNumber, cash);
+                mainFrame.showMessage(message, Constants.MessageType.INFO);
+            } catch (NumberFormatException e1) {
+                mainFrame.showMessage(ERR_INVALID_NUMBER, MessageType.ERROR);
             } catch (Exception ex) {
                 mainFrame.showMessage(ex.getMessage(), MessageType.ERROR);
             }

@@ -36,6 +36,6 @@ public abstract class Transaction {
 
     public abstract Message getSpecificsFromCustomer();
 
-    protected abstract Check completeTransaction();
+    public abstract Check completeTransaction();
 
 }

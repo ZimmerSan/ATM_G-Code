@@ -1,18 +1,11 @@
 package atm.view.screenpanels;
 
-import java.awt.Color;
-import java.awt.Font;
+import atm.tools.ViewUtils;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
-import atm.tools.ViewUtils;
 
 public class GetCardNumberPanel extends JPanel{
 
@@ -60,6 +53,12 @@ public class GetCardNumberPanel extends JPanel{
     	if(aFlag)
             refresh();
     	super.setVisible(aFlag); 
+    }
+
+    @Override
+    public void requestFocus() {
+        super.requestFocus();
+        cardTextField.requestFocus();
     }
 
     public synchronized void refresh(){

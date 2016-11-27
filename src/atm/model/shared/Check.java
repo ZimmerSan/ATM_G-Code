@@ -19,12 +19,13 @@ public class Check {
         headingPortion[2] = "CARD " + card.getNumber() + " TRANS #" + transaction.getTransactionId();
         balancesPortion = "TOTAL BAL: " + balance;
     }
-    public String toString(){
+
+    public String toString() {
         String res = "";
-        res +=headingPortion[0] +"\n"+headingPortion[1]+"\n"+headingPortion[2]+"\n"+balancesPortion;
-        if(detailsPortion != null)
-            for(int i = 0; i<detailsPortion.length; i++)
-                res+="\n"+detailsPortion[i];
-        return  res;
+        res += headingPortion[0] + "\n" + headingPortion[1] + "\n" + headingPortion[2] + "\n" + balancesPortion;
+        if (detailsPortion != null)
+            for (int i = 0; i < detailsPortion.length; i++)
+                res += "\n" + detailsPortion[i];
+        return res;
     }
 }

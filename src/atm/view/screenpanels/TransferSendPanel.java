@@ -1,19 +1,13 @@
 package atm.view.screenpanels;
 
-import java.awt.Color;
-import java.awt.Font;
+import atm.tools.ViewUtils;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
-import atm.tools.ViewUtils;
-
-public class TransmitSendPanel extends JPanel {
+public class TransferSendPanel extends JPanel {
 
 	private static final int ROW_1_X = 20;
 	private static final int ROW_2_X = 340;
@@ -21,12 +15,12 @@ public class TransmitSendPanel extends JPanel {
 	private static final int ROW_2_Y = 160;
 	private static final int ROW_3_Y = 220;
 
-	private static TransmitSendPanel instance;
+	private static TransferSendPanel instance;
 	private JTextField amountTextField;
 	private JButton get50, get100, get200, get500, get1000, ownAmount;
 	JButton declinebtn;
 
-    private TransmitSendPanel(){
+    private TransferSendPanel(){
     	super();
     	ViewUtils.setupDefaultScreenPanel(this);
     	
@@ -78,8 +72,8 @@ public class TransmitSendPanel extends JPanel {
     	super.setVisible(aFlag);
     }
     
-    public static synchronized TransmitSendPanel getInstance(){
-        if (instance == null) instance = new TransmitSendPanel();
+    public static synchronized TransferSendPanel getInstance(){
+        if (instance == null) instance = new TransferSendPanel();
         return instance;
     }
     
@@ -90,6 +84,10 @@ public class TransmitSendPanel extends JPanel {
     public String getCustomAmount(){
     	return amountTextField.getText();
     }
+
+	public void setCustomAmount(int customAmount) {
+		amountTextField.setText(String.valueOf(customAmount));
+	}
     
     public void add50AL(ActionListener al){
     	get50.addActionListener(al);
@@ -118,4 +116,6 @@ public class TransmitSendPanel extends JPanel {
     public void addDeclineListener(ActionListener listener){
 		declinebtn.addActionListener(listener);
 	}
+
+
 }

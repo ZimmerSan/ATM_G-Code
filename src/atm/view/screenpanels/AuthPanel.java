@@ -1,55 +1,27 @@
 package atm.view.screenpanels;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
+import atm.tools.ViewUtils;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-import javax.swing.AbstractAction;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-import javax.swing.SwingConstants;
-
-import atm.tools.ViewUtils;
 
 public class AuthPanel extends JPanel {
 
 	private static AuthPanel instance;
-	JTextField cardTextField;
 	JPasswordField passwordField;
-	JButton acceptbtn;
-	JButton declinebtn;
+	JButton acceptBtn;
+	JButton declineBtn;
 	
 
     private AuthPanel(){
     	super();
     	ViewUtils.setupDefaultScreenPanel(this);
-    	
     	init();
     }
     
     private void init(){
-    	/*
-    	JLabel cardLabel = new JLabel("Input Card Number:", SwingConstants.LEFT);
-    	cardLabel.setForeground(Color.white);
-    	cardLabel.setSize(120, 40);
-    	cardLabel.setLocation(40, 20);
-    	cardLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-    	//add(cardLabel);
-    	
-    	cardTextField = new JTextField();
-    	cardTextField.setSize(200, 40);
-    	cardTextField.setLocation(200, 20);
-    	
-    	//add(cardTextField);
-    	*/
-    	
     	JLabel pinLabel = new JLabel("Input PIN:", SwingConstants.LEFT);
     	pinLabel.setForeground(Color.white);
     	pinLabel.setSize(120, 40);
@@ -62,18 +34,16 @@ public class AuthPanel extends JPanel {
     	passwordField.setLocation(200, 80);
     	add(passwordField);
     	
-    	acceptbtn = ViewUtils.createButton("Accept", 100, 180, 100, 40);
-    	declinebtn = ViewUtils.createButton("Decline", 240, 180, 100, 40);
+    	acceptBtn = ViewUtils.createButton("Accept", 100, 180, 100, 40);
+    	declineBtn = ViewUtils.createButton("Decline", 240, 180, 100, 40);
     	
-    	ViewUtils.addActionToMap(this, acceptbtn, KeyEvent.VK_ENTER);
-    	ViewUtils.addActionToMap(this, declinebtn, KeyEvent.VK_ESCAPE);
-//    	ViewUtils.addActionToMap(cardTextField, acceptbtn, KeyEvent.VK_ENTER);
-//    	ViewUtils.addActionToMap(cardTextField, declinebtn, KeyEvent.VK_ESCAPE);
-    	ViewUtils.addActionToMap(passwordField, acceptbtn, KeyEvent.VK_ENTER);
-    	ViewUtils.addActionToMap(passwordField, declinebtn, KeyEvent.VK_ESCAPE);
+    	ViewUtils.addActionToMap(this, acceptBtn, KeyEvent.VK_ENTER);
+    	ViewUtils.addActionToMap(this, declineBtn, KeyEvent.VK_ESCAPE);
+    	ViewUtils.addActionToMap(passwordField, acceptBtn, KeyEvent.VK_ENTER);
+    	ViewUtils.addActionToMap(passwordField, declineBtn, KeyEvent.VK_ESCAPE);
     	
-    	add(acceptbtn);
-    	add(declinebtn);
+    	add(acceptBtn);
+    	add(declineBtn);
     }
 
     @Override
@@ -83,26 +53,24 @@ public class AuthPanel extends JPanel {
     	super.setVisible(aFlag);
     }
 
-    public synchronized void refresh(){
-		// TODO: 19-Nov-16 clear text fields
-		//cardTextField.setText("");
+    public void refresh(){
 		passwordField.setText("");
 	}
 
-    public void addDeclineListener(ActionListener listener){
-		declinebtn.addActionListener(listener);
+	@Override
+	public void requestFocus() {
+		super.requestFocus();
+		passwordField.requestFocus();
+	}
+
+	public void addDeclineListener(ActionListener listener){
+		declineBtn.addActionListener(listener);
 	}
     
 	public void addAcceptListener(ActionListener listener){
-		acceptbtn.addActionListener(listener);
+		acceptBtn.addActionListener(listener);
 	}
 	
-	/*
-    public String getEnteredCardNumber(){
-        return cardTextField.getText();
-    }
-    */
-
     public String getEnteredPin(){
         return String.valueOf(passwordField.getPassword());
     }

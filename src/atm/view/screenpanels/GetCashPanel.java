@@ -1,21 +1,11 @@
 package atm.view.screenpanels;
 
-import java.awt.Color;
-import java.awt.Font;
+import atm.tools.ViewUtils;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
-import atm.model.shared.Check;
-import atm.model.shared.Message;
-import atm.model.transaction.Transaction;
-import atm.model.transaction.Withdrawal;
-import atm.tools.ViewUtils;
 
 public class GetCashPanel extends JPanel{
 	
@@ -93,6 +83,10 @@ public class GetCashPanel extends JPanel{
     
     public String getCustomAmount(){
     	return amountTextField.getText();
+    }
+
+	public void setCustomAmount(long amount){
+    	amountTextField.setText(String.valueOf(amount));
     }
     
     public void add50AL(ActionListener al){

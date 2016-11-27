@@ -29,6 +29,7 @@ public class Atm {
 
     //state
     private State state;
+    private String insertedCard;
     private Client currentClient;
     private boolean sessionActive;
 
@@ -47,8 +48,26 @@ public class Atm {
         sessionActive = false;
     }
 
-    public synchronized void insertCard(String cardNumber, String enteredPin) throws InvalidClientException {
-        Client client = cardReader.readCard(cardNumber);
+    public boolean insertCard(String card){
+        boolean verifyCard = verifyCard(card);
+        if (verifyCard) insertedCard = card;
+        return verifyCard;
+    }
+
+    public boolean verifyCard(String card){
+        try {
+            if (cardReader.readCard(card) != null) {
+                insertedCard = card;
+                return true;
+            } else
+                return false;
+        } catch (InvalidClientException e) {
+            return false;
+        }
+    }
+
+    public void authClient(String enteredPin) throws InvalidClientException {
+        Client client = cardReader.readCard(insertedCard);
         if (verifyPin(enteredPin, client)) {
             setState(PROCESSING_STATE);
             currentClient = client;
@@ -57,10 +76,11 @@ public class Atm {
         else throw new InvalidClientException();
     }
 
-    public synchronized void ejectCard() {
+    public void ejectCard() {
         if (isSessionActive()) cardReader.ejectCard();
         setState(IDLE_STATE);
         currentClient = null;
+        insertedCard = null;
         sessionActive = false;
     }
 
@@ -95,30 +115,29 @@ public class Atm {
         return null;
     }
 
-    public static synchronized Atm getInstance() {
-        if (instance == null) instance = new Atm();
-        return instance;
-    }
-
-    public String doWithdrawal(int cash) throws Exception {
+    public String doWithdrawal(long cash) throws Exception {
         Withdrawal w = new Withdrawal(instance, currentClient, new Money(cash));
         w.performTransaction();
-        return w.getSpecificsFromCustomer().toString();
+        return w.completeTransaction().toString();
     }
 
-    public String doTransfer(String cardNumber, int cash) throws Exception {
+    public String doTransfer(String cardNumber, long cash) throws Exception {
         Client clientForTransfer = cardReader.readCard(cardNumber);
         Transfer t = new Transfer(instance, currentClient, clientForTransfer, new Money(cash));
         t.performTransaction();
-        return t.getSpecificsFromCustomer().toString();
+        return t.completeTransaction().toString();
     }
 
     public String doInquiry() throws Exception {
         Transaction inquiry = new Inquiry(instance, currentClient);
         inquiry.performTransaction();
-        return inquiry.getSpecificsFromCustomer().toString();
+        return inquiry.completeTransaction().toString();
     }
 
+    public static synchronized Atm getInstance() {
+        if (instance == null) instance = new Atm();
+        return instance;
+    }
 
     public boolean isSessionActive() {
         return sessionActive;

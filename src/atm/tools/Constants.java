@@ -36,6 +36,8 @@ public interface Constants {
     String ERR_INVALID_NEW_PIN = "PINs do not match or do not consist of only " + PIN_LENGTH + " digit(s).";
     String ERR_INVALID_OLD_PIN = "Invalid old PIN";
     String ERR_INVALID_CLIENT = "Can not get user. Check entered data, please.";
+    String ERR_INVALID_NUMBER = "Bad number.";
+    String ERR_INVALID_CARD = "Card doesn't exist in DB.";
     String ERR_UNKNOWN = "We have some problems. Please, contact our administrator.";
 
 }
