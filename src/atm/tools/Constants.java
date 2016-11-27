@@ -26,6 +26,8 @@ public interface Constants {
     String TITLE_ERROR = "Error";
     String TITLE_VALID = "Valid";
 
+    String ASK_PRINT_CHECK = "Would you like to print check?";
+
     // Info
     String CARD_EJECTED = "Take your card, please.";
     String PIN_CHANGED = "PIN has been changed.";
